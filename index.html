@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +13,14 @@
             --glass: rgba(255, 255, 255, 0.12);
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
-        body, html {
-            margin: 0; padding: 0;
+        body,
+        html {
+            margin: 0;
+            padding: 0;
             background: #000;
             color: white;
             font-family: 'Georgia', serif;
@@ -24,15 +29,20 @@
             width: 100%;
         }
 
-        h1, h2, .caption, .btn-generic {
+        h1,
+        h2,
+        .caption,
+        .btn-generic {
             font-family: 'Caveat', cursive;
         }
 
-        /* --- PANTALLAS (ESTRUCTURA) --- */
+        /* --- ESTRUCTURA DE PANTALLAS --- */
         .screen {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: none;
             flex-direction: column;
             align-items: center;
@@ -41,137 +51,232 @@
             z-index: 10;
         }
 
-        .active { display: flex; opacity: 1; }
+        .active {
+            display: flex;
+            opacity: 1;
+        }
 
-        /* --- VIDEO DE FONDO (PANTALLA 2) --- */
+        /* --- VIDEO DE FONDO Y OVERLAY --- */
         .video-background {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -5;
             object-fit: cover;
         }
 
         .video-overlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.65); /* Capa oscura */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
             z-index: -4;
         }
 
-        /* --- COMPONENTES VISUALES --- */
+        /* --- COMPONENTES --- */
         .hero-card {
             background: var(--glass);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 25px; border-radius: 20px;
-            width: 85%; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            border-radius: 20px;
+            width: 85%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: opacity 1.5s ease;
+            /* Para el desvanecimiento */
+        }
+
+        .fade-out {
+            opacity: 0 !important;
         }
 
         .btn-generic {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none; padding: 10px 30px; color: white;
-            border-radius: 50px; cursor: pointer; font-size: 1.5rem;
-            margin-top: 20px; box-shadow: 0 5px 15px rgba(255,117,140,0.4);
-            text-decoration: none; display: inline-block;
+            border: none;
+            padding: 10px 30px;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
-        /* --- FOTOS DISPERSAS (PARALLAX) --- */
-        .collage-container { position: fixed; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
-        
-        .foto-marco { 
-            position: absolute; width: 75px; background: white; padding: 5px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5); opacity: 0; 
+        /* --- FOTOS Y PARALLAX --- */
+        .collage-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .foto-marco {
+            position: absolute;
+            width: 75px;
+            background: white;
+            padding: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            opacity: 0;
             transition: opacity 1s ease, transform 0.1s linear;
         }
-        .foto-marco img { width: 100%; height: 75px; object-fit: cover; }
 
-        /* Posiciones iniciales */
-        .pos1 { top: 15%; left: 10%; transform: rotate(-10deg); }
-        .pos2 { top: 40%; right: 10%; transform: rotate(15deg); }
-        .pos3 { top: 70%; left: 15%; transform: rotate(-5deg); }
+        .foto-marco img {
+            width: 100%;
+            height: 75px;
+            object-fit: cover;
+        }
 
-        /* --- MÁQUINA DE ESCRIBIR --- */
-        .cursor::after { content: "|"; animation: parpadeo 0.7s infinite; color: var(--secondary); }
-        @keyframes parpadeo { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+        .pos1 {
+            top: 15%;
+            left: 10%;
+            transform: rotate(-10deg);
+        }
+
+        .pos2 {
+            top: 40%;
+            right: 10%;
+            transform: rotate(15deg);
+        }
+
+        .pos3 {
+            top: 70%;
+            left: 15%;
+            transform: rotate(-5deg);
+        }
+
+        /* Posición para la cuarta foto (ajusta top/left a tu gusto) */
+        .pos4 {
+            top: 75%;
+            right: 15%;
+            transform: rotate(-12deg);
+        }
+
+        .cursor::after {
+            content: "|";
+            animation: parpadeo 0.7s infinite;
+            color: var(--secondary);
+        }
+
+        @keyframes parpadeo {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
 
         /* --- VIDEO FINAL --- */
         #video-final-container {
-            display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: #000; z-index: 500;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 500;
         }
     </style>
 </head>
+
 <body>
 
     <div id="screen-start" class="screen active" style="background: #0f0c29;">
         <h1 style="font-size: 3.5rem; margin-bottom: 10px;">Hola...</h1>
         <p style="opacity: 0.8; margin-bottom: 30px;">Tengo algo para decirte.</p>
-        <button class="btn-generic" onclick="changeScreen('screen-start', 'screen-main')">Abrir detalle 🌸</button>
+        <button class="btn-generic" style="opacity:1;" onclick="changeScreen('screen-start', 'screen-main')">Abrir
+            detalle 🌸</button>
     </div>
 
     <div id="screen-main" class="screen">
         <video class="video-background" autoplay muted loop playsinline id="main-bg-video">
-            <source src="https://www.dropbox.com/scl/fi/erv0pjgvoc4ma04ol7d8a/vfinal.mov?rlkey=zjl3bjk65z2n0gl7vw831jyx2&st=o7c38krh&raw=1" type="video/mp4">
+            <source
+                src="https://www.dropbox.com/scl/fi/ctcfdqs01cb0yu2ehy84j/lv_0_20260309145550.mp4?rlkey=b5nwijf62fvww113iqyr217yu&st=n1e1h3nm&raw=1"
+                type="video/mp4">
         </video>
         <div class="video-overlay"></div>
 
         <div class="collage-container">
-            <div class="foto-marco pos1" id="f1" data-depth="0.2"><img src="https://www.dropbox.com/scl/fi/ya759sf1vi4vbpprwa1vz/atrapados.JPG?rlkey=m1jgd21ecjby137s89vwocx24&st=7flt1qf4&raw=1"></div>
-            <div class="foto-marco pos2" id="f2" data-depth="0.4"><img src="https://www.dropbox.com/scl/fi/ya759sf1vi4vbpprwa1vz/atrapados.JPG?rlkey=m1jgd21ecjby137s89vwocx24&st=7flt1qf4&raw=1"></div>
-            <div class="foto-marco pos3" id="f3" data-depth="0.3"><img src="https://www.dropbox.com/scl/fi/ya759sf1vi4vbpprwa1vz/atrapados.JPG?rlkey=m1jgd21ecjby137s89vwocx24&st=7flt1qf4&raw=1"></div>
+            <div class="foto-marco pos1" id="f1" data-depth="0.2"><img
+                    src="https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T"></div>
+            <div class="foto-marco pos2" id="f2" data-depth="0.4"><img
+                    src="https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-"></div>
+            <div class="foto-marco pos3" id="f3" data-depth="0.3"><img
+                    src="https://lh3.googleusercontent.com/u/0/d/17ll_u-c7gtKxQUBSHqrxMc9pVzvOsb3D"></div>
+            <div class="foto-marco pos4" id="f4" data-depth="0.5"><img
+                    src="https://lh3.googleusercontent.com/u/0/d/1855o1Tz7C3tOtH5Xmn0ITz722SRWhI4R"></div>
         </div>
 
-        <div class="hero-card">
+        <div class="hero-card" id="card-main">
             <h1 id="tw1-h1" data-text="Para ti 🌸" style="font-size: 2.5rem; margin: 0;"></h1>
-            <p id="tw1-p" data-text="Eres una mujer increíble, capaz de iluminar cualquier lugar con tu esencia. Nunca dejes de perseguir lo que te hace feliz." style="font-size: 1.1rem; line-height: 1.6;"></p>
-            <button class="btn-generic" id="btn-next" style="display:none;" onclick="changeScreen('screen-main', 'screen-final')">Continuar ✨</button>
+            <p id="tw1-p"
+                data-text="Eres una mujer increíble, capaz de iluminar cualquier lugar con tu esencia. Nunca dejes de perseguir lo que te hace feliz."
+                style="font-size: 1.1rem; line-height: 1.6;"></p>
         </div>
-        <div style="height: 20vh; width: 100%;"></div> </div>
+        <button class="btn-generic" id="btn-next" onclick="changeScreen('screen-main', 'screen-final')">Continuar
+            ✨</button>
+        <div style="height: 20vh; width: 100%;"></div>
+    </div>
 
     <div id="screen-final" class="screen" style="background: radial-gradient(circle, #1a1a2e, #000);">
-        <div class="hero-card" style="background: transparent; border: none; backdrop-filter: none;">
+        <div class="hero-card" id="card-final" style="background: transparent; border: none; backdrop-filter: none;">
             <h1 id="tw2-h1" data-text="Antes de terminar..." style="font-size: 2.5rem;"></h1>
-            <p id="tw2-p" data-text="Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. Gracias por ser parte de mi historia y por permitirme ser parte de la tuya." style="font-size: 1.1rem; line-height: 1.8;"></p>
-            <button class="btn-generic" id="btn-play" style="display:none;" onclick="playRegalo()">Toca aquí (Play) ▶️</button>
+            <p id="tw2-p"
+                data-text="Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. Gracias por ser parte de mi historia y por permitirme ser parte de la tuya."
+                style="font-size: 1.1rem; line-height: 1.8;"></p>
         </div>
+        <button class="btn-generic" id="btn-play" onclick="playRegalo()">Toca aquí (Play) ▶️</button>
 
         <div id="video-final-container">
-            <video id="video-regalo" style="width:100%; height:100%; object-fit:contain;">
-                <source src="https://www.dropbox.com/scl/fi/erv0pjgvoc4ma04ol7d8a/vfinal.mov?rlkey=zjl3bjk65z2n0gl7vw831jyx2&st=o7c38krh&raw=1" type="video/mp4">
+            <video id="video-regalo" muted playsinline style="width:100%; height:100%; object-fit:contain;">
+                <source
+                    src="https://www.dropbox.com/scl/fi/i4v6qkynmf6vsh9tg0smi/lv_7414675558627314999_20260309153956.mp4?rlkey=jsfb0vbf153zgporcwgcvt79v&st=syeyzhlp&raw1"
+                    type="video/mp4">
             </video>
         </div>
 
-        <h1 id="msg-cierre" style="display:none; font-size: 4rem; color: var(--secondary); text-align: center; padding: 20px;">¡Te quiero mucho! ❤️</h1>
+        <h1 id="msg-cierre"
+            style="display:none; font-size: 3.5rem; color: var(--secondary); text-align: center; padding: 20px; font-family:'Caveat';">
+            ¡Te quiero mucho! ❤️</h1>
     </div>
 
-    <audio id="musica" loop><source src="https://www.dropbox.com/scl/fi/ma9rlcj0rdmqnsiof2k7x/Passenger-Let-Her-Go-Official-Video.mp3?rlkey=q8gjycafvt65vtfjkko4g5x7i&st=oi6e7xyv&raw=1" type="audio/mpeg"></audio>
+    <audio id="musica" loop>
+        <source src="LINK_MUSICA" type="audio/mpeg">
+    </audio>
 
     <script>
-        // --- NAVEGACIÓN ENTRE PANTALLAS ---
+        // --- NAVEGACIÓN ---
         function changeScreen(hideId, showId) {
             const hideEl = document.getElementById(hideId);
             const showEl = document.getElementById(showId);
-
             hideEl.style.opacity = '0';
             setTimeout(() => {
                 hideEl.style.display = 'none';
                 showEl.style.display = 'flex';
                 showEl.style.opacity = '0';
-                
                 setTimeout(() => {
                     showEl.style.opacity = '1';
                     showEl.classList.add('active');
-                    
-                    if(showId === 'screen-main') {
+                    if (showId === 'screen-main') {
                         document.body.style.overflowY = 'auto';
                         document.getElementById('musica').play();
                         initMainSequence();
                     }
-                    if(showId === 'screen-final') {
-                        window.scrollTo(0,0);
+                    if (showId === 'screen-final') {
+                        window.scrollTo(0, 0);
                         document.body.style.overflow = 'hidden';
                         initFinalSequence();
                     }
@@ -184,46 +289,59 @@
             const txt = el.getAttribute('data-text');
             let i = 0; el.textContent = ""; el.classList.add('cursor');
             function t() {
-                if (i < txt.length) { 
-                    el.textContent += txt.charAt(i); 
-                    i++; 
-                    setTimeout(t, vel); 
-                } else { 
-                    el.classList.remove('cursor'); 
-                    if(cb) cb();
+                if (i < txt.length) {
+                    el.textContent += txt.charAt(i); i++; setTimeout(t, vel);
+                } else {
+                    el.classList.remove('cursor'); if (cb) cb();
                 }
             }
             t();
         }
 
-        // --- SECUENCIAS ---
+        // --- SECUENCIA PANTALLA 2 ---
         function initMainSequence() {
-            // Animación fotos
             const fotos = document.querySelectorAll('.foto-marco');
-            fotos.forEach((f, i) => {
-                setTimeout(() => f.style.opacity = '1', 600 * (i+1));
-            });
-            // Escritura
+            const card = document.getElementById('card-main');
+            const btn = document.getElementById('btn-next');
+
+            fotos.forEach((f, i) => { setTimeout(() => f.style.opacity = '1', 600 * (i + 1)); });
+
             escribir(document.getElementById('tw1-h1'), 70, () => {
-                escribir(document.getElementById('tw1-p'), 40, () => {
-                    document.getElementById('btn-next').style.display = 'inline-block';
+                escribir(document.getElementById('tw1-p'), 45, () => {
+                    // Pausa de lectura, desvanecimiento y botón
+                    setTimeout(() => {
+                        card.classList.add('fade-out');
+                        setTimeout(() => {
+                            btn.style.opacity = '1';
+                        }, 3500); // 3.5 segundos de "solo fondo"
+                    }, 2500); // 2.5 segundos para terminar de leer
                 });
             });
-            // Parallax
+
             window.addEventListener('scroll', () => {
                 const scrolled = window.pageYOffset;
                 fotos.forEach(f => {
                     const depth = f.getAttribute('data-depth');
-                    f.style.transform = `translateY(-${scrolled * depth}px) rotate(${f.classList.contains('pos1') ? -10 : f.classList.contains('pos2') ? 15 : -5}deg)`;
+                    const rot = f.classList.contains('pos1') ? -10 : f.classList.contains('pos2') ? 15 : -5;
+                    f.style.transform = `translateY(-${scrolled * depth}px) rotate(${rot}deg)`;
                 });
             });
         }
 
+        // --- SECUENCIA PANTALLA 3 ---
         function initFinalSequence() {
+            const card = document.getElementById('card-final');
+            const btn = document.getElementById('btn-play');
+
             escribir(document.getElementById('tw2-h1'), 70, () => {
                 escribir(document.getElementById('tw2-p'), 45, () => {
-                    const btn = document.getElementById('btn-play');
-                    btn.style.display = 'inline-block';
+                    // Pausa de lectura, desvanecimiento y botón
+                    setTimeout(() => {
+                        card.classList.add('fade-out');
+                        setTimeout(() => {
+                            btn.style.opacity = '1';
+                        }, 3500);
+                    }, 2500);
                 });
             });
         }
@@ -231,19 +349,18 @@
         function playRegalo() {
             const container = document.getElementById('video-final-container');
             const video = document.getElementById('video-regalo');
-            const musica = document.getElementById('musica');
-            
-            musica.pause();
+            const btnPlay = document.getElementById('btn-play');
+
+            btnPlay.style.display = 'none';
             container.style.display = 'block';
             video.play();
 
-            video.onended = function() {
+            video.onended = function () {
                 container.style.display = 'none';
-                document.getElementById('final-deep-msg')?.style.setProperty('display', 'none');
-                document.querySelector('#screen-final .hero-card').style.display = 'none';
                 document.getElementById('msg-cierre').style.display = 'block';
             };
         }
     </script>
 </body>
+
 </html>
