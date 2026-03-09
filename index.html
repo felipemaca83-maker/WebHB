@@ -12,20 +12,38 @@
             --glass: rgba(255, 255, 255, 0.12);
         }
 
+        * { box-sizing: border-box; }
+
         body, html {
             margin: 0; padding: 0;
             background: #000;
             color: white;
-            font-family: 'Georgia', serif; /* Fuente normal */
+            font-family: 'Georgia', serif;
             overflow: hidden;
             height: 100%;
+            width: 100%;
         }
 
-        h1, h2, .caption {
-            font-family: 'Caveat', cursive; /* Fuente Títulos */
+        h1, h2, .caption, .btn-generic {
+            font-family: 'Caveat', cursive;
         }
 
-        /* --- VIDEO DE FONDO --- */
+        /* --- PANTALLAS (ESTRUCTURA) --- */
+        .screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease;
+            z-index: 10;
+        }
+
+        .active { display: flex; opacity: 1; }
+
+        /* --- VIDEO DE FONDO (PANTALLA 2) --- */
         .video-background {
             position: fixed;
             top: 0; left: 0;
@@ -38,181 +56,191 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); /* Oscurece el video */
+            background: rgba(0, 0, 0, 0.65); /* Capa oscura */
             z-index: -4;
         }
 
-        /* --- NAVEGACIÓN --- */
-        .screen {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-y: auto;
-            transition: opacity 1s ease;
-        }
-
-        .active { display: flex; opacity: 1; }
-
-        /* --- PANTALLA 1: INICIO --- */
-        #screen-start { background: #0f0c29; z-index: 100; }
-
-        /* --- PANTALLA 2: CARTA --- */
-        .collage-container { position: fixed; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
-        .foto-marco { 
-            position: absolute; width: 75px; background: white; padding: 5px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5); opacity: 0; transition: 1s;
-        }
-        .foto-marco img { width: 100%; height: 75px; object-fit: cover; }
-
+        /* --- COMPONENTES VISUALES --- */
         .hero-card {
             background: var(--glass);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255,255,255,0.2);
-            padding: 30px; border-radius: 20px;
-            width: 80%; text-align: center; margin: 50px 0;
-        }
-
-        /* --- PANTALLA 3: FINAL --- */
-        #screen-final { 
-            background: radial-gradient(circle, #24243e, #0f0c29); 
-            text-align: center; padding: 20px;
+            padding: 25px; border-radius: 20px;
+            width: 85%; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .btn-generic {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none; padding: 12px 30px; color: white;
-            border-radius: 50px; cursor: pointer; font-size: 1.1rem;
+            border: none; padding: 10px 30px; color: white;
+            border-radius: 50px; cursor: pointer; font-size: 1.5rem;
             margin-top: 20px; box-shadow: 0 5px 15px rgba(255,117,140,0.4);
+            text-decoration: none; display: inline-block;
         }
 
+        /* --- FOTOS DISPERSAS (PARALLAX) --- */
+        .collage-container { position: fixed; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+        
+        .foto-marco { 
+            position: absolute; width: 75px; background: white; padding: 5px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); opacity: 0; 
+            transition: opacity 1s ease, transform 0.1s linear;
+        }
+        .foto-marco img { width: 100%; height: 75px; object-fit: cover; }
+
+        /* Posiciones iniciales */
+        .pos1 { top: 15%; left: 10%; transform: rotate(-10deg); }
+        .pos2 { top: 40%; right: 10%; transform: rotate(15deg); }
+        .pos3 { top: 70%; left: 15%; transform: rotate(-5deg); }
+
+        /* --- MÁQUINA DE ESCRIBIR --- */
+        .cursor::after { content: "|"; animation: parpadeo 0.7s infinite; color: var(--secondary); }
+        @keyframes parpadeo { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+        /* --- VIDEO FINAL --- */
         #video-final-container {
             display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: #000; z-index: 200;
+            width: 100%; height: 100%; background: #000; z-index: 500;
         }
-
-        #msg-cierre { display: none; font-size: 2rem; color: var(--secondary); }
-
-        .cursor::after { content: "|"; animation: parpadeo 0.7s infinite; }
-        @keyframes parpadeo { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="screen-start" class="screen active">
-        <h1 style="font-size: 3rem;">Un detalle para ti...</h1>
-        <button class="btn-generic" onclick="nextScreen('screen-start', 'screen-main')">Abrir 🌸</button>
+    <div id="screen-start" class="screen active" style="background: #0f0c29;">
+        <h1 style="font-size: 3.5rem; margin-bottom: 10px;">Hola...</h1>
+        <p style="opacity: 0.8; margin-bottom: 30px;">Tengo algo para decirte.</p>
+        <button class="btn-generic" onclick="changeScreen('screen-start', 'screen-main')">Abrir detalle 🌸</button>
     </div>
 
     <div id="screen-main" class="screen">
-        <video class="video-background" autoplay muted loop id="bg-video">
+        <video class="video-background" autoplay muted loop playsinline id="main-bg-video">
             <source src="https://www.dropbox.com/scl/fi/erv0pjgvoc4ma04ol7d8a/vfinal.mov?rlkey=zjl3bjk65z2n0gl7vw831jyx2&st=o7c38krh&raw=1" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
 
-        <div class="collage-container" id="collage">
-            <div class="foto-marco" style="top:10%; left:5%; transform:rotate(-10deg);"><img src="https://www.dropbox.com/scl/fi/lm22rw0rkmewtnaq2ki89/s3.jpg?rlkey=8w23ze40364t6ilz49a018ttt&st=vyp9tpci&raw=1"></div>
-            <div class="foto-marco" style="top:30%; right:5%; transform:rotate(15deg);"><img src="https://www.dropbox.com/scl/fi/lm22rw0rkmewtnaq2ki89/s3.jpg?rlkey=8w23ze40364t6ilz49a018ttt&st=vyp9tpci&raw=1"></div>
-            <div class="foto-marco" style="top:60%; left:10%; transform:rotate(-5deg);"><img src="https://www.dropbox.com/scl/fi/lm22rw0rkmewtnaq2ki89/s3.jpg?rlkey=8w23ze40364t6ilz49a018ttt&st=vyp9tpci&raw=1"></div>
+        <div class="collage-container">
+            <div class="foto-marco pos1" id="f1" data-depth="0.2"><img src="https://www.dropbox.com/scl/fi/ya759sf1vi4vbpprwa1vz/atrapados.JPG?rlkey=m1jgd21ecjby137s89vwocx24&st=7flt1qf4&raw=1"></div>
+            <div class="foto-marco pos2" id="f2" data-depth="0.4"><img src="https://www.dropbox.com/scl/fi/ya759sf1vi4vbpprwa1vz/atrapados.JPG?rlkey=m1jgd21ecjby137s89vwocx24&st=7flt1qf4&raw=1"></div>
+            <div class="foto-marco pos3" id="f3" data-depth="0.3"><img src="https://www.dropbox.com/scl/fi/ya759sf1vi4vbpprwa1vz/atrapados.JPG?rlkey=m1jgd21ecjby137s89vwocx24&st=7flt1qf4&raw=1"></div>
         </div>
 
         <div class="hero-card">
-            <h1 id="tw-h1" data-text="Para ti 🌸" class="cursor"></h1>
-            <p id="tw-p" data-text="Eres una mujer increíble, capaz de iluminar cualquier lugar con tu esencia. Nunca dejes de perseguir lo que te hace feliz."></p>
-            <button class="btn-generic" id="btn-to-final" style="display:none;" onclick="nextScreen('screen-main', 'screen-final')">Continuar ✨</button>
+            <h1 id="tw1-h1" data-text="Para ti 🌸" style="font-size: 2.5rem; margin: 0;"></h1>
+            <p id="tw1-p" data-text="Eres una mujer increíble, capaz de iluminar cualquier lugar con tu esencia. Nunca dejes de perseguir lo que te hace feliz." style="font-size: 1.1rem; line-height: 1.6;"></p>
+            <button class="btn-generic" id="btn-next" style="display:none;" onclick="changeScreen('screen-main', 'screen-final')">Continuar ✨</button>
         </div>
-        <div style="height: 100px;"></div> </div>
+        <div style="height: 20vh; width: 100%;"></div> </div>
 
-    <div id="screen-final" class="screen">
-        <div style="max-width: 80%;" id="final-deep-msg">
-            <h1 style="font-size: 2.5rem;">Antes de terminar...</h1>
-            <p style="font-size: 1.2rem; line-height: 1.8;">
-                Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. 
-                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
-                ue pasó, sino por con quién los vivimos. 
-                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
-                ue pasó, sino por con quién los vivimos. 
-                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
-                ue pasó, sino por con quién los vivimos. 
-                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
-                ue pasó, sino por con quién los vivimos. 
-                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
-                ue pasó, sino por con quién los vivimos. 
-                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
-                ue pasó, sino por con quién los vivimos. 
-                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
-                ue pasó, sino por con quién los vivimos. 
-                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
-            
-            </p>
-            <button class="btn-generic" onclick="playFinalVideo()">Toca aquí (Play) ▶️</button>
+    <div id="screen-final" class="screen" style="background: radial-gradient(circle, #1a1a2e, #000);">
+        <div class="hero-card" style="background: transparent; border: none; backdrop-filter: none;">
+            <h1 id="tw2-h1" data-text="Antes de terminar..." style="font-size: 2.5rem;"></h1>
+            <p id="tw2-p" data-text="Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. Gracias por ser parte de mi historia y por permitirme ser parte de la tuya." style="font-size: 1.1rem; line-height: 1.8;"></p>
+            <button class="btn-generic" id="btn-play" style="display:none;" onclick="playRegalo()">Toca aquí (Play) ▶️</button>
         </div>
 
         <div id="video-final-container">
             <video id="video-regalo" style="width:100%; height:100%; object-fit:contain;">
-                <source src="LINK_VIDEO_REGALO_DROPBOX?raw=1" type="video/mp4">
+                <source src="https://www.dropbox.com/scl/fi/erv0pjgvoc4ma04ol7d8a/vfinal.mov?rlkey=zjl3bjk65z2n0gl7vw831jyx2&st=o7c38krh&raw=1" type="video/mp4">
             </video>
         </div>
 
-        <h1 id="msg-cierre">¡Te quiero mucho! ❤️</h1>
+        <h1 id="msg-cierre" style="display:none; font-size: 4rem; color: var(--secondary); text-align: center; padding: 20px;">¡Te quiero mucho! ❤️</h1>
     </div>
 
-    <audio id="musica" loop><source src="MUSICA?raw=1" type="audio/mpeg"></audio>
+    <audio id="musica" loop><source src="https://www.dropbox.com/scl/fi/ma9rlcj0rdmqnsiof2k7x/Passenger-Let-Her-Go-Official-Video.mp3?rlkey=q8gjycafvt65vtfjkko4g5x7i&st=oi6e7xyv&raw=1" type="audio/mpeg"></audio>
 
     <script>
-        function nextScreen(hide, show) {
-            document.getElementById(hide).classList.remove('active');
+        // --- NAVEGACIÓN ENTRE PANTALLAS ---
+        function changeScreen(hideId, showId) {
+            const hideEl = document.getElementById(hideId);
+            const showEl = document.getElementById(showId);
+
+            hideEl.style.opacity = '0';
             setTimeout(() => {
-                document.getElementById(hide).style.display = 'none';
-                const s = document.getElementById(show);
-                s.style.display = 'flex';
-                s.classList.add('active');
-                if(show === 'screen-main') {
-                    document.body.style.overflow = 'auto';
-                    document.getElementById('musica').play();
-                    startMainSequence();
-                }
-            }, 500);
+                hideEl.style.display = 'none';
+                showEl.style.display = 'flex';
+                showEl.style.opacity = '0';
+                
+                setTimeout(() => {
+                    showEl.style.opacity = '1';
+                    showEl.classList.add('active');
+                    
+                    if(showId === 'screen-main') {
+                        document.body.style.overflowY = 'auto';
+                        document.getElementById('musica').play();
+                        initMainSequence();
+                    }
+                    if(showId === 'screen-final') {
+                        window.scrollTo(0,0);
+                        document.body.style.overflow = 'hidden';
+                        initFinalSequence();
+                    }
+                }, 50);
+            }, 800);
         }
 
-        function startMainSequence() {
-            // Animación fotos
-            document.querySelectorAll('.foto-marco').forEach((f, i) => {
-                setTimeout(() => f.style.opacity = '1', 500 * (i+1));
-            });
-            // Escritura
-            escribir(document.getElementById('tw-h1'), 80, () => {
-                escribir(document.getElementById('tw-p'), 40, () => {
-                    document.getElementById('btn-to-final').style.display = 'inline-block';
-                });
-            });
-        }
-
+        // --- MÁQUINA DE ESCRIBIR ---
         function escribir(el, vel, cb) {
             const txt = el.getAttribute('data-text');
             let i = 0; el.textContent = ""; el.classList.add('cursor');
             function t() {
-                if (i < txt.length) { el.textContent += txt.charAt(i); i++; setTimeout(t, vel); }
-                else { el.classList.remove('cursor'); if(cb) cb(); }
+                if (i < txt.length) { 
+                    el.textContent += txt.charAt(i); 
+                    i++; 
+                    setTimeout(t, vel); 
+                } else { 
+                    el.classList.remove('cursor'); 
+                    if(cb) cb();
+                }
             }
             t();
         }
 
-        function playFinalVideo() {
+        // --- SECUENCIAS ---
+        function initMainSequence() {
+            // Animación fotos
+            const fotos = document.querySelectorAll('.foto-marco');
+            fotos.forEach((f, i) => {
+                setTimeout(() => f.style.opacity = '1', 600 * (i+1));
+            });
+            // Escritura
+            escribir(document.getElementById('tw1-h1'), 70, () => {
+                escribir(document.getElementById('tw1-p'), 40, () => {
+                    document.getElementById('btn-next').style.display = 'inline-block';
+                });
+            });
+            // Parallax
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                fotos.forEach(f => {
+                    const depth = f.getAttribute('data-depth');
+                    f.style.transform = `translateY(-${scrolled * depth}px) rotate(${f.classList.contains('pos1') ? -10 : f.classList.contains('pos2') ? 15 : -5}deg)`;
+                });
+            });
+        }
+
+        function initFinalSequence() {
+            escribir(document.getElementById('tw2-h1'), 70, () => {
+                escribir(document.getElementById('tw2-p'), 45, () => {
+                    const btn = document.getElementById('btn-play');
+                    btn.style.display = 'inline-block';
+                });
+            });
+        }
+
+        function playRegalo() {
             const container = document.getElementById('video-final-container');
             const video = document.getElementById('video-regalo');
-            const audioMain = document.getElementById('musica');
+            const musica = document.getElementById('musica');
             
-            audioMain.pause(); // Pausamos la música de fondo para que se oiga el video
+            musica.pause();
             container.style.display = 'block';
             video.play();
 
             video.onended = function() {
                 container.style.display = 'none';
-                document.getElementById('final-deep-msg').style.display = 'none';
+                document.getElementById('final-deep-msg')?.style.setProperty('display', 'none');
+                document.querySelector('#screen-final .hero-card').style.display = 'none';
                 document.getElementById('msg-cierre').style.display = 'block';
             };
         }
