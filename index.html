@@ -4,311 +4,218 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Ti ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff758c;
             --secondary: #ff7eb3;
-            --bg: #0f0c29;
-            --glass: rgba(255, 255, 255, 0.15);
+            --glass: rgba(255, 255, 255, 0.12);
         }
 
-        body {
+        body, html {
             margin: 0; padding: 0;
-            background: #0f0c29;
+            background: #000;
             color: white;
-            font-family: 'Segoe UI', sans-serif;
-            overflow: hidden; /* Bloqueado hasta inicio */
-            min-height: 100vh;
+            font-family: 'Georgia', serif; /* Fuente normal */
+            overflow: hidden;
+            height: 100%;
         }
 
-        /* Pantalla de Inicio (Overlay) */
-        #overlay {
+        h1, h2, .caption {
+            font-family: 'Caveat', cursive; /* Fuente Títulos */
+        }
+
+        /* --- VIDEO DE FONDO --- */
+        .video-background {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: #0f0c29;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 1s ease;
-        }
-
-        .btn-start {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            padding: 15px 40px;
-            color: white;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 117, 140, 0.6);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* Contenido Principal */
-        #main-content { opacity: 0; transition: opacity 2s ease; display: none; }
-        
-        #particles { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            z-index: -3; /* Capa más profunda */
-        }
-        
-        /* --- CONTENEDOR DE FOTOS FIJO ATRÁS --- */
-        .collage-container {
-            position: fixed; /* FIJO a la pantalla, no al scroll */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2; /* Detrás del texto, delante de partículas */
-            pointer-events: none; /* No interrumpir toques en el texto */
-        }
-
-        /* --- FOTOS REDUCIDAS Y DECORATIVAS --- */
-        .foto-marco {
-            position: absolute;
-            width: 70px; /* Tamaño reducido */
-            background: white;
-            padding: 5px; /* Marco minimalista */
-            box-shadow: 0 5px 10px rgba(0,0,0,0.5);
-            transition: opacity 1s ease, transform 0.1s linear; /* Transición suave para scroll */
-            opacity: 0;
-            pointer-events: auto; /* Permitir hover/toque */
-        }
-
-        .foto-marco img {
-            width: 100%;
-            height: 70px; /* Cuadradas */
+            z-index: -5;
             object-fit: cover;
         }
 
-        /* Ocultar captions para pureza visual de fondo */
-        .foto-marco .caption {
-            display: none;
+        .video-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Oscurece el video */
+            z-index: -4;
         }
 
-        /* Posiciones dispersas (Sección 1 - Visibles al inicio) */
-        /* data-depth controla la velocidad del efecto parallax (0.1 a 0.5) */
-        .pos1 { top: 10vh; left: 8%; transform: rotate(-10deg) scale(0.5); }
-        .pos2 { top: 25vh; right: 8%; transform: rotate(12deg) scale(0.5); }
-        .pos3 { top: 50vh; left: 12%; transform: rotate(-8deg) scale(0.5); }
-        .pos4 { top: 65vh; right: 10%; transform: rotate(15deg) scale(0.5); }
+        /* --- NAVEGACIÓN --- */
+        .screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            transition: opacity 1s ease;
+        }
 
-        /* Posiciones dispersas (Sección 2 - Aparecen con Scroll) */
-        .pos5 { top: 110vh; left: 10%; transform: rotate(10deg) scale(0.5); }
-        .pos6 { top: 130vh; right: 5%; transform: rotate(-15deg) scale(0.5); }
-        .pos7 { top: 160vh; left: 7%; transform: rotate(5deg) scale(0.5); }
+        .active { display: flex; opacity: 1; }
 
-        /* Tarjeta de Texto Principal */
+        /* --- PANTALLA 1: INICIO --- */
+        #screen-start { background: #0f0c29; z-index: 100; }
+
+        /* --- PANTALLA 2: CARTA --- */
+        .collage-container { position: fixed; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+        .foto-marco { 
+            position: absolute; width: 75px; background: white; padding: 5px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); opacity: 0; transition: 1s;
+        }
+        .foto-marco img { width: 100%; height: 75px; object-fit: cover; }
+
         .hero-card {
             background: var(--glass);
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 25px;
-            border-radius: 20px;
-            margin: 150px auto; /* Centrado verticalmente al inicio */
-            width: 80%;
-            text-align: center;
-            position: relative;
-            z-index: 10; /* Encima de las fotos */
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 30px; border-radius: 20px;
+            width: 80%; text-align: center; margin: 50px 0;
         }
 
-        /* Espaciador para permitir scroll y ver las fotos de abajo */
-        .spacer {
-            height: 100vh;
-            width: 100%;
+        /* --- PANTALLA 3: FINAL --- */
+        #screen-final { 
+            background: radial-gradient(circle, #24243e, #0f0c29); 
+            text-align: center; padding: 20px;
         }
 
-        h1 { font-size: 1.8rem; color: var(--secondary); margin-bottom: 10px; }
-        p { font-size: 1rem; line-height: 1.5; }
+        .btn-generic {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none; padding: 12px 30px; color: white;
+            border-radius: 50px; cursor: pointer; font-size: 1.1rem;
+            margin-top: 20px; box-shadow: 0 5px 15px rgba(255,117,140,0.4);
+        }
 
-        .cursor::after { content: "|"; animation: parpadeo 0.7s infinite; color: var(--secondary); }
+        #video-final-container {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: #000; z-index: 200;
+        }
+
+        #msg-cierre { display: none; font-size: 2rem; color: var(--secondary); }
+
+        .cursor::after { content: "|"; animation: parpadeo 0.7s infinite; }
         @keyframes parpadeo { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-
-        /* Clase para animar la aparición en scroll */
-        .reveal.active {
-            opacity: 1;
-        }
     </style>
 </head>
 <body>
 
-    <div id="overlay">
-        <p style="margin-bottom: 20px; opacity: 0.7;">Un detalle para ti...</p>
-        <button class="btn-start" onclick="iniciarExperiencia()">Abrir ✨</button>
+    <div id="screen-start" class="screen active">
+        <h1 style="font-size: 3rem;">Un detalle para ti...</h1>
+        <button class="btn-generic" onclick="nextScreen('screen-start', 'screen-main')">Abrir 🌸</button>
     </div>
 
-    <audio id="musica" loop>
-        <source src="https://www.dropbox.com/scl/fi/ma9rlcj0rdmqnsiof2k7x/Passenger-Let-Her-Go-Official-Video.mp3?rlkey=q8gjycafvt65vtfjkko4g5x7i&st=oi6e7xyv&raw=1" type="audio/mpeg">
-    </audio>
+    <div id="screen-main" class="screen">
+        <video class="video-background" autoplay muted loop id="bg-video">
+            <source src="https://www.dropbox.com/scl/fi/erv0pjgvoc4ma04ol7d8a/vfinal.mov?rlkey=zjl3bjk65z2n0gl7vw831jyx2&st=o7c38krh&raw=1" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
 
-    <div id="main-content">
-        <canvas id="particles"></canvas>
-        
+        <div class="collage-container" id="collage">
+            <div class="foto-marco" style="top:10%; left:5%; transform:rotate(-10deg);"><img src="https://www.dropbox.com/scl/fi/lm22rw0rkmewtnaq2ki89/s3.jpg?rlkey=8w23ze40364t6ilz49a018ttt&st=vyp9tpci&raw=1"></div>
+            <div class="foto-marco" style="top:30%; right:5%; transform:rotate(15deg);"><img src="https://www.dropbox.com/scl/fi/lm22rw0rkmewtnaq2ki89/s3.jpg?rlkey=8w23ze40364t6ilz49a018ttt&st=vyp9tpci&raw=1"></div>
+            <div class="foto-marco" style="top:60%; left:10%; transform:rotate(-5deg);"><img src="https://www.dropbox.com/scl/fi/lm22rw0rkmewtnaq2ki89/s3.jpg?rlkey=8w23ze40364t6ilz49a018ttt&st=vyp9tpci&raw=1"></div>
+        </div>
+
         <div class="hero-card">
-            <h1 id="typewriter-h1" data-text="Para ti 🌸" class="cursor"></h1>
-            <p id="typewriter-p" data-text="Eres una mujer increíble, capaz de iluminar cualquier lugar con tu esencia. Nunca dejes de perseguir lo que te hace feliz." class="cursor"></p>
+            <h1 id="tw-h1" data-text="Para ti 🌸" class="cursor"></h1>
+            <p id="tw-p" data-text="Eres una mujer increíble, capaz de iluminar cualquier lugar con tu esencia. Nunca dejes de perseguir lo que te hace feliz."></p>
+            <button class="btn-generic" id="btn-to-final" style="display:none;" onclick="nextScreen('screen-main', 'screen-final')">Continuar ✨</button>
+        </div>
+        <div style="height: 100px;"></div> </div>
+
+    <div id="screen-final" class="screen">
+        <div style="max-width: 80%;" id="final-deep-msg">
+            <h1 style="font-size: 2.5rem;">Antes de terminar...</h1>
+            <p style="font-size: 1.2rem; line-height: 1.8;">
+                Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. 
+                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
+                ue pasó, sino por con quién los vivimos. 
+                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
+                ue pasó, sino por con quién los vivimos. 
+                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
+                ue pasó, sino por con quién los vivimos. 
+                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
+                ue pasó, sino por con quién los vivimos. 
+                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
+                ue pasó, sino por con quién los vivimos. 
+                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
+                ue pasó, sino por con quién los vivimos. 
+                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
+                ue pasó, sino por con quién los vivimos. 
+                Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.
+            
+            </p>
+            <button class="btn-generic" onclick="playFinalVideo()">Toca aquí (Play) ▶️</button>
         </div>
 
-        <div class="collage-container" id="collage-bg">
-            <div class="foto-marco pos1 f-inicio" id="f1" data-depth="0.2"><img src="https://www.dropbox.com/scl/fi/1ilhr02qiipl15d6suox1/htap.jpg?rlkey=zxjnl5dza6svxz2428fyouiu3&st=dtkflv0q&raw=1"></div>
-            <div class="foto-marco pos2 f-inicio" id="f2" data-depth="0.3"><img src="https://www.dropbox.com/scl/fi/1ilhr02qiipl15d6suox1/htap.jpg?rlkey=zxjnl5dza6svxz2428fyouiu3&st=dtkflv0q&raw=1"></div>
-            <div class="foto-marco pos3 f-inicio" id="f3" data-depth="0.2"><img src="https://www.dropbox.com/scl/fi/1ilhr02qiipl15d6suox1/htap.jpg?rlkey=zxjnl5dza6svxz2428fyouiu3&st=dtkflv0q&raw=1"></div>
-            <div class="foto-marco pos4 f-inicio" id="f4" data-depth="0.4"><img src="LINK_FOTO_4?raw=1"></div>
-
-            <div class="foto-marco pos5 reveal f-scroll" data-delay="0.1s" data-depth="0.3"><img src="LINK_FOTO_5?raw=1"></div>
-            <div class="foto-marco pos6 reveal f-scroll" data-delay="0.3s" data-depth="0.2"><img src="LINK_FOTO_6?raw=1"></div>
-            <div class="foto-marco pos7 reveal f-scroll" data-delay="0.5s" data-depth="0.4"><img src="LINK_FOTO_7?raw=1"></div>
+        <div id="video-final-container">
+            <video id="video-regalo" style="width:100%; height:100%; object-fit:contain;">
+                <source src="LINK_VIDEO_REGALO_DROPBOX?raw=1" type="video/mp4">
+            </video>
         </div>
 
-        <div class="spacer"></div>
+        <h1 id="msg-cierre">¡Te quiero mucho! ❤️</h1>
     </div>
+
+    <audio id="musica" loop><source src="MUSICA?raw=1" type="audio/mpeg"></audio>
 
     <script>
-        // --- 1. LÓGICA DE INICIO ---
-        function iniciarExperiencia() {
-            document.getElementById('overlay').style.opacity = '0';
+        function nextScreen(hide, show) {
+            document.getElementById(hide).classList.remove('active');
             setTimeout(() => {
-                document.getElementById('overlay').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                document.getElementById('main-content').style.opacity = '1';
-                document.body.style.overflow = 'auto'; // Habilitar scroll
-
-                const audio = document.getElementById('musica');
-                audio.play().catch(e => console.log("Error audio:", e));
-
-                // Disparar secuencia de animaciones
-                activarSecuenciaInicial();
-            }, 1000);
+                document.getElementById(hide).style.display = 'none';
+                const s = document.getElementById(show);
+                s.style.display = 'flex';
+                s.classList.add('active');
+                if(show === 'screen-main') {
+                    document.body.style.overflow = 'auto';
+                    document.getElementById('musica').play();
+                    startMainSequence();
+                }
+            }, 500);
         }
 
-        // --- 2. LÓGICA MÁQUINA DE ESCRIBIR ---
-        function escribir(elemento, velocidad, callback) {
-            const texto = elemento.getAttribute('data-text');
-            let i = 0; elemento.textContent = "";
+        function startMainSequence() {
+            // Animación fotos
+            document.querySelectorAll('.foto-marco').forEach((f, i) => {
+                setTimeout(() => f.style.opacity = '1', 500 * (i+1));
+            });
+            // Escritura
+            escribir(document.getElementById('tw-h1'), 80, () => {
+                escribir(document.getElementById('tw-p'), 40, () => {
+                    document.getElementById('btn-to-final').style.display = 'inline-block';
+                });
+            });
+        }
+
+        function escribir(el, vel, cb) {
+            const txt = el.getAttribute('data-text');
+            let i = 0; el.textContent = ""; el.classList.add('cursor');
             function t() {
-                if (i < texto.length) { 
-                    elemento.textContent += texto.charAt(i); 
-                    i++; 
-                    setTimeout(t, velocidad); 
-                } else { 
-                    elemento.classList.remove('cursor'); 
-                    if(callback) callback();
-                }
+                if (i < txt.length) { el.textContent += txt.charAt(i); i++; setTimeout(t, vel); }
+                else { el.classList.remove('cursor'); if(cb) cb(); }
             }
             t();
         }
 
-        // --- 3. LÓGICA DE ANIMACIONES INICIALES Y SCROLL ---
-        function activarSecuenciaInicial() {
-            initParticles();
-            animateParticles();
-
-            escribir(document.getElementById('typewriter-h1'), 80, () => {
-                escribir(document.getElementById('typewriter-p'), 40);
-            });
-
-            // Revelar fotos iniciales
-            const fotosInicio = document.querySelectorAll('.f-inicio');
-            fotosInicio.forEach((el, index) => {
-                setTimeout(() => {
-                    el.style.opacity = '1';
-                    // Aplicar escala inicial manteniendo rotación
-                    const transformActual = window.getComputedStyle(el).transform;
-                    el.style.transform = `${transformActual.replace('scale(0.5)', '')} scale(1)`;
-                }, 400 * (index + 1));
-            });
-
-            // Activar Observador de Scroll para fotos extra
-            activarObservadorScroll();
+        function playFinalVideo() {
+            const container = document.getElementById('video-final-container');
+            const video = document.getElementById('video-regalo');
+            const audioMain = document.getElementById('musica');
             
-            // Activar Efecto Parallax en las fotos fijas
-            window.addEventListener('scroll', efectoParallaxFotos);
+            audioMain.pause(); // Pausamos la música de fondo para que se oiga el video
+            container.style.display = 'block';
+            video.play();
+
+            video.onended = function() {
+                container.style.display = 'none';
+                document.getElementById('final-deep-msg').style.display = 'none';
+                document.getElementById('msg-cierre').style.display = 'block';
+            };
         }
-
-        function activarObservadorScroll() {
-            const opciones = { threshold: 0.1 }; // Detectar pronto
-            const observador = new IntersectionObserver((entradas) => {
-                entradas.forEach(entrada => {
-                    if (entrada.isIntersecting) {
-                        const delay = entrada.target.getAttribute('data-delay') || '0s';
-                        entrada.target.style.transitionDelay = delay;
-                        entrada.target.classList.add('active');
-                        // No unobserve, para que sigan moviéndose con parallax
-                    }
-                });
-            }, opciones);
-            document.querySelectorAll('.reveal').forEach(el => observador.observe(el));
-        }
-
-        // --- NUEVO: EFECTO PARALLAX MANUAL PARA FOTOS FIJAS ---
-        function efectoParallaxFotos() {
-            const fotos = document.querySelectorAll('.foto-marco');
-            const scrollTop = window.pageYOffset; // Cuánto ha scrolleado
-
-            fotos.forEach(foto => {
-                // Obtenemos la profundidad personalizada (por defecto 0.2)
-                const depth = foto.getAttribute('data-depth') || 0.2;
-                // Calculamos cuánto moverla hacia arriba basado en el scroll y su profundidad
-                const movement = scrollTop * depth;
-                
-                // Aplicamos el movimiento manteniendo la rotación original del CSS
-                // Obtenemos la rotación actual del estilo computado (matriz) o re-aplicamos la clase
-                const clases = foto.classList;
-                let rotation = 0;
-                if(clases.contains('pos1')) rotation = -10;
-                if(clases.contains('pos2')) rotation = 12;
-                if(clases.contains('pos3')) rotation = -8;
-                if(clases.contains('pos4')) rotation = 15;
-                if(clases.contains('pos5')) rotation = 10;
-                if(clases.contains('pos6')) rotation = -15;
-                if(clases.contains('pos7')) rotation = 5;
-
-                // Si la foto está activa (visible), aplicamos el movimiento
-                if(foto.style.opacity == '1' || foto.classList.contains('active')) {
-                    // Mover hacia arriba (negativo) basado en el scroll
-                    foto.style.transform = `translateY(-${movement}px) rotate(${rotation}deg) scale(1)`;
-                }
-            });
-        }
-
-        // --- 4. LÓGICA DE PARTÍCULAS (Mantenida) ---
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function initParticles() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            for(let i=0; i<30; i++) particles.push({
-                x: Math.random()*canvas.width, y: Math.random()*canvas.height,
-                vx: Math.random()*0.3-0.15, vy: Math.random()*0.3-0.15, s: Math.random()*1.5
-            });
-        }
-        function animateParticles() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            particles.forEach(p => {
-                p.x+=p.vx; p.y+=p.vy;
-                if(p.x<0 || p.x>canvas.width) p.vx*=-1;
-                if(p.y<0 || p.y>canvas.height) p.vy*=-1;
-                ctx.fillStyle = 'rgba(255,117,140,0.3)';
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
-            });
-            requestAnimationFrame(animateParticles);
-        }
-
-        window.addEventListener('resize', initParticles);
     </script>
 </body>
 </html>
