@@ -10,7 +10,6 @@
         :root {
             --primary: #ff758c;
             --secondary: #ff7eb3;
-            --glass: rgba(255, 255, 255, 0.12);
         }
 
         * {
@@ -24,7 +23,7 @@
             background: #000;
             color: white;
             font-family: 'Georgia', serif;
-            overflow: hidden;
+            overflow-x: hidden;
             height: 100%;
             width: 100%;
         }
@@ -34,6 +33,11 @@
         .caption,
         .btn-generic {
             font-family: 'Caveat', cursive;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8); /* Mejora legibilidad sin cuadros */
+        }
+
+        p {
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
         }
 
         /* --- ESTRUCTURA DE PANTALLAS --- */
@@ -73,23 +77,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(0, 0, 0, 0.5); /* Ajustado para que el texto resalte */
             z-index: -4;
         }
 
-        /* --- COMPONENTES --- */
+        /* --- CONTENEDOR DE TEXTO (SIN CUADROS) --- */
         .hero-card {
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 25px;
-            border-radius: 20px;
-            width: 85%;
+            background: transparent; /* Eliminado el fondo glass */
+            border: none; /* Eliminado el borde */
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transition: opacity 1.5s ease;
-            /* Para el desvanecimiento */
         }
 
         .fade-out {
@@ -99,15 +99,20 @@
         .btn-generic {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             border: none;
-            padding: 10px 30px;
+            padding: 10px 35px;
             color: white;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.3);
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 1s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-generic:active {
+            transform: scale(0.95);
         }
 
         /* --- FOTOS Y PARALLAX --- */
@@ -121,9 +126,10 @@
 
         .foto-marco {
             position: absolute;
-            width: 75px;
+            width: 80px;
             background: white;
             padding: 5px;
+            padding-bottom: 15px; /* Efecto Polaroid */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             opacity: 0;
             transition: opacity 1s ease, transform 0.1s linear;
@@ -131,34 +137,14 @@
 
         .foto-marco img {
             width: 100%;
-            height: 75px;
+            height: 80px;
             object-fit: cover;
         }
 
-        .pos1 {
-            top: 15%;
-            left: 10%;
-            transform: rotate(-10deg);
-        }
-
-        .pos2 {
-            top: 40%;
-            right: 10%;
-            transform: rotate(15deg);
-        }
-
-        .pos3 {
-            top: 70%;
-            left: 15%;
-            transform: rotate(-5deg);
-        }
-
-        /* Posición para la cuarta foto (ajusta top/left a tu gusto) */
-        .pos4 {
-            top: 75%;
-            right: 15%;
-            transform: rotate(-12deg);
-        }
+        .pos1 { top: 10%; left: 8%; transform: rotate(-10deg); }
+        .pos2 { top: 35%; right: 8%; transform: rotate(15deg); }
+        .pos3 { top: 65%; left: 12%; transform: rotate(-5deg); }
+        .pos4 { top: 70%; right: 12%; transform: rotate(-12deg); }
 
         .cursor::after {
             content: "|";
@@ -167,18 +153,10 @@
         }
 
         @keyframes parpadeo {
-
-            0%,
-            100% {
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
 
-        /* --- VIDEO FINAL --- */
         #video-final-container {
             display: none;
             position: fixed;
@@ -189,68 +167,58 @@
             background: #000;
             z-index: 500;
         }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem !important; }
+            p { font-size: 1rem !important; }
+            .foto-marco { width: 65px; }
+        }
     </style>
 </head>
 
 <body>
 
-    <div id="screen-start" class="screen active" style="background: #0f0c29;">
+    <div id="screen-start" class="screen active" style="background: radial-gradient(circle, #1a1a2e, #000);">
         <h1 style="font-size: 3.5rem; margin-bottom: 10px;">Hola...</h1>
         <p style="opacity: 0.8; margin-bottom: 30px;">Tengo algo para decirte.</p>
-        <button class="btn-generic" style="opacity:1;" onclick="changeScreen('screen-start', 'screen-main')">Abrir
-            detalle 🌸</button>
+        <button class="btn-generic" style="opacity:1;" onclick="startExperience()">Abrir detalle 🌸</button>
     </div>
 
     <div id="screen-main" class="screen">
         <video class="video-background" autoplay muted loop playsinline id="main-bg-video">
-            <source
-                src="https://www.dropbox.com/scl/fi/ctcfdqs01cb0yu2ehy84j/lv_0_20260309145550.mp4?rlkey=b5nwijf62fvww113iqyr217yu&st=n1e1h3nm&raw=1"
-                type="video/mp4">
+            <source src="https://www.dropbox.com/scl/fi/ctcfdqs01cb0yu2ehy84j/lv_0_20260309145550.mp4?rlkey=b5nwijf62fvww113iqyr217yu&st=n1e1h3nm&raw=1" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
 
         <div class="collage-container">
-            <div class="foto-marco pos1" id="f1" data-depth="0.2"><img
-                    src="https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T"></div>
-            <div class="foto-marco pos2" id="f2" data-depth="0.4"><img
-                    src="https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-"></div>
-            <div class="foto-marco pos3" id="f3" data-depth="0.3"><img
-                    src="https://lh3.googleusercontent.com/u/0/d/17ll_u-c7gtKxQUBSHqrxMc9pVzvOsb3D"></div>
-            <div class="foto-marco pos4" id="f4" data-depth="0.5"><img
-                    src="https://lh3.googleusercontent.com/u/0/d/1855o1Tz7C3tOtH5Xmn0ITz722SRWhI4R"></div>
+            <div class="foto-marco pos1" id="f1" data-depth="0.2"><img src="https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T"></div>
+            <div class="foto-marco pos2" id="f2" data-depth="0.4"><img src="https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-"></div>
+            <div class="foto-marco pos3" id="f3" data-depth="0.3"><img src="https://lh3.googleusercontent.com/u/0/d/17ll_u-c7gtKxQUBSHqrxMc9pVzvOsb3D"></div>
+            <div class="foto-marco pos4" id="f4" data-depth="0.5"><img src="https://lh3.googleusercontent.com/u/0/d/1855o1Tz7C3tOtH5Xmn0ITz722SRWhI4R"></div>
         </div>
 
         <div class="hero-card" id="card-main">
-            <h1 id="tw1-h1" data-text="Para ti 🌸" style="font-size: 2.5rem; margin: 0;"></h1>
-            <p id="tw1-p"
-                data-text="Eres una mujer increíble, capaz de iluminar cualquier lugar con tu esencia. Nunca dejes de perseguir lo que te hace feliz."
-                style="font-size: 1.1rem; line-height: 1.6;"></p>
+            <h1 id="tw1-h1" data-text="Para ti 🌸" style="font-size: 3rem; margin: 0;"></h1>
+            <p id="tw1-p" data-text="Eres una mujer increíble, capaz de iluminar cualquier lugar con tu esencia. Nunca dejes de perseguir lo que te hace feliz." style="font-size: 1.3rem; line-height: 1.6;"></p>
         </div>
-        <button class="btn-generic" id="btn-next" onclick="changeScreen('screen-main', 'screen-final')">Continuar
-            ✨</button>
+        <button class="btn-generic" id="btn-next" onclick="changeScreen('screen-main', 'screen-final')">Continuar ✨</button>
         <div style="height: 20vh; width: 100%;"></div>
     </div>
 
     <div id="screen-final" class="screen" style="background: radial-gradient(circle, #1a1a2e, #000);">
-        <div class="hero-card" id="card-final" style="background: transparent; border: none; backdrop-filter: none;">
-            <h1 id="tw2-h1" data-text="Antes de terminar..." style="font-size: 2.5rem;"></h1>
-            <p id="tw2-p"
-                data-text="Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. Gracias por ser parte de mi historia y por permitirme ser parte de la tuya."
-                style="font-size: 1.1rem; line-height: 1.8;"></p>
+        <div class="hero-card" id="card-final">
+            <h1 id="tw2-h1" data-text="Antes de terminar..." style="font-size: 2.8rem;"></h1>
+            <p id="tw2-p" data-text="Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. Gracias por ser parte de mi historia." style="font-size: 1.3rem; line-height: 1.8;"></p>
         </div>
         <button class="btn-generic" id="btn-play" onclick="playRegalo()">Toca aquí (Play) ▶️</button> 
 
         <div id="video-final-container">
-            <video id="video-regalo" muted playsinline style="width:100%; height:100%; object-fit:contain;">
-                <source
-                    src="https://www.dropbox.com/scl/fi/i4v6qkynmf6vsh9tg0smi/lv_7414675558627314999_20260309153956.mp4?rlkey=jsfb0vbf153zgporcwgcvt79v&st=5haar070&raw=1"
-                    type="video/mp4">
+            <video id="video-regalo" playsinline style="width:100%; height:100%; object-fit:contain;">
+                <source src="https://www.dropbox.com/scl/fi/i4v6qkynmf6vsh9tg0smi/lv_7414675558627314999_20260309153956.mp4?rlkey=jsfb0vbf153zgporcwgcvt79v&st=5haar070&raw=1" type="video/mp4">
             </video>
         </div>
 
-        <h1 id="msg-cierre"
-            style="display:none; font-size: 3.5rem; color: var(--secondary); text-align: center; padding: 20px; font-family:'Caveat';">
-            ¡Te quiero mucho! ❤️</h1>
+        <h1 id="msg-cierre" style="display:none; font-size: 3.5rem; color: var(--secondary); text-align: center; padding: 20px;">¡Te quiero mucho! ❤️</h1>
     </div>
 
     <audio id="musica" loop>
@@ -258,6 +226,12 @@
     </audio>
 
     <script>
+        // Función inicial para activar audio
+        function startExperience() {
+            document.getElementById('musica').play().catch(e => console.log("Audio esperando interacción"));
+            changeScreen('screen-start', 'screen-main');
+        }
+
         // --- NAVEGACIÓN ---
         function changeScreen(hideId, showId) {
             const hideEl = document.getElementById(hideId);
@@ -271,13 +245,9 @@
                     showEl.style.opacity = '1';
                     showEl.classList.add('active');
                     if (showId === 'screen-main') {
-                        document.body.style.overflowY = 'auto';
-                        document.getElementById('musica').play();
                         initMainSequence();
                     }
                     if (showId === 'screen-final') {
-                        window.scrollTo(0, 0);
-                        document.body.style.overflow = 'hidden';
                         initFinalSequence();
                     }
                 }, 50);
@@ -308,13 +278,10 @@
 
             escribir(document.getElementById('tw1-h1'), 70, () => {
                 escribir(document.getElementById('tw1-p'), 45, () => {
-                    // Pausa de lectura, desvanecimiento y botón
                     setTimeout(() => {
                         card.classList.add('fade-out');
-                        setTimeout(() => {
-                            btn.style.opacity = '1';
-                        }, 3500); // 3.5 segundos de "solo fondo"
-                    }, 2500); // 2.5 segundos para terminar de leer
+                        setTimeout(() => { btn.style.opacity = '1'; }, 2000);
+                    }, 3000);
                 });
             });
 
@@ -322,8 +289,7 @@
                 const scrolled = window.pageYOffset;
                 fotos.forEach(f => {
                     const depth = f.getAttribute('data-depth');
-                    const rot = f.classList.contains('pos1') ? -10 : f.classList.contains('pos2') ? 15 : -5;
-                    f.style.transform = `translateY(-${scrolled * depth}px) rotate(${rot}deg)`;
+                    f.style.transform = `translateY(-${scrolled * depth}px) rotate(${f.classList.contains('pos1') ? -10 : 10}deg)`;
                 });
             });
         }
@@ -335,13 +301,10 @@
 
             escribir(document.getElementById('tw2-h1'), 70, () => {
                 escribir(document.getElementById('tw2-p'), 45, () => {
-                    // Pausa de lectura, desvanecimiento y botón
                     setTimeout(() => {
                         card.classList.add('fade-out');
-                        setTimeout(() => {
-                            btn.style.opacity = '1';
-                        }, 3500);
-                    }, 2500);
+                        setTimeout(() => { btn.style.opacity = '1'; }, 2000);
+                    }, 3000);
                 });
             });
         }
@@ -350,17 +313,20 @@
             const container = document.getElementById('video-final-container');
             const video = document.getElementById('video-regalo');
             const btnPlay = document.getElementById('btn-play');
+            const musica = document.getElementById('musica');
 
+            musica.pause(); // Pausamos la música para que se oiga el video
             btnPlay.style.display = 'none';
             container.style.display = 'block';
+            video.muted = false;
             video.play();
 
             video.onended = function () {
                 container.style.display = 'none';
                 document.getElementById('msg-cierre').style.display = 'block';
+                musica.play(); // Reanuda la música al final
             };
         }
     </script>
 </body>
-
 </html>
