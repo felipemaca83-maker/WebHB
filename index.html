@@ -155,13 +155,11 @@
         }
 
         .credits-text {
-            position: absolute;
-            bottom: -100%;
-            /* Empieza fuera de la pantalla por abajo */
-            width: 100%;
-            opacity: 1;
-            /* La animación se activará por JS */
-        }
+    position: absolute;
+    width: 100%;
+    top: 100%; /* Inicia justo debajo del borde inferior del contenedor */
+    opacity: 1;
+}
 
         .credits-text p {
             font-size: 1.05rem;
@@ -216,17 +214,16 @@
             color: var(--secondary);
         }
 
-        @keyframes parpadeo {
-
-            0%,
-            100% {
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-        }
+        @keyframes scrollCredits {
+    0% { 
+        top: 100%; 
+        transform: translateY(0); 
+    }
+    100% { 
+        top: 0%; 
+        transform: translateY(-110%); /* Sube hasta que su propio tamaño quede fuera */
+    }
+}
     </style>
 </head>
 
@@ -242,7 +239,7 @@
     <div id="screen-main" class="screen">
         <video class="video-background" autoplay muted loop playsinline id="main-bg-video">
             <source
-                src="https://www.dropbox.com/scl/fi/ctcfdqs01cb0yu2ehy84j/lv_0_20260309145550.mp4?rlkey=b5nwijf62fvww113iqyr217yu&st=n1e1h3nm&raw=1"
+                src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&st=vo6hho2e&raw=1"
                 type="video/mp4">
         </video>
         <div class="video-overlay"></div>
@@ -364,7 +361,7 @@
             fotos.forEach((f, i) => setTimeout(() => f.style.opacity = '1', 600 * (i + 1)));
 
             // 2. Iniciamos la animación de créditos (Scroll hacia arriba)
-            creditsText.style.animation = "scrollCredits 25s linear forwards"; // Ajusta '25s' para velocidad
+            creditsText.style.animation = "scrollCredits 45s linear forwards"; // Ajusta '25s' para velocidad
 
             // 3. Cuando termina la animación de créditos
             creditsText.addEventListener('animationend', () => {
