@@ -12,117 +12,221 @@
             --secondary: #ff7eb3;
         }
 
-        * { box-sizing: border-box; }
-
-        body, html {
-            margin: 0; padding: 0;
-            background: #000; color: white;
-            font-family: 'Georgia', serif;
-            overflow: hidden; height: 100%; width: 100%;
+        * {
+            box-sizing: border-box;
         }
 
-        h1, h2, .btn-generic {
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: white;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+
+        h1,
+        h2,
+        .btn-generic {
             font-family: 'Caveat', cursive;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         /* --- PANTALLAS --- */
         .screen {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: none; flex-direction: column;
-            align-items: center; justify-content: center;
-            transition: opacity 0.8s ease; z-index: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease;
+            z-index: 10;
         }
 
-        .active { display: flex; opacity: 1; }
+        .active {
+            display: flex;
+            opacity: 1;
+        }
 
         /* --- FONDO --- */
         .video-background {
-            opacity: 0; transition: opacity 2s ease;
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -5; object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -5;
+            object-fit: cover;
         }
 
         .video-overlay {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); z-index: -4;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -4;
         }
 
         /* --- COMPONENTES --- */
         .btn-generic {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none; padding: 10px 30px;
-            color: white; border-radius: 50px;
-            cursor: pointer; font-size: 1.5rem;
+            border: none;
+            padding: 10px 30px;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.5rem;
             margin-top: 20px;
             box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
-            opacity: 0; display: none;
+            opacity: 0;
+            display: none;
             transition: opacity 1s ease, transform 0.3s ease;
             z-index: 100;
         }
 
         /* --- FOTOS --- */
         #collage {
-            position: fixed; width: 100%; height: 100%;
-            z-index: -2; pointer-events: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
         }
 
         .foto-marco {
-            position: absolute; width: 75px;
-            background: white; padding: 5px;
+            position: absolute;
+            width: 75px;
+            background: white;
+            padding: 5px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            opacity: 0; transition: opacity 1s ease;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
-        .foto-marco img { width: 100%; height: 75px; object-fit: cover; }
+        .foto-marco img {
+            width: 100%;
+            height: 75px;
+            object-fit: cover;
+        }
 
-        .pos1 { top: 10%; left: 10%; transform: rotate(-10deg); }
-        .pos2 { top: 25%; right: 10%; transform: rotate(15deg); }
-        .pos3 { top: 75%; left: 15%; transform: rotate(-5deg); }
-        .pos4 { top: 85%; right: 15%; transform: rotate(-12deg); }
+        .pos1 {
+            top: 10%;
+            left: 10%;
+            transform: rotate(-10deg);
+        }
+
+        .pos2 {
+            top: 25%;
+            right: 10%;
+            transform: rotate(15deg);
+        }
+
+        .pos3 {
+            top: 75%;
+            left: 15%;
+            transform: rotate(-5deg);
+        }
+
+        .pos4 {
+            top: 85%;
+            right: 15%;
+            transform: rotate(-12deg);
+        }
 
         /* --- CRÉDITOS --- */
         .credits-container {
-            opacity: 0; transition: opacity 1.5s ease;
-            width: 85%; height: 70vh;
-            overflow: hidden; position: relative; text-align: center;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            width: 85%;
+            height: 70vh;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
         }
 
-        .credits-text { position: absolute; width: 100%; top: 100%; }
+        .credits-text {
+            position: absolute;
+            width: 100%;
+            top: 100%;
+
+        }
+
+        .credits-text p {
+            font-size: 0.8rem;
+            /* <--- Aumenta a 1.2rem o 1.5rem si lo quieres más grande */
+            line-height: 1.7;
+            /* Espaciado entre líneas */
+            margin: 0;
+        }
 
         /* --- SALUDOS --- */
-        #birthday-greeting, #final-text-container {
-            display: none; text-align: center;
-            opacity: 0; transition: opacity 1.5s ease;
-            position: fixed; top: 45%; left: 50%;
+        #birthday-greeting,
+        #final-text-container {
+            display: none;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            position: fixed;
+            top: 45%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%; z-index: 15;
+            width: 90%;
+            z-index: 15;
         }
 
         .fixed-btn {
-            position: fixed; top: 65%; left: 50%;
-            transform: translateX(-50%); z-index: 100;
+            position: fixed;
+            top: 65%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
         }
 
         /* --- VIDEO FINAL --- */
         #video-final-container {
-            display: none; position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 500;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 500;
         }
 
         .cursor::after {
-            content: "|"; animation: parpadeo 0.7s infinite;
+            content: "|";
+            animation: parpadeo 0.7s infinite;
             color: var(--secondary);
         }
 
-        @keyframes parpadeo { 50% { opacity: 0; } }
+        @keyframes parpadeo {
+            50% {
+                opacity: 0;
+            }
+        }
+
         @keyframes scrollCredits {
-            0% { top: 100%; transform: translateY(0); }
-            100% { top: 0%; transform: translateY(-110%); }
+            0% {
+                top: 100%;
+                transform: translateY(0);
+            }
+
+            100% {
+                top: 0%;
+                transform: translateY(-110%);
+            }
         }
     </style>
 </head>
@@ -137,13 +241,15 @@
     </div>
 
     <div id="screen-main" class="screen">
-        <video class="video-background" autoplay muted loop playsinline id="main-bg-video">                src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&raw=1"
-            <source src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&raw=1" 
-            type="video/mp4">
+        <video class="video-background" autoplay muted loop playsinline id="main-bg-video">
+            src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&raw=1"
+            <source
+                src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&raw=1"
+                type="video/mp4">
         </video>
         <div class="video-overlay"></div>
 
-       <div id="collage">
+        <div id="collage">
             <div class="foto-marco pos1" data-depth="0.2"><img
                     src="https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T"></div>
             <div class="foto-marco pos2" data-depth="0.4"><img
@@ -156,15 +262,19 @@
         <div class="credits-container" id="credits-container">
             <div class="credits-text" id="credits-text">
                 <p>
-                    Hoy quiero desearte un feliz cumpleaños de una manera especial, como tanto te gusta.<br>Aunque estemos distanciados,
-                    quiero que sepas que festejo cada uno de tus logros en silencio.<br><br>Conozco de cerca el esfuerzo
-                    que hay detrás de cada paso que das y sé, mejor que nadie, cuánto te lo mereces.<br><br>Me llena de
-                    alegría ver que estás alcanzando todo aquello que alguna vez me contaste, y en el fondo siempre desee que
-                    se te cumpliera.<br><br>Mi mayor anhelo es que sigas siendo feliz, rodeada de
-                    la familia que tanto te ama y haciendo lo que te apasiona.<br><br>Por eso, cada vez que alcances una
+                    Hoy quiero desearte un feliz cumpleaños de una manera especial, como tanto te gusta...<br><br><br>Aunque
+                    estemos distanciados,
+                    quiero que sepas que festejo cada uno de tus logros en silencio.<br><br><br>Conozco de cerca el esfuerzo
+                    que hay detrás de cada paso que das y sé, mejor que nadie, cuánto te lo mereces.<br><br><br>Me llena de
+                    alegría ver que estás alcanzando todo aquello que alguna vez me contaste, y en el fondo siempre
+                    desee que
+                    se te cumpliera.<br><br><br>Mi mayor anhelo es que sigas siendo feliz, rodeada de
+                    la familia que tanto te ama y haciendo lo que te apasiona.<br><br><br>Por eso, cada vez que alcances una
                     nueva meta, recuerda que en algún lugar siempre habrá alguien alegrándose por ti, aunque no esté
-                    ahí.<br><br>Te quiero ver triunfando, creciendo, aprendiendo y disfrutando de cada paso del camino.<br><br>
-                    Te recuerdo y me doy cuenta que estas completa, pero aun sabiendo eso, me gustaría creer que soy la pieza que te complementa
+                    ahí.<br><br><br>Te quiero ver triunfando, creciendo, aprendiendo y disfrutando de cada paso del
+                    camino.<br><br><br>
+                    Cuando te recuerdo me doy cuenta que estas completa, pero aun sabiendo eso me gustaría creer que soy la
+                    pieza que te complementa<br><br><br>
                     Que Dios te bendiga en cada paso, te proteja de todo mal y que a tu vida le
                     lluevan bendiciones y cosas hermosas.<br><br><br>
                 </p>
@@ -172,36 +282,45 @@
         </div>
 
         <div id="birthday-greeting">
-            <h1 data-text="¡Feliz cumpleaños, Dayana! ✨<br>Feliz vuelta al sol." style="font-size: 2.2rem; margin: 0;"></h1>
-            <p id="small-hint" data-text="(quédate hasta el final)" style="font-size: 1rem; opacity: 0; margin-top: 15px; font-style: italic; color: var(--secondary);"></p>
+            <h1 data-text="¡Feliz cumpleaños, Dayana! ✨<br>Feliz vuelta al sol." style="font-size: 2.2rem; margin: 0;">
+            </h1>
+            <p id="small-hint" data-text="(quédate hasta el final)"
+                style="font-size: 1rem; opacity: 0; margin-top: 15px; font-style: italic; color: var(--secondary);"></p>
         </div>
 
-        <button class="btn-generic fixed-btn" id="btn-next" onclick="changeScreen('screen-main', 'screen-final')">Continuar ✨</button>
+        <button class="btn-generic fixed-btn" id="btn-next"
+            onclick="changeScreen('screen-main', 'screen-final')">Continuar ✨</button>
     </div>
 
     <div id="screen-final" class="screen" style="background: radial-gradient(circle, #1a1a2e, #000);">
         <div id="final-text-container">
             <h1 id="tw2-h1" data-text="Antes de terminar..." style="font-size: 2.5rem;"></h1>
-            <p id="tw2-p" data-text="Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. Gracias por ser parte de mi historia y por permitirme ser parte de la tuya." 
-               style="font-size: 1.1rem; line-height: 1.8; margin-top: 20px;"></p>
+            <p id="tw2-p"
+                data-text="Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. Gracias por ser parte de mi historia y por permitirme ser parte de la tuya."
+                style="font-size: 1.1rem; line-height: 1.8; margin-top: 20px;"></p>
         </div>
 
         <button class="btn-generic fixed-btn" id="btn-play" onclick="playRegalo()">Toca aquí (Play) ▶️</button>
 
         <div id="video-final-container">
-            <video id="video-regalo" muted playsinline style="width:100%; height:100%; object-fit:contain;">                    src="https://www.dropbox.com/scl/fi/i4v6qkynmf6vsh9tg0smi/lv_7414675558627314999_20260309153956.mp4?rlkey=jsfb0vbf153zgporcwgcvt79v&st=cusesvwe&raw=1"
-                <source src="https://www.dropbox.com/scl/fi/i4v6qkynmf6vsh9tg0smi/lv_7414675558627314999_20260309153956.mp4?rlkey=jsfb0vbf153zgporcwgcvt79v&raw=1" 
-                type="video/mp4">
+            <video id="video-regalo" muted playsinline style="width:100%; height:100%; object-fit:contain;">
+                src="https://www.dropbox.com/scl/fi/i4v6qkynmf6vsh9tg0smi/lv_7414675558627314999_20260309153956.mp4?rlkey=jsfb0vbf153zgporcwgcvt79v&st=cusesvwe&raw=1"
+                <source
+                    src="https://www.dropbox.com/scl/fi/i4v6qkynmf6vsh9tg0smi/lv_7414675558627314999_20260309153956.mp4?rlkey=jsfb0vbf153zgporcwgcvt79v&raw=1"
+                    type="video/mp4">
             </video>
         </div>
 
-        <h1 id="msg-cierre" style="display:none; font-size: 3.5rem; color: var(--secondary); text-align: center; z-index: 600;">
+        <h1 id="msg-cierre"
+            style="display:none; font-size: 3.5rem; color: var(--secondary); text-align: center; z-index: 600;">
             ¡Te quiero mucho! ❤️
         </h1>
     </div>
 
     <audio id="musica" loop>
-        <source src="https://www.dropbox.com/scl/fi/ma9rlcj0rdmqnsiof2k7x/Passenger-Let-Her-Go-Official-Video.mp3?rlkey=q8gjycafvt65vtfjkko4g5x7i&raw=1" type="audio/mpeg">
+        <source
+            src="https://www.dropbox.com/scl/fi/ma9rlcj0rdmqnsiof2k7x/Passenger-Let-Her-Go-Official-Video.mp3?rlkey=q8gjycafvt65vtfjkko4g5x7i&raw=1"
+            type="audio/mpeg">
     </audio>
 
     <script>
@@ -249,11 +368,11 @@
             const greeting = document.getElementById('birthday-greeting');
 
             setTimeout(() => video.style.opacity = "1", 150);
-            fotos.forEach((f, i) => setTimeout(() => f.style.opacity = '1', 500 + (250 * i)));
+            fotos.forEach((f, i) => setTimeout(() => f.style.opacity = '1', 1500 + (1000 * i)));
             setTimeout(() => {
                 creditsContainer.style.opacity = "1";
-                creditsText.style.animation = "scrollCredits 25s linear forwards";
-            }, 100);
+                creditsText.style.animation = "scrollCredits 50s linear forwards";
+            }, 15000);
 
             creditsText.addEventListener('animationend', () => {
                 creditsContainer.style.transition = "opacity 1s ease";
@@ -273,10 +392,10 @@
                                     setTimeout(() => {
                                         btn.style.display = 'inline-block';
                                         setTimeout(() => btn.style.opacity = '1', 100);
-                                    }, 5000);
+                                    }, 2500);
                                 }, 3500); // Tiempo para leer "Feliz cumple" y "quédate"
                             });
-                        }, 800);
+                        }, 500);
                     });
                 }, 1000);
             });
@@ -294,7 +413,7 @@
                     setTimeout(() => {
                         container.style.transition = "opacity 2s ease";
                         container.style.opacity = '0'; // Desaparece el texto
-                        
+
                         // Aparece el botón de Play unos segundos después
                         setTimeout(() => {
                             btnPlay.style.display = 'inline-block';
@@ -314,10 +433,10 @@
 
             btnPlay.style.display = 'none';
             container.style.display = 'block';
-            
+
             video.play();
             // La música sigue sonando (audio id="musica")
-            
+
             video.onended = () => {
                 container.style.transition = "opacity 1.5s ease";
                 container.style.opacity = '0';
@@ -330,4 +449,5 @@
         }
     </script>
 </body>
+
 </html>
