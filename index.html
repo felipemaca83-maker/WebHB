@@ -190,12 +190,20 @@
             opacity: 0;
             transition: opacity 1.5s ease;
             position: fixed;
-            /* Para centrarlo sobre el video limpio */
-            top: 50%;
+            top: 45%;
+            /* Subimos un poco el texto (estaba en 50%) */
             left: 50%;
             transform: translate(-50%, -50%);
             width: 90%;
             z-index: 15;
+        }
+
+        #screen-main .btn-generic {
+            position: fixed;
+            top: 60%;
+            /* El botón aparecerá al 60% de la altura, debajo del texto */
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         /* --- VIDEO FINAL --- */
@@ -265,13 +273,13 @@
                 <p>
                     Hoy quiero desearte un feliz cumpleaños de una manera especial.<br>Aunque estemos distanciados,
                     quiero que sepas que festejo cada uno de tus logros en silencio.<br><br>Conozco de cerca el esfuerzo
-                    que hay detrás de cada paso que das y sé, mejor que nadie, cuánto te lo mereces.<br><br>Me llena de
+                    <!-- que hay detrás de cada paso que das y sé, mejor que nadie, cuánto te lo mereces.<br><br>Me llena de
                     alegría ver que estás alcanzando todo aquello que alguna vez me confiaste; en el fondo, siempre fue
                     mi deseo que tus sueños se cumplieran.<br><br>Mi mayor anhelo es que sigas siendo feliz, rodeada de
                     la familia que tanto te ama y haciendo lo que te apasiona.<br><br>Por eso, cada vez que alcances una
                     nueva meta, recuerda que en algún lugar siempre habrá alguien alegrándose por ti, aunque no esté
                     presente ahí.<br><br>Que Dios te bendiga en cada paso, te proteja de todo mal y que a tu vida le
-                    lluevan bendiciones y cosas hermosas.<br><br><br>
+                    lluevan bendiciones y cosas hermosas.<br><br><br> -->
                 </p>
             </div>
         </div>
@@ -361,7 +369,6 @@
         }
 
         // --- SECUENCIA PANTALLA 2: CRÉDITOS ---
-        // --- SECUENCIA PANTALLA 2: CRÉDITOS ---
         function initCreditsSequence() {
             const video = document.getElementById('main-bg-video');
             const fotos = document.querySelectorAll('.foto-marco');
@@ -388,12 +395,12 @@
             setTimeout(() => {
                 creditsContainer.style.opacity = "1";
                 // Iniciamos el scroll. 25s es una buena velocidad para leer con el video de fondo.
-                creditsText.style.animation = "scrollCredits 25s linear forwards";
+                creditsText.style.animation = "scrollCredits 15s linear forwards";
             }, 1500);
 
             // 4. FINAL DE LOS CRÉDITOS Y SALUDO
             creditsText.addEventListener('animationend', () => {
-                creditsContainer.style.transition = "opacity 1.5s ease";
+                creditsContainer.style.transition = "opacity 0.5s ease";
                 creditsContainer.style.opacity = '0';
 
                 setTimeout(() => {
@@ -406,9 +413,9 @@
                         setTimeout(() => {
                             btn.style.display = 'inline-block';
                             setTimeout(() => btn.style.opacity = '1', 100);
-                        }, 1500);
+                        }, 2500);
                     });
-                }, 1500);
+                }, 500);
             });
         }
 
