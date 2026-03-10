@@ -238,10 +238,8 @@
 
     <div id="screen-main" class="screen">
         <video class="video-background" autoplay muted loop playsinline id="main-bg-video">
-            <source
-                src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&st=vo6hho2e&raw=1"
-                type="video/mp4">
-        </video>
+    <source src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&raw=1" type="video/mp4">
+</video>
         <div class="video-overlay"></div>
 
         <div id="collage">
@@ -313,21 +311,28 @@
 
         // --- NAVEGACIÓN ---
         function changeScreen(hideId, showId) {
-            if (hideId === 'screen-start') musica.play().catch(e => console.log(e));
-            const h = document.getElementById(hideId);
-            const s = document.getElementById(showId);
-            h.style.opacity = '0';
-            setTimeout(() => {
-                h.style.display = 'none';
-                s.style.display = 'flex';
-                s.style.opacity = '0';
-                setTimeout(() => {
-                    s.style.opacity = '1';
-                    if (showId === 'screen-main') initCreditsSequence();
-                    if (showId === 'screen-final') initFinalSequence();
-                }, 50);
-            }, 800);
-        }
+    if (hideId === 'screen-start') {
+        musica.play().catch(e => console.log("Error música:", e));
+        // Forzar el inicio del video al hacer click en el primer botón
+        const videoFondo = document.getElementById('main-bg-video');
+        if(videoFondo) videoFondo.play(); 
+    }
+    
+    const h = document.getElementById(hideId);
+    const s = document.getElementById(showId);
+    h.style.opacity = '0';
+    
+    setTimeout(() => {
+        h.style.display = 'none';
+        s.style.display = 'flex';
+        s.style.opacity = '0';
+        setTimeout(() => {
+            s.style.opacity = '1';
+            if (showId === 'screen-main') initCreditsSequence();
+            if (showId === 'screen-final') initFinalSequence();
+        }, 50);
+    }, 800);
+}
 
         // --- MÁQUINA DE ESCRIBIR ---
         function escribir(el, vel, cb) {
@@ -349,51 +354,60 @@
         }
 
         // --- SECUENCIA PANTALLA 2: CRÉDITOS ---
-        function initCreditsSequence() {
-            const fotos = document.querySelectorAll('.foto-marco');
-            const creditsContainer = document.getElementById('credits-container');
-            const creditsText = document.getElementById('credits-text');
-            const greeting = document.getElementById('birthday-greeting');
-            const greetingH1 = greeting.querySelector('h1');
-            const btn = document.getElementById('btn-next');
+        // --- SECUENCIA PANTALLA 2: CRÉDITOS ---
+function initCreditsSequence() {
+    const fotos = document.querySelectorAll('.foto-marco');
+    const creditsContainer = document.getElementById('credits-container');
+    const creditsText = document.getElementById('credits-text');
+    const greeting = document.getElementById('birthday-greeting');
+    const greetingH1 = greeting.querySelector('h1');
+    const btn = document.getElementById('btn-next');
 
-            // 1. Aparecen las fotos
-            fotos.forEach((f, i) => setTimeout(() => f.style.opacity = '1', 600 * (i + 1)));
+    // 1. Aparecen las fotos gradualmente
+    fotos.forEach((f, i) => setTimeout(() => f.style.opacity = '1', 400 * (i + 1)));
 
-            // 2. Iniciamos la animación de créditos (Scroll hacia arriba)
-            creditsText.style.animation = "scrollCredits 45s linear forwards"; // Ajusta '25s' para velocidad
+    // 2. Iniciamos la animación de créditos (Ajustado a 25s)
+    creditsText.style.animation = "scrollCredits 25s linear forwards"; 
 
-            // 3. Cuando termina la animación de créditos
-            creditsText.addEventListener('animationend', () => {
-                // Ocultamos el contenedor de créditos
-                creditsContainer.style.display = 'none';
+    // 3. Cuando termina la animación de créditos
+    creditsText.addEventListener('animationend', () => {
+        // Desvanecer contenedor de créditos suavemente
+        creditsContainer.style.transition = "opacity 1s ease";
+        creditsContainer.style.opacity = '0';
 
-                // 4. Aparece el saludo final con máquina de escribir
-                greeting.style.display = 'block';
+        setTimeout(() => {
+            creditsContainer.style.display = 'none';
+
+            // 4. Aparece el saludo "¡Feliz cumpleaños, Dayana!"
+            greeting.style.display = 'block';
+            setTimeout(() => {
                 greeting.style.opacity = '1';
-                escribir(greetingH1, 75, () => {
-
-                    // 5. Pausa final y aparición del botón
+                // Velocidad de escritura: 65ms por letra
+                escribir(greetingH1, 65, () => {
+                    
+                    // 5. Pausa para leer y luego aparece el botón
                     setTimeout(() => {
-                        greeting.style.opacity = "0"; // Desvanecemos el saludo
-                        setTimeout(() => {
-                            btn.style.display = 'inline-block';
-                            setTimeout(() => btn.style.opacity = '1', 100);
-                        }, 3500); // 3.5 seg de solo video
-                    }, 4000); // 4 seg para leer el saludo
+                        // Opcional: si quieres que el texto de cumple se quede, comenta la línea de abajo
+                        // greeting.style.opacity = "0"; 
+                        
+                        btn.style.display = 'inline-block';
+                        setTimeout(() => btn.style.opacity = '1', 100);
+                    }, 2000); // 2 segundos de espera tras terminar de escribir
                 });
-            });
+            }, 500);
+        }, 1000);
+    });
 
-            // Parallax (Se mantiene igual)
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                fotos.forEach(f => {
-                    const depth = f.getAttribute('data-depth');
-                    const rotation = f.classList.contains('pos1') ? -10 : f.classList.contains('pos2') ? 15 : (f.classList.contains('pos3') ? -5 : -12);
-                    f.style.transform = `translateY(-${scrolled * depth}px) rotate(${rotation}deg)`;
-                });
-            });
-        }
+    // Parallax de las fotos
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        fotos.forEach(f => {
+            const depth = f.getAttribute('data-depth');
+            const rotation = f.classList.contains('pos1') ? -10 : f.classList.contains('pos2') ? 15 : (f.classList.contains('pos3') ? -5 : -12);
+            f.style.transform = `translateY(-${scrolled * depth}px) rotate(${rotation}deg)`;
+        });
+    });
+}
 
         // --- SECUENCIA PANTALLA 3 ---
         function initFinalSequence() {
