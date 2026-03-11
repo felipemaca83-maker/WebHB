@@ -125,24 +125,32 @@
             transform: rotate(-12deg)
         }
 
-        /* --- AJUSTE DE SCROLL (PARA QUE INICIE DESDE ABAJO) --- */
+        /* --- AJUSTE DE SCROLL CORREGIDO --- */
         .scroll-container {
             opacity: 0;
             transition: opacity 1s ease;
-            width: 90%;
+            width: 100%;
+            /* Cambiado de 90% a 100% para facilitar el centrado */
             height: 100vh;
-            /* Ocupa todo el alto para que el 100% sea el borde inferior real */
             overflow: hidden;
             position: absolute;
             top: 0;
-            text-align: center;
+            left: 0;
+            /* Aseguramos que empiece desde el borde izquierdo */
+            display: flex;
+            justify-content: center;
+            /* Centra el contenido horizontalmente */
         }
 
         .scroll-text {
             position: absolute;
-            width: 100%;
+            width: 80%;
+            /* Ancho del bloque de texto */
             top: 100%;
-            /* Inicia justo debajo del borde de la pantalla */
+            left: 50%;
+            /* Lo movemos al centro */
+            transform: translateX(-50%);
+            /* Truco para centrar perfectamente un elemento absoluto */
         }
 
         /* --- BOTONES --- */
@@ -170,12 +178,60 @@
             z-index: 20;
         }
 
-        #text-despedida p {
+        #text-1 {
+            width: 100%;
+            /* Ya está limitado por el padre .scroll-text */
+            margin: 0 auto;
+            font-size: 1.3rem;
+            /* Subido de 0.7rem para que sea legible */
             line-height: 1.8;
-            /* Aumenta el espacio entre líneas para facilitar la lectura */
-            padding: 0 10%;
-            /* Deja márgenes a los lados */
+            color: #f0f0f0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
             text-align: center;
+        }
+
+        #text-1 p {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* --- TEXTO PANTALLA 3 (Alineación y Centrado) --- */
+        #text-2 {
+            width: 100%;
+            text-align: center;
+        }
+
+        #text-2 h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        #text-2 p {
+            font-size: 1.3rem;
+            /* Tamaño equilibrado */
+            line-height: 1.8;
+            margin: 0 auto;
+            width: 85%;
+            text-align: center;
+        }
+
+        #text-despedida {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #text-despedida p {
+            font-size: 1.1rem !important; /* Tamaño tipo carta, mucho más fino */
+            line-height: 1.8;
+            padding: 0 10%;
+            width: 100%;
+            max-width: 700px; /* Evita que el texto sea demasiado ancho en PC */
+            margin: 0 auto 1.5rem auto; /* Espacio entre párrafos */
+            text-align: center;
+            color: #e0e0e0;
         }
 
         @keyframes scrollUpAnimation {
@@ -184,10 +240,42 @@
             }
 
             100% {
-                top: -150%;
+                top: -200%;
             }
 
             /* Sube hasta desaparecer por arriba */
+        }
+
+        @media (max-width: 600px) {
+            #text-1 {
+                font-size: 0.9rem;
+                /* Tamaño optimizado para móvil */
+                width: 100%;
+                text-align: center;
+            }
+
+            .scroll-text {
+                width: 90%;
+                /* En móviles le damos un poco más de espacio a los lados */
+            }
+
+            #text-2 p {
+                font-size: 0.9rem;
+            }
+
+            #text-despedida p {
+                font-size: 0.9rem;
+                /* En móviles el texto largo debe ser más pequeño aún */
+                line-height: 1.8;
+            }
+
+            #text-2 h1 {
+                font-size: 2rem;
+            }
+
+            .foto-marco {
+                width: 60px;
+            }
         }
 
         #video-final-container {
@@ -216,9 +304,7 @@
 
     <div id="screen-main" class="screen">
         <video class="video-background" autoplay muted loop playsinline id="main-bg-video">
-            <source
-                src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&raw=1"
-                type="video/mp4">
+            <source src="Pictures/regalo.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
 
@@ -304,36 +390,27 @@
 
         <div id="video-final-container">
             <video id="video-regalo" muted playsinline style="width:100%;height:100%;object-fit:contain;">
-                <source
-                    src="https://www.dropbox.com/scl/fi/fj1okinny003h3abtnez7/VideofFinal.mp4?rlkey=jsg7dmblmir6mc87x5qdoutvx&st=7x7ien8s&raw=1"
-                    type="video/mp4">
+                <source src="Pictures/fondo.mp4" type="video/mp4">
             </video>
         </div>
 
         <div class="scroll-container" id="container-despedida">
             <div class="scroll-text" id="text-despedida">
-                <p style="font-size: 1.6rem; padding: 20px;">Se que no esperabas esto, y yo tampoco, pasaron meses,
-                    días, semanas... y aun recuerdo aquellos momentos, momentos que me sacan una sonrisa, momentos que
-                    duelen, dolor que he aceptado.
-                    Te imaginas que hubiera pasado si todo fuera distinto? donde todo hubiera funcionado? donde no te
-                    tuviera que escribir esto desde la distancia, los miles de momentos que pudimos vivir, porque
-                    nuestra historia pudo y puede continuar, ninguno de los dos puede cambiar el pasado.
-                    En mi corazon no hay odio ni resentimiento por ti, apesar de lo que lamentablemente experimente, me
-                    hiciste mas fuerte, mejoré, me hubiera gustado que vieras mi mejor versio, la que siempre debiste
-                    merecer... he aprendido tanto, no se si esta era la manera de aprender y valorar, pero me marcó de
-                    por vida, al igual que lo hiciste tu, con tu luz.
-                    Tal vez mis heridas no han sanado del todo, creeme que muchas veces imaginé un mensaje, una llamada,
-                    recordaba el sonido del autobus cuando paraba cerca a mi casa, te imagine llegando, y que toda esa
-                    incertidumbre terminara... nunca pasó.
-                    Estoy seguro que tu enfoque y amor propio te llevaran a la cima, tienes tantas cualidades y virtudes
-                    que te harán brillar, y aunque no pueda estar ahí para verlo, me alegra saber que lo harás.
-                    No se si estemos mejor el uno sin el otro, no se si este sea el final de la historia, no se si en el
-                    fondo guardemos la esperanza de volvernos a cruzar, no se si aun haya amor en nosotros... solo sé,
-                    que todo pasa por algo, sé que Dios no hace sus cosas al azar, no nos cruzó porque si, no nos puso
-                    tan dificil prueba porque si, no nos envió tanto amor y dolor porque si, tal vez... nos quiere
-                    preparar para grandes cosas, para mas pruebas, tal vez nos quiere ver mas fuertes, mas estables, mas
-                    maduros, mas felices... solo tal vez.
-                </p>
+                <p>Sé que no esperabas esto, y yo tampoco. Pasaron meses, días, semanas... y aún recuerdo aquellos momentos que me sacan una sonrisa, momentos que duelen, un dolor que he aceptado.</p>
+                
+                <p>¿Te imaginas qué hubiera pasado si todo fuera distinto? ¿Donde todo hubiera funcionado? Donde no te tuviera que escribir esto desde la distancia. Los miles de momentos que pudimos vivir, porque nuestra historia pudo y puede continuar... ninguno de los dos puede cambiar el pasado.</p>
+                
+                <p>En mi corazón no hay odio ni resentimiento por ti. A pesar de lo que lamentablemente experimenté, me hiciste más fuerte, mejoré. Me hubiera gustado que vieras mi mejor versión, la que siempre debiste merecer... he aprendido tanto.</p>
+                
+                <p>No sé si esta era la manera de aprender y valorar, pero me marcó de por vida, al igual que lo hiciste tú, con tu luz.</p>
+                
+                <p>Tal vez mis heridas no han sanado del todo, créeme que muchas veces imaginé un mensaje, una llamada... recordaba el sonido del autobús cuando paraba cerca a mi casa, te imaginé llegando, y que toda esa incertidumbre terminara... nunca pasó.</p>
+                
+                <p>Estoy seguro que tu enfoque y amor propio te llevarán a la cima, tienes tantas cualidades y virtudes que te harán brillar, y aunque no pueda estar ahí para verlo, me alegra saber que lo harás.</p>
+                
+                <p>No sé si estemos mejor el uno sin el otro, no sé si este sea el final de la historia, no sé si en el fondo guardemos la esperanza de volvernos a cruzar, no sé si aún haya amor en nosotros...</p>
+                
+                <p>Solo sé, que todo pasa por algo. Sé que Dios no hace sus cosas al azar, no nos cruzó porque sí, no nos puso tan difícil prueba porque sí... tal vez nos quiere preparar para grandes cosas, para más pruebas, para vernos más fuertes, más maduros, más felices... solo tal vez.</p>
             </div>
         </div>
 
@@ -349,9 +426,7 @@
     </div>
 
     <audio id="musica" loop>
-        <source
-            src="https://www.dropbox.com/scl/fi/0wnejd06ar9zpk1qxmltd/The-Carpenters-Close-to-you-Espa-ol.mp3?rlkey=3fs06rl3ew4fj0uzjztldukv3&st=xu9o7nye&raw=1"
-            type="audio/mpeg">
+        <source src="Pictures/musica.mpeg" type="audio/mpeg">
     </audio>
 
     <script>
@@ -393,7 +468,7 @@
                 cont.style.opacity = 1;
 
                 // Duración de 45s: Equilibrio entre lectura cómoda y fluidez
-                text.style.animation = "scrollUpAnimation 55s linear forwards";
+                text.style.animation = "scrollUpAnimation 50s linear forwards";
 
                 // --- CÁLCULO DE RECORRIDO COMPLETO ---
                 // Esperamos a que el texto termine su trayectoria hacia arriba (45s)
@@ -427,7 +502,7 @@
 
                     }, 1000);
 
-                }, 40000); // 45s de animación + 1s de margen
+                }, 45000); // 45s de animación + 1s de margen
 
             }, 25000);
         }
@@ -486,7 +561,7 @@
                     setTimeout(() => {
                         contD.style.opacity = 1;
                         // 75 segundos para un scroll suave y pausado
-                        textD.style.animation = "scrollUpAnimation 75s linear forwards";
+                        textD.style.animation = "scrollUpAnimation 70s linear forwards";
 
                         // --- CÁLCULO DE FINALIZACIÓN ---
                         // Esperamos a que el texto termine de subir completamente (75s + 1s margen)
