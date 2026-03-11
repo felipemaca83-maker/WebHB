@@ -5,81 +5,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Ti ✨</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary: #ff758c;
             --secondary: #ff7eb3;
+            --transition: 0.8s ease;
         }
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0
         }
 
-        body,
-        html {
-            margin: 0;
-            padding: 0;
+        body {
             background: #000;
             color: white;
             font-family: 'Georgia', serif;
             overflow: hidden;
-            height: 100%;
-            width: 100%;
+            height: 100vh;
         }
 
         h1,
         h2,
-        .btn-generic {
+        .btn {
             font-family: 'Caveat', cursive;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
-        /* --- PANTALLAS --- */
         .screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.8s ease;
-            z-index: 10;
+            transition: opacity var(--transition);
         }
 
-        .active {
+        .screen.active {
             display: flex;
             opacity: 1;
         }
 
-        /* --- FONDO --- */
         .video-background {
-            opacity: 0;
-            transition: opacity 2s ease;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -5;
+            inset: 0;
             object-fit: cover;
+            z-index: -5;
+            opacity: 0;
+            transition: opacity 2s;
         }
 
         .video-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: rgba(0, 0, 0, 0.7);
             z-index: -4;
         }
 
-        /* --- COMPONENTES --- */
-        .btn-generic {
+        .btn {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             border: none;
             padding: 10px 30px;
@@ -87,19 +75,27 @@
             border-radius: 50px;
             cursor: pointer;
             font-size: 1.5rem;
-            margin-top: 20px;
             box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+            transition: .3s;
             opacity: 0;
             display: none;
-            transition: opacity 1s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .fixed-btn {
+            position: fixed;
+            top: 65%;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 100;
         }
 
-        /* --- FOTOS --- */
         #collage {
             position: fixed;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             z-index: -2;
             pointer-events: none;
         }
@@ -111,7 +107,7 @@
             padding: 5px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 1s;
         }
 
         .foto-marco img {
@@ -123,31 +119,30 @@
         .pos1 {
             top: 10%;
             left: 10%;
-            transform: rotate(-10deg);
+            transform: rotate(-10deg)
         }
 
         .pos2 {
             top: 25%;
             right: 10%;
-            transform: rotate(15deg);
+            transform: rotate(15deg)
         }
 
         .pos3 {
             top: 75%;
             left: 15%;
-            transform: rotate(-5deg);
+            transform: rotate(-5deg)
         }
 
         .pos4 {
             top: 85%;
             right: 15%;
-            transform: rotate(-12deg);
+            transform: rotate(-12deg)
         }
 
-        /* --- CRÉDITOS --- */
         .credits-container {
             opacity: 0;
-            transition: opacity 1.5s ease;
+            transition: opacity 1.5s;
             width: 85%;
             height: 70vh;
             overflow: hidden;
@@ -159,24 +154,19 @@
             position: absolute;
             width: 100%;
             top: 100%;
-
         }
 
         .credits-text p {
-            font-size: 0.8rem;
-            /* <--- Aumenta a 1.2rem o 1.5rem si lo quieres más grande */
+            font-size: .8rem;
             line-height: 1.7;
-            /* Espaciado entre líneas */
-            margin: 0;
         }
 
-        /* --- SALUDOS --- */
         #birthday-greeting,
         #final-text-container {
             display: none;
             text-align: center;
             opacity: 0;
-            transition: opacity 1.5s ease;
+            transition: opacity 1.5s;
             position: fixed;
             top: 45%;
             left: 50%;
@@ -185,47 +175,33 @@
             z-index: 15;
         }
 
-        .fixed-btn {
-            position: fixed;
-            top: 65%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-        }
-
-        /* --- VIDEO FINAL --- */
         #video-final-container {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: #000;
             z-index: 500;
         }
 
         .cursor::after {
             content: "|";
-            animation: parpadeo 0.7s infinite;
+            animation: blink .7s infinite;
             color: var(--secondary);
         }
 
-        @keyframes parpadeo {
+        @keyframes blink {
             50% {
-                opacity: 0;
+                opacity: 0
             }
         }
 
         @keyframes scrollCredits {
             0% {
-                top: 100%;
-                transform: translateY(0);
+                top: 100%
             }
 
             100% {
-                top: 0%;
-                transform: translateY(-110%);
+                top: -110%
             }
         }
     </style>
@@ -233,34 +209,46 @@
 
 <body>
 
-    <div id="screen-start" class="screen active" style="background: #0f0c29;">
-        <h1 style="font-size: 3.5rem; margin-bottom: 10px;">Hola...</h1>
-        <p style="opacity: 0.8; margin-bottom: 30px;">Tengo algo para decirte.</p>
-        <button class="btn-generic" style="opacity:1; display:inline-block;"
-            onclick="changeScreen('screen-start', 'screen-main')">Abrir detalle 🌸</button>
+    <!-- SCREEN 1 -->
+
+    <div id="screen-start" class="screen active" style="background:#0f0c29">
+
+        <h1 style="font-size:3.5rem">Hola...</h1>
+        <p style="opacity:.8;margin-bottom:30px">Tengo algo para decirte.</p>
+
+        <button class="btn" style="display:inline-block;opacity:1" onclick="changeScreen('screen-start','screen-main')">
+            Abrir detalle 🌸
+        </button>
+
     </div>
 
+    <!-- SCREEN 2 -->
+
     <div id="screen-main" class="screen">
-        <video class="video-background" autoplay muted loop playsinline id="main-bg-video">
-            src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&raw=1"
-            <source
-                src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?rlkey=1utczkkugl2x4fbvvv3pf9rdb&raw=1"
+
+        <video id="main-bg-video" class="video-background" autoplay muted loop playsinline>
+            <source src="https://www.dropbox.com/scl/fi/5qdk4xuhb4f2fr16utwyr/lv_0_20260309180107.mp4?raw=1"
                 type="video/mp4">
         </video>
+
         <div class="video-overlay"></div>
 
         <div id="collage">
-            <div class="foto-marco pos1" data-depth="0.2"><img
+
+            <div class="foto-marco pos1"><img
                     src="https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T"></div>
-            <div class="foto-marco pos2" data-depth="0.4"><img
+            <div class="foto-marco pos2"><img
                     src="https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-"></div>
-            <div class="foto-marco pos3" data-depth="0.3"><img
+            <div class="foto-marco pos3"><img
                     src="https://lh3.googleusercontent.com/u/0/d/17ll_u-c7gtKxQUBSHqrxMc9pVzvOsb3D"></div>
-            <div class="foto-marco pos4" data-depth="0.5"><img
+            <div class="foto-marco pos4"><img
                     src="https://lh3.googleusercontent.com/u/0/d/1855o1Tz7C3tOtH5Xmn0ITz722SRWhI4R"></div>
+
         </div>
+
         <div class="credits-container" id="credits-container">
             <div class="credits-text" id="credits-text">
+
                 <p>
                     Hoy quiero desearte un feliz cumpleaños de una manera especial, como tanto te gusta...<br><br><br>Aunque
                     estemos distanciados,
@@ -278,177 +266,238 @@
                     Que Dios te bendiga en cada paso, te proteja de todo mal y que a tu vida le
                     lluevan bendiciones y cosas hermosas.<br><br><br>
                 </p>
+
             </div>
         </div>
 
         <div id="birthday-greeting">
-            <h1 data-text="Te mereces lo mejor✨<br>Nunca lo olvides" style="font-size: 2.2rem; margin: 0;">
-            </h1>
+            <h1 data-text="Te mereces lo mejor✨<br>Nunca lo olvides"></h1>
             <p id="small-hint" data-text="(quédate hasta el final)"
-                style="font-size: 1rem; opacity: 0; margin-top: 15px; font-style: italic; color: var(--secondary);"></p>
+                style="opacity:0;margin-top:15px;font-style:italic;color:var(--secondary)"></p>
         </div>
 
-        <button class="btn-generic fixed-btn" id="btn-next"
-            onclick="changeScreen('screen-main', 'screen-final')">Continuar ✨</button>
+        <button id="btn-next" class="btn fixed-btn" onclick="changeScreen('screen-main','screen-final')">
+            Continuar ✨
+        </button>
+
     </div>
 
-    <div id="screen-final" class="screen" style="background: radial-gradient(circle, #1a1a2e, #000);">
+    <!-- SCREEN FINAL -->
+
+    <div id="screen-final" class="screen" style="background:radial-gradient(circle,#1a1a2e,#000)">
+
         <div id="final-text-container">
-            <h1 id="tw2-h1" data-text="Antes de terminar..." style="font-size: 2.5rem;"></h1>
+
+            <h1 id="tw2-h1" data-text="Antes de terminar..."></h1>
+
             <p id="tw2-p"
-                data-text="Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. Gracias por ser parte de mi historia y por permitirme ser parte de la tuya."
-                style="font-size: 1.1rem; line-height: 1.8; margin-top: 20px;"></p>
+                data-text="Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos. Gracias por ser parte de mi historia.">
+            </p>
+
         </div>
 
-        <button class="btn-generic fixed-btn" id="btn-play" onclick="playRegalo()">Toca aquí (Play) ▶️</button>
+        <button id="btn-play" class="btn fixed-btn" onclick="playRegalo()">
+            Toca aquí ▶️
+        </button>
 
         <div id="video-final-container">
-            <video id="video-regalo" muted playsinline style="width:100%; height:100%; object-fit:contain;">
-                <source
-                    src="https://www.dropbox.com/scl/fi/fj1okinny003h3abtnez7/VideofFinal.mp4?rlkey=jsg7dmblmir6mc87x5qdoutvx&st=7x7ien8s&raw=1"
-                    type="video/mp4">   
+
+            <video id="video-regalo" muted playsinline style="width:100%;height:100%;object-fit:contain">
+                <source src="https://www.dropbox.com/scl/fi/fj1okinny003h3abtnez7/VideofFinal.mp4?raw=1"
+                    type="video/mp4">
             </video>
+
         </div>
 
-        <h1 id="msg-cierre"
-            style="display:none; font-size: 3.5rem; color: var(--secondary); text-align: center; z-index: 600;">
-            <!-- <h1 data-text="¡Feliz cumpleaños, Dayana! ✨<br>Feliz vuelta al sol." style="font-size: 2.2rem; margin: 0;"> -->
-
-            Feliz Cumpleaños Dayana, Feliz Vuelta al Sol ❤️
+        <h1 id="msg-cierre" style="display:none;font-size:3.5rem;color:var(--secondary);text-align:center;z-index:600">
+            Feliz Cumpleaños Dayana ❤️
         </h1>
+
     </div>
 
     <audio id="musica" loop>
         <source
-            src="https://www.dropbox.com/scl/fi/ma9rlcj0rdmqnsiof2k7x/Passenger-Let-Her-Go-Official-Video.mp3?rlkey=q8gjycafvt65vtfjkko4g5x7i&raw=1"
-            type="audio/mpeg">
+            src="https://www.dropbox.com/scl/fi/ma9rlcj0rdmqnsiof2k7x/Passenger-Let-Her-Go-Official-Video.mp3?raw=1">
     </audio>
 
     <script>
-        const musica = document.getElementById('musica');
 
-        function changeScreen(hideId, showId) {
-            if (hideId === 'screen-start') {
-                musica.play().catch(e => console.log(e));
-                document.getElementById('main-bg-video').play();
+        const $ = id => document.getElementById(id)
+
+        const musica = $('musica')
+
+        function changeScreen(hide, show) {
+
+            if (hide === 'screen-start') {
+                musica.play().catch(() => { })
+                $('main-bg-video').play()
             }
-            const h = document.getElementById(hideId);
-            const s = document.getElementById(showId);
-            h.style.opacity = '0';
+
+            const h = $(hide)
+            const s = $(show)
+
+            h.style.opacity = 0
+
             setTimeout(() => {
-                h.style.display = 'none';
-                s.style.display = 'flex';
-                s.style.opacity = '0';
-                setTimeout(() => {
-                    s.style.opacity = '1';
-                    if (showId === 'screen-main') initCreditsSequence();
-                    if (showId === 'screen-final') initFinalSequence();
-                }, 50);
-            }, 800);
+
+                h.style.display = 'none'
+                s.style.display = 'flex'
+
+                requestAnimationFrame(() => {
+                    s.style.opacity = 1
+                })
+
+                if (show === 'screen-main') initCredits()
+                if (show === 'screen-final') initFinal()
+
+            }, 800)
+
         }
 
         function escribir(el, vel, cb) {
-            const txt = el.getAttribute('data-text');
-            let i = 0; el.innerHTML = ""; el.classList.add('cursor');
-            function t() {
+
+            const txt = el.dataset.text
+            let i = 0
+
+            el.innerHTML = ""
+            el.classList.add('cursor')
+
+            function type() {
+
                 if (i < txt.length) {
-                    if (txt.substring(i, i + 4) === '<br>') { el.innerHTML += '<br>'; i += 4; }
-                    else { el.innerHTML += txt.charAt(i); i++; }
-                    setTimeout(t, vel);
-                } else { el.classList.remove('cursor'); if (cb) cb(); }
+
+                    if (txt.substring(i, i + 4) === "<br>") {
+                        el.innerHTML += "<br>"
+                        i += 4
+                    } else {
+                        el.innerHTML += txt[i]
+                        i++
+                    }
+
+                    setTimeout(type, vel)
+
+                } else {
+                    el.classList.remove('cursor')
+                    cb && cb()
+                }
+
             }
-            t();
+
+            type()
+
         }
 
-        function initCreditsSequence() {
-            const video = document.getElementById('main-bg-video');
-            const fotos = document.querySelectorAll('.foto-marco');
-            const creditsContainer = document.getElementById('credits-container');
-            const creditsText = document.getElementById('credits-text');
-            const btn = document.getElementById('btn-next');
-            const greeting = document.getElementById('birthday-greeting');
+        function initCredits() {
 
-            setTimeout(() => video.style.opacity = "1", 150);
-            fotos.forEach((f, i) => setTimeout(() => f.style.opacity = '1', 1500 + (1000 * i)));
+            $('main-bg-video').style.opacity = 1
+
+            document.querySelectorAll('.foto-marco')
+                .forEach((f, i) => {
+                    setTimeout(() => f.style.opacity = 1, 1500 + i * 1000)
+                })
+
             setTimeout(() => {
-                creditsContainer.style.opacity = "1";
-                creditsText.style.animation = "scrollCredits 0.5s linear forwards";
-            }, 5000); //-------------------------------
 
-            creditsText.addEventListener('animationend', () => {
-                creditsContainer.style.transition = "opacity 1s ease";
-                creditsContainer.style.opacity = '0';
+                $('credits-container').style.opacity = 1
+                $('credits-text').style.animation = "scrollCredits 45s linear forwards"
+
+            }, 25000)
+
+            $('credits-text').addEventListener('animationend', () => {
+
+                $('credits-container').style.opacity = 0
+
                 setTimeout(() => {
-                    creditsContainer.style.display = 'none';
-                    greeting.style.display = 'block';
-                    greeting.style.opacity = '1';
+
+                    $('credits-container').style.display = 'none'
+
+                    const greeting = $('birthday-greeting')
+                    greeting.style.display = 'block'
+                    greeting.style.opacity = 1
+
                     escribir(greeting.querySelector('h1'), 70, () => {
-                        const hint = document.getElementById('small-hint');
+
+                        const hint = $('small-hint')
+
                         setTimeout(() => {
-                            hint.style.opacity = "1";
+                            hint.style.opacity = 1
                             escribir(hint, 50, () => {
+
                                 setTimeout(() => {
-                                    greeting.style.transition = "opacity 2s ease";
-                                    greeting.style.opacity = "0";
+                                    greeting.style.opacity = 0
+
                                     setTimeout(() => {
-                                        btn.style.display = 'inline-block';
-                                        setTimeout(() => btn.style.opacity = '1', 100);
-                                    }, 2500);
-                                }, 3500); // Tiempo para leer "Feliz cumple" y "quédate"
-                            });
-                        }, 500);
-                    });
-                }, 1000);
-            });
+                                        $('btn-next').style.display = 'inline-block'
+                                        setTimeout(() => $('btn-next').style.opacity = 1, 100)
+                                    }, 2500)
+
+                                }, 3500)
+
+                            })
+
+                        }, 500)
+
+                    })
+
+                }, 1000)
+
+            })
+
         }
 
-        function initFinalSequence() {
-            const container = document.getElementById('final-text-container');
-            const btnPlay = document.getElementById('btn-play');
-            container.style.display = 'block';
-            container.style.opacity = '1';
+        function initFinal() {
 
-            escribir(document.getElementById('tw2-h1'), 70, () => {
-                escribir(document.getElementById('tw2-p'), 45, () => {
-                    // Espera para leer el mensaje largo
+            const container = $('final-text-container')
+            const btn = $('btn-play')
+
+            container.style.display = 'block'
+            container.style.opacity = 1
+
+            escribir($('tw2-h1'), 70, () => {
+                escribir($('tw2-p'), 45, () => {
+
                     setTimeout(() => {
-                        container.style.transition = "opacity 2s ease";
-                        container.style.opacity = '0'; // Desaparece el texto
 
-                        // Aparece el botón de Play unos segundos después
+                        container.style.opacity = 0
+
                         setTimeout(() => {
-                            btnPlay.style.display = 'inline-block';
-                            setTimeout(() => btnPlay.style.opacity = '1', 100);
-                        }, 3000); // 3 segundos de calma antes del botón
+                            btn.style.display = 'inline-block'
+                            setTimeout(() => btn.style.opacity = 1, 100)
+                        }, 3000)
 
-                    }, 6000); // 6 segundos para leer el texto largo
-                });
-            });
+                    }, 6000)
+
+                })
+            })
+
         }
 
         function playRegalo() {
-            const container = document.getElementById('video-final-container');
-            const video = document.getElementById('video-regalo');
-            const btnPlay = document.getElementById('btn-play');
-            const msgCierre = document.getElementById('msg-cierre');
 
-            btnPlay.style.display = 'none';
-            container.style.display = 'block';
+            const container = $('video-final-container')
+            const video = $('video-regalo')
+            const btn = $('btn-play')
 
-            video.play();
-            // La música sigue sonando (audio id="musica")
+            btn.style.display = 'none'
+            container.style.display = 'block'
+
+            video.play()
 
             video.onended = () => {
-                container.style.transition = "opacity 1.5s ease";
-                container.style.opacity = '0';
+
+                container.style.opacity = 0
+
                 setTimeout(() => {
-                    container.style.display = 'none';
-                    msgCierre.style.display = 'block';
-                    setTimeout(() => msgCierre.style.opacity = '1', 100);
-                }, 1500);
-            };
+                    container.style.display = 'none'
+                    $('msg-cierre').style.display = 'block'
+                }, 1500)
+
+            }
+
         }
+
     </script>
+
 </body>
 
 </html>
