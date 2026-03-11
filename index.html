@@ -1,193 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Ti ✨</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --primary: #ff758c;
-            --secondary: #ff7eb3;
+        :root { --primary: #ff758c; --secondary: #ff7eb3; }
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0; padding: 0; background: #000; color: white;
+            font-family: 'Georgia', serif; overflow: hidden; height: 100%; width: 100%;
         }
-
-        * {
-            box-sizing: border-box
-        }
-
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            color: white;
-            font-family: 'Georgia', serif;
-            overflow: hidden;
-            height: 100%;
-            width: 100%;
-        }
-
-        h1,
-        h2,
-        .btn-generic {
-            font-family: 'Caveat', cursive;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, .8);
-            font-size: 3rem;
-        }
+        h1, h2, .btn-generic { font-family: 'Caveat', cursive; text-shadow: 0 2px 4px rgba(0,0,0,.8); }
 
         .screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity .8s ease;
-            z-index: 10;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; flex-direction: column; align-items: center;
+            justify-content: center; transition: opacity .8s ease; z-index: 10;
         }
-
-        .active {
-            display: flex;
-            opacity: 1;
-        }
+        .active { display: flex; opacity: 1; }
 
         .video-background {
-            opacity: 0;
-            transition: opacity 2s ease;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -5;
+            opacity: 0; transition: opacity 2s ease; position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -5;
         }
-
         .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, .7);
-            z-index: -4;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,.7); z-index: -4;
         }
 
-        .btn-generic {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            padding: 10px 30px;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.5rem;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255, 117, 140, .4);
-            opacity: 0;
-            display: none;
-            transition: opacity 1s ease, transform .3s ease;
-            z-index: 100;
-        }
-
-        .fixed-btn {
-            position: fixed;
-            top: 80%; /* Ajustado para no tapar texto */
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        #collage {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            pointer-events: none;
-        }
-
+        /* --- FOTOS --- */
+        #collage { position: fixed; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
         .foto-marco {
-            position: absolute;
-            width: 75px;
-            background: white;
-            padding: 5px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
-            opacity: 0;
-            transition: opacity 1s ease;
+            position: absolute; width: 75px; background: white; padding: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.5); opacity: 0; transition: opacity 1s ease;
         }
-
-        .foto-marco img {
-            width: 100%;
-            height: 75px;
-            object-fit: cover;
-        }
-
+        .foto-marco img { width: 100%; height: 75px; object-fit: cover; }
         .pos1 { top: 10%; left: 10%; transform: rotate(-10deg) }
         .pos2 { top: 25%; right: 10%; transform: rotate(15deg) }
         .pos3 { top: 75%; left: 15%; transform: rotate(-5deg) }
         .pos4 { top: 85%; right: 15%; transform: rotate(-12deg) }
 
-        /* Contenedor genérico para efecto scroll */
+        /* --- AJUSTE DE SCROLL (PARA QUE INICIE DESDE ABAJO) --- */
         .scroll-container {
-            opacity: 0;
-            transition: opacity 1.5s ease;
-            width: 85%;
-            height: 60vh;
-            overflow: hidden;
-            position: relative;
-            text-align: center;
+            opacity: 0; transition: opacity 1s ease;
+            width: 90%; height: 100vh; /* Ocupa todo el alto para que el 100% sea el borde inferior real */
+            overflow: hidden; position: absolute; top: 0; text-align: center;
+        }
+        .scroll-text { 
+            position: absolute; width: 100%; 
+            top: 100%; /* Inicia justo debajo del borde de la pantalla */
         }
 
-        .scroll-text {
-            position: absolute;
-            width: 100%;
-            top: 100%;
+        /* --- BOTONES --- */
+        .btn-generic {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none; padding: 12px 35px; color: white; border-radius: 50px;
+            cursor: pointer; font-size: 1.6rem; 
+            box-shadow: 0 5px 15px rgba(255,117,140,.4);
+            opacity: 0; display: none; transition: opacity 1s ease;
+            z-index: 100; position: relative;
         }
 
-        .scroll-text p, .scroll-text h1 {
-            margin-bottom: 2rem;
-            font-size: 0.7rem; /* Aumenta a 1.2rem o 1.5rem si lo quieres más grande */
-            line-height: 1.7;   /* Esto controla la separación entre líneas */
+        #fixed-message {
+            display: none; opacity: 0; text-align: center;
+            transition: opacity 1s ease; z-index: 20;
         }
 
-        @keyframes scrollUp {
-            0% { top: 100%; transform: translateY(0); }
-            100% { top: 0%; transform: translateY(-110%); }
+        @keyframes scrollUpAnimation {
+            0% { top: 100%; }
+            100% { top: -120%; } /* Sube hasta desaparecer por arriba */
         }
 
         #video-final-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 500;
-        }
-
-        #msg-cierre {
-            opacity: 0;
-            transition: opacity 2s ease;
-            font-size: 3.5rem;
-            color: var(--secondary);
-            text-align: center;
-            z-index: 600;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: #000; z-index: 500;
         }
     </style>
 </head>
-
 <body>
 
     <div id="screen-start" class="screen active" style="background:#0f0c29;">
-        <h1 style="font-size:3.5rem;margin-bottom:10px;">Hola...</h1>
-        <p style="opacity:.8;margin-bottom:30px;">Tengo algo para decirte.</p>
-        <button class="btn-generic" style="opacity:1;display:inline-block;" onclick="changeScreen('screen-start','screen-main')">
+        <h1 style="font-size:3.5rem;">Hola...</h1>
+        <p style="opacity:.8;">Tengo algo para decirte.</p>
+        <button class="btn-generic" style="opacity:1;display:block;" onclick="changeScreen('screen-start','screen-main')">
             Abrir detalle 🌸
         </button>
     </div>
@@ -207,23 +104,19 @@
 
         <div class="scroll-container" id="container-1">
             <div class="scroll-text" id="text-1">
-                <p>Hoy quiero desearte un feliz cumpleaños de una manera especial, como tanto te gusta...<br><br><br>
-                Aunque estemos distanciados, quiero que sepas que festejo cada uno de tus logros en silencio.<br><br><br>
-                Conozco de cerca el esfuerzo que hay detrás de cada paso que das y sé, mejor que nadie, cuánto te lo mereces.<br><br><br>
-                Me llena de alegría ver que estás alcanzando todo aquello que alguna vez me contaste, y en el fondo siempre deseé que se te cumpliera.<br><br><br>
-                Mi mayor anhelo es que sigas siendo feliz, rodeada de la familia que tanto te ama y haciendo lo que te apasiona.<br><br><br>
-                Por eso, cada vez que alcances una nueva meta, recuerda que en algún lugar siempre habrá alguien alegrándose por ti, aunque no esté ahí.<br><br><br>
-                Te quiero ver triunfando, creciendo, aprendiendo y disfrutando de cada paso del camino.<br><br><br>
-                Cuando te recuerdo me doy cuenta que estas completa, pero aun sabiendo eso me gustaría creer que soy la pieza que te complementa.<br><br><br>
-                Que Dios te bendiga en cada paso, te proteja de todo mal y que a tu vida le lluevan bendiciones y cosas hermosas.</p>
-                <h1 style="font-size:2.2rem;">Te mereces lo mejor✨<br>Nunca lo olvides</h1>
-                <p style="font-style:italic; color:var(--secondary);">(quédate hasta el final)</p>
+                <p>Hoy quiero desearte un feliz cumpleaños de una manera especial...<br><br><br>
+                (Tu texto aquí...)<br><br><br>
+                Que Dios te bendiga en cada paso, te proteja de todo mal y que a tu vida le lluevan bendiciones.</p>
             </div>
         </div>
 
-        <button class="btn-generic fixed-btn" id="btn-next" onclick="changeScreen('screen-main','screen-final')">
-            Continuar ✨
-        </button>
+        <div id="fixed-message">
+            <h1 style="font-size:2.8rem;">Te mereces lo mejor✨<br>Nunca lo olvides</h1>
+            <p style="color:var(--secondary); font-style:italic;">(quédate hasta el final)</p>
+            <button class="btn-generic" id="btn-next" onclick="changeScreen('screen-main','screen-final')" style="margin: 0 auto;">
+                Continuar ✨
+            </button>
+        </div>
     </div>
 
     <div id="screen-final" class="screen" style="background:radial-gradient(circle,#1a1a2e,#000);">
@@ -231,20 +124,13 @@
         <div class="scroll-container" id="container-2">
             <div class="scroll-text" id="text-2">
                 <h1>Antes de terminar...</h1>
-                <p>El paso del tiempo me ha hecho darme cuenta de que la vida está repleta de sorpresas, de pequeños detalles de grandes efectos y afectos, pero sobre todo de personas que dan giros inesperados a nuestras historias, como tú.<br><br>
-                Ni tú ni yo nos esperábamos, para qué mentirnos? No contábamos con nosotros en nuestra vida.<br><br>
-                La cuestión es que aquel día nos encontramos. No sé si fue una coincidencia, una serendipia como dirían los más románticos o resultado de una fuerza mayor, pero conectamos.<br><br>
-                Y no hablo solo de cruzar miradas... Me refiero a esa sensación que irrumpe desde lo más profundo y te embriaga por dentro sin saber cómo, a esa conexión inexplicable.<br><br>
-                Lo recuerdo perfectamente. Y desde ahí todo empezó a cobrar cierto sentido.<br><br>
-                Daba igual de qué hablábamos, desde que te encontré es como si el mundo exterior hubiera dejado de tener protagonismo.<br><br>
-                Horas y horas de hablar de nosotros, del tiempo, de lo que nos gustaría e incluso de aquello que a otras personas no nos atrevimos a contar.<br><br>
-                Aunque también había momentos de silencios, pero de los más cómodos que he experimentado en mi vida, de esos que facilitan un juego de miradas y fijan imágenes en nuestras retinas.<br><br>
-                Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos.<br><br>
+                <p>El paso del tiempo me ha hecho darme cuenta de que la vida está repleta de sorpresas...<br><br>
+                (Tu texto aquí...)<br><br>
                 Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.</p>
             </div>
         </div>
 
-        <button class="btn-generic fixed-btn" id="btn-play" onclick="playRegalo()">
+        <button class="btn-generic" id="btn-play" onclick="playRegalo()">
             Toca aquí (Play) ▶️
         </button>
 
@@ -254,20 +140,20 @@
             </video>
         </div>
 
-        <div class="scroll-container" id="container-despedida" style="height: auto;">
+        <div class="scroll-container" id="container-despedida">
              <div class="scroll-text" id="text-despedida">
-                <p>ESCRIBE AQUI TU MENSAJE FINAL DE DESPEDIDA</p>
+                <p style="font-size: 1.6rem; padding: 20px;">ESCRIBE AQUI TU MENSAJE FINAL DE DESPEDIDA</p>
              </div>
         </div>
 
-        <h1 id="msg-cierre" style="display:none;">
-            Feliz Cumpleaños Dayana, Feliz Vuelta al Sol ❤️
-        </h1>
-
-        <button class="btn-generic fixed-btn" id="btn-salir" onclick="location.reload()" style="top: 85%;">
-            Salir 🌸
-        </button>
-
+        <div id="final-layout" style="display:none; text-align:center; flex-direction:column; align-items:center;">
+            <h1 style="font-size:3rem; color:var(--secondary); margin-bottom:30px;">
+                Feliz Cumpleaños Dayana, <br> Feliz Vuelta al Sol ❤️
+            </h1>
+            <button class="btn-generic" id="btn-salir" onclick="location.reload()" style="display:inline-block; opacity:1;">
+                Salir 🌸
+            </button>
+        </div>
     </div>
 
     <audio id="musica" loop>
@@ -280,93 +166,101 @@
 
         function changeScreen(hideId, showId) {
             if (hideId === "screen-start") {
-                musica.play().catch(() => { });
+                musica.play().catch(() => {});
                 $('main-bg-video').play();
             }
-
             const hide = $(hideId);
             const show = $(showId);
-
             hide.style.opacity = 0;
+
             setTimeout(() => {
                 hide.style.display = 'none';
                 show.style.display = 'flex';
                 show.style.opacity = 1;
 
-                if (showId === "screen-main") initScrollSequence('container-1', 'text-1', 'btn-next', 60);
-                if (showId === "screen-final") initScrollSequence('container-2', 'text-2', 'btn-play', 50);
+                if (showId === "screen-main") initP2();
+                if (showId === "screen-final") initP3();
             }, 800);
         }
 
-        function initScrollSequence(containerId, textId, btnId, duration) {
-            const container = $(containerId);
-            const text = $(textId);
-            const btn = $(btnId);
-            const fotos = document.querySelectorAll('.foto-marco');
-
-            // Mostrar fotos gradualmente si estamos en screen-main
-            if(containerId === 'container-1') {
-                fotos.forEach((f, i) => {
-                    setTimeout(() => f.style.opacity = 1, 1000 + (i * 800));
-                });
-                setTimeout(() => $('main-bg-video').style.opacity = 1, 500);
-            }
-
-            setTimeout(() => {
-                container.style.opacity = 1;
-                text.style.animation = `scrollUp ${duration}s linear forwards`;
-            }, 25000);
-
-            text.addEventListener('animationend', () => {
-                setTimeout(() => {
-                    container.style.opacity = 0;
-                    setTimeout(() => {
-                        container.style.display = 'none';
-                        btn.style.display = 'inline-block';
-                        btn.style.opacity = 1;
-                    }, 1000);
-                }, 2000);
+        function initP2() {
+            setTimeout(() => $('main-bg-video').style.opacity = 1, 100);
+            document.querySelectorAll('.foto-marco').forEach((f, i) => {
+                setTimeout(() => f.style.opacity = 1, 500 + (i * 900));
             });
+
+            // PAUSA INICIAL DE 2s PARA VER VIDEO
+            setTimeout(() => {
+                const cont = $('container-1');
+                cont.style.opacity = 1;
+                $('text-1').style.animation = "scrollUpAnimation 45s linear forwards";
+                
+                $('text-1').addEventListener('animationend', () => {
+                    cont.style.opacity = 0;
+                    setTimeout(() => {
+                        cont.style.display = 'none';
+                        const fixed = $('fixed-message');
+                        fixed.style.display = 'block';
+                        setTimeout(() => fixed.style.opacity = 1, 100);
+                        // BOTÓN APARECE TRAS 1s (CORREGIDO)
+                        setTimeout(() => {
+                            $('btn-next').style.display = 'block';
+                            $('btn-next').style.opacity = 1;
+                        }, 1000);
+                    }, 800);
+                });
+            }, 25000);
+        }
+
+        function initP3() {
+            // PAUSA INICIAL DE 1.5s (MÁXIMO 2s)
+            setTimeout(() => {
+                const cont = $('container-2');
+                cont.style.opacity = 1;
+                $('text-2').style.animation = "scrollUpAnimation 45s linear forwards";
+
+                $('text-2').addEventListener('animationend', () => {
+                    setTimeout(() => {
+                        cont.style.opacity = 0;
+                        setTimeout(() => {
+                            cont.style.display = 'none';
+                            $('btn-play').style.display = 'block';
+                            $('btn-play').style.opacity = 1;
+                        }, 500);
+                    }, 1000);
+                });
+            }, 1500);
         }
 
         function playRegalo() {
-            const container = $('video-final-container');
+            const videoCont = $('video-final-container');
             const video = $('video-regalo');
-            const btnPlay = $('btn-play');
-            const msgCierre = $('msg-cierre');
-            const btnSalir = $('btn-salir');
-            const containerDespedida = $('container-despedida');
-            const textDespedida = $('text-despedida');
-
-            btnPlay.style.display = "none";
-            container.style.display = "block";
+            $('btn-play').style.display = "none";
+            videoCont.style.display = "block";
             video.play();
 
             video.onended = () => {
-                container.style.opacity = 0;
+                videoCont.style.opacity = 0;
                 setTimeout(() => {
-                    container.style.display = "none";
+                    videoCont.style.display = "none";
                     
-                    // Efecto final para el mensaje de despedida
-                    containerDespedida.style.display = "block";
-                    containerDespedida.style.opacity = 1;
-                    textDespedida.style.animation = "scrollUp 10s linear forwards";
+                    // INICIO TEXTO DESPEDIDA (DESDE ABAJO)
+                    const contD = $('container-despedida');
+                    contD.style.display = "block";
+                    contD.style.opacity = 1;
+                    $('text-despedida').style.animation = "scrollUpAnimation 12s linear forwards";
 
-                    textDespedida.addEventListener('animationend', () => {
-                        containerDespedida.style.opacity = 0;
+                    $('text-despedida').addEventListener('animationend', () => {
+                        contD.style.opacity = 0;
                         setTimeout(() => {
-                            containerDespedida.style.display = "none";
-                            msgCierre.style.display = "block";
-                            setTimeout(() => {
-                                msgCierre.style.opacity = 1;
-                                // APARECE BOTÓN SALIR
-                                btnSalir.style.display = "inline-block";
-                                btnSalir.style.opacity = 1;
-                            }, 100);
+                            contD.style.display = "none";
+                            const layout = $('final-layout');
+                            layout.style.display = "flex";
+                            setTimeout(() => layout.style.opacity = 1, 100);
                         }, 1000);
                     });
                 }, 1000);
-            }
+            };
         }
     </script>
 </body>
