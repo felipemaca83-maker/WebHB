@@ -305,7 +305,7 @@
         <div id="video-final-container">
             <video id="video-regalo" muted playsinline style="width:100%; height:100%; object-fit:contain;">
                 <source
-                    src="https://www.dropbox.com/scl/fi/fj1okinny003h3abtnez7/lv_0_20260310184026.mp4?rlkey=jsg7dmblmir6mc87x5qdoutvx&st=otkxpyzt&draw=1"
+                    src="https://www.dropbox.com/scl/fi/fj1okinny003h3abtnez7/VideofFinal.mp4?rlkey=jsg7dmblmir6mc87x5qdoutvx&st=7x7ien8s&raw=1"
                     type="video/mp4">   
             </video>
         </div>
@@ -372,8 +372,8 @@
             fotos.forEach((f, i) => setTimeout(() => f.style.opacity = '1', 1500 + (1000 * i)));
             setTimeout(() => {
                 creditsContainer.style.opacity = "1";
-                creditsText.style.animation = "scrollCredits 50s linear forwards";
-            }, 25000);
+                creditsText.style.animation = "scrollCredits 0.5s linear forwards";
+            }, 5000); //-------------------------------
 
             creditsText.addEventListener('animationend', () => {
                 creditsContainer.style.transition = "opacity 1s ease";
