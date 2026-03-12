@@ -144,13 +144,12 @@
 
         .scroll-text {
             position: absolute;
-            width: 80%;
-            /* Ancho del bloque de texto */
+            width: 85%; /* Ancho del bloque de texto */
+            max-width: 600px; /* Evita que el cuadro sea demasiado ancho en PC */
             top: 100%;
-            left: 50%;
-            /* Lo movemos al centro */
-            transform: translateX(-50%);
-            /* Truco para centrar perfectamente un elemento absoluto */
+            left: 50%; /* Lo movemos al centro */
+            transform: translateX(-50%); /* Truco para centrar perfectamente un elemento absoluto */
+            text-align: center;
         }
 
         /* --- BOTONES --- */
@@ -186,8 +185,16 @@
             /* Subido de 0.7rem para que sea legible */
             line-height: 1.8;
             color: #f0f0f0;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Sombra más fuerte para resaltar */
             text-align: center;
+            /* --- EL CUADRO DE TEXTO (Efecto Vidrio) --- */
+            background: rgba(0, 0, 0, 0.4); /* Fondo oscuro semitransparente */
+            backdrop-filter: blur(8px);    /* Desenfoca el video de fondo */
+            -webkit-backdrop-filter: blur(8px); /* Soporte para Safari */
+            padding: 40px 20px;            /* Espacio interno para que el texto respire */
+            border-radius: 20px;           /* Bordes redondeados elegantes */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Borde casi invisible */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8); /* Sombra para dar profundidad */
         }
 
         #text-1 p {
@@ -324,13 +331,13 @@
                 Hoy quiero desearte un feliz cumpleaños de una manera especial, como tanto te gusta...<br><br><br>Aunque
                 estemos distanciados,
                 quiero que sepas que festejo cada uno de tus logros en silencio.<br><br><br>Conozco de cerca el esfuerzo
-                que hay detrás de cada paso que das y sé, mejor que nadie, cuánto te lo mereces.<br><br><br>Me llena de
-                alegría ver que estás alcanzando todo aquello que alguna vez me contaste, y en el fondo siempre
+                que hay detrás de cada paso que das y sé, mejor que nadie cuánto te lo mereces.<br><br><br>Me llena de
+                alegría ver que estás alcanzando todo aquello que alguna vez me contaste, en el fondo siempre
                 desee que
                 se te cumpliera.<br><br><br>Mi mayor anhelo es que sigas siendo feliz, rodeada de
-                la familia que tanto te ama y haciendo lo que te apasiona.<br><br><br>Por eso, cada vez que alcances una
+                la familia que tanto te ama y haciendo lo que te apasiona.<br><br><br>Por eso cada vez que alcances una
                 nueva meta, recuerda que en algún lugar siempre habrá alguien alegrándose por ti, aunque no esté
-                ahí.<br><br><br>Te quiero ver triunfando, creciendo, aprendiendo y disfrutando de cada paso del
+                ahí, a tu lado.<br><br><br>Te quiero ver triunfando, creciendo, aprendiendo y disfrutando de cada paso del
                 camino.<br><br><br>
                 Cuando te recuerdo me doy cuenta que estas completa, pero aun sabiendo eso me gustaría creer que soy la
                 pieza que te complementa.<br><br><br>
@@ -355,37 +362,36 @@
             <div class="scroll-text" id="text-2">
                 <h1>Antes de terminar...</h1>
                 <p>El paso del tiempo me ha hecho darme cuenta de que la vida está repleta de sorpresas, de pequeños
-                    detalles de grandes efectos y afectos, pero sobre todo de personas que dan giros inesperados a
+                    detalles de grandes efectos, pero sobre todo de personas que dan giros inesperados a
                     nuestras historias, como tú.<br><br><br>
 
                     Ni tú ni yo nos esperábamos, para qué mentirnos? No contábamos con nosotros en nuestra
                     vida.<br><br><br>
 
-                    La cuestión es que aquel día nos encontramos no sé si fue una coincidencia, una serendipia como
-                    dirían los más románticos o resultado de una fuerza mayor, pero conectamos.<br><br><br>
+                    La cuestión es que aquel día nos encontramos y no sé si fue una coincidencia, una serendipia como
+                    dirían los más románticos o resultado de una fuerza mayor, no sé... pero conectamos.<br><br><br>
 
                     Y no hablo solo de cruzar miradas... Me refiero a esa sensación que irrumpe desde lo más profundo y
-                    te embriaga por dentro sin saber cómo... a esa conexión inexplicable.<br><br><br>
+                    te desordena por dentro sin saber cómo... a esa conexión inexplicable me refiero.<br><br><br>
 
-                    Lo recuerdo perfectamente. Y desde ahí todo empezó a cobrar cierto sentido.<br><br><br>
+                    Lo recuerdo perfectamente. Y desde ahí todo empezaba a cobrar sentido, en efecto.<br><br><br>
 
                     Daba igual de qué hablábamos, desde que te encontré es como si el mundo exterior hubiera dejado de
                     tener protagonismo.<br><br><br>
 
-                    Horas y horas de hablar de nosotros, del tiempo, de lo que nos gustaría e incluso de aquello que a
-                    otras personas no nos atrevimos a contar.<br><br><br>
+                    Horas y horas de hablar de nosotros, del tiempo, de lo que nos gustaría e incluso de aquello de lo que no nos atreviamos a contar a la sociedad.<br><br><br>
 
                     Aunque también había momentos de silencios, pero de los más cómodos que he experimentado en mi vida,
                     de esos que facilitan un juego de miradas y fijan imágenes en nuestras retinas.<br><br><br>
 
-                    Hay momentos que se quedan grabados no por lo que pasó, sino por con quién los vivimos.<br><br><br>
+                    Hay momentos que se quedarán grabados no por lo que pasó, sino por con quién los vivimos.<br><br><br>
 
                     Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.</p>
             </div>
         </div>
 
         <button class="btn-generic" id="btn-play" onclick="playRegalo()">
-            Toca aquí (Play) ▶️
+            📹▶️
         </button>
 
         <div id="video-final-container">
@@ -404,13 +410,33 @@
                 
                 <p>No sé si esta era la manera de aprender y valorar, pero me marcó de por vida, al igual que lo hiciste tú, con tu luz.</p>
                 
-                <p>Tal vez mis heridas no han sanado del todo, créeme que muchas veces imaginé un mensaje, una llamada... recordaba el sonido del autobús cuando paraba cerca a mi casa, te imaginé llegando, y que toda esa incertidumbre terminara... nunca pasó.</p>
+                <p>Tal vez mis heridas no han sanado del todo, créeme que muchas veces imaginé un mensaje, una llamada... recordaba el sonido del autobús cuando paraba cerca a mi casa y sabia que eras tú, te imaginé llegando, y que toda esa incertidumbre terminaría... nunca pasó.</p>
                 
                 <p>Estoy seguro que tu enfoque y amor propio te llevarán a la cima, tienes tantas cualidades y virtudes que te harán brillar, y aunque no pueda estar ahí para verlo, me alegra saber que lo harás.</p>
                 
-                <p>No sé si estemos mejor el uno sin el otro, no sé si este sea el final de la historia, no sé si en el fondo guardemos la esperanza de volvernos a cruzar, no sé si aún haya amor en nosotros...</p>
+                <p>No sé si estemos mejor el uno sin el otro</p>
                 
-                <p>Solo sé, que todo pasa por algo. Sé que Dios no hace sus cosas al azar, no nos cruzó porque sí, no nos puso tan difícil prueba porque sí... tal vez nos quiere preparar para grandes cosas, para más pruebas, para vernos más fuertes, más maduros, más felices... solo tal vez.</p>
+                <p>No sé si este sea el final de la historia</p>
+
+                <p>No sé si en el fondo guardemos la esperanza de volver a encontranos</p>
+
+                <p>No sé si aún haya amor en nosotros...</p>
+
+                <p>Solo sé, que todo pasa por algo</p>
+            
+                <p>Sé que Dios no hace sus cosas al azar, no cruzó nuestras vidas "porque sí"</p>
+            
+                <p>Sé que no nos mereciamos tan dificil prueba...👼🏻</p>
+
+                <p>Tal vez nos quizó preparar para grandes cosas, para más pruebas, para vernos más fuertes, más maduros, más concientes... solo tal vez.</p>
+                
+                <p>Hubiera dado todo porque fuera diferente... pero ya estabas decidida en irte</p>
+
+                <p>La vida es una paradoja, trato de encontrar un "por qué", y siempre llego a la conclusión de que todo tiene su propósito.</p>
+
+                <p>Apesar de eso, en el fondo de mi corazón, una pequeña llama sigue encendida, no lo negaré, dentro de ella hay miles de esperanzas contenidas, esperando qué?... no lo sé</p>
+            
+                <p>Simplemente siguen ahí, esperando que la depara el destino, la vida, el futuro, inertes como particulas en el universo, universo que solo le da sentido si estas tu.</p>
             </div>
         </div>
 
@@ -504,7 +530,7 @@
 
                 }, 45000); // 45s de animación + 1s de margen
 
-            }, 25000);
+            }, 5000);
         }
 
         function initP3() {
@@ -561,7 +587,7 @@
                     setTimeout(() => {
                         contD.style.opacity = 1;
                         // 75 segundos para un scroll suave y pausado
-                        textD.style.animation = "scrollUpAnimation 70s linear forwards";
+                        textD.style.animation = "scrollUpAnimation 95s linear forwards";
 
                         // --- CÁLCULO DE FINALIZACIÓN ---
                         // Esperamos a que el texto termine de subir completamente (75s + 1s margen)
@@ -580,7 +606,7 @@
                                 layout.style.opacity = 1;
                             }, 1500); // Pausa tras el desvanecimiento final
 
-                        }, 76000); // 75s de la animación + 1s de margen
+                        }, 100000); // 75s de la animación + 1s de margen
 
                     }, 2000);
 
