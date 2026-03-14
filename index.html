@@ -33,6 +33,11 @@
         .btn-generic {
             font-family: 'Caveat', cursive;
             text-shadow: 0 2px 4px rgba(0, 0, 0, .8);
+            opacity: 1;
+            /* Cambia de 0 a 1 */
+            display: inline-block;
+            /* Cambia de none a inline-block o block */
+
         }
 
         .screen {
@@ -142,18 +147,170 @@
             /* Centra el contenido horizontalmente */
         }
 
+        /* Efecto de partículas sutiles */
+        #screen-start {
+            background: radial-gradient(circle at center, #1a1a40 0%, #000 100%);
+            background-size: 200% 200%;
+            animation: gradientMove 15s infinite alternate;
+            flex-direction: column;
+            /* Elementos en vertical */
+            align-items: center;
+            /* Centra horizontalmente */
+            justify-content: center;
+            /* Centra verticalmente */
+            text-align: center;
+            /* Alinea las líneas de texto al centro */
+        }
+
+        /* Animación de entrada para el texto */
+        .fade-in-text {
+            opacity: 0;
+            text-align: center;
+            transform: translateY(20px);
+            animation: fadeInUp 1.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Botón con efecto de pulso */
+        .btn-pulse {
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7);
+            transition: transform 0.3s ease;
+        }
+
+        .btn-pulse:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 15px rgba(255, 117, 140, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 117, 140, 0);
+            }
+        }
+
+        /* Partículas animadas */
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            /* Añadimos un resplandor (glow) a cada partícula */
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            animation: float infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(110vh) translateX(0) scale(1);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            80% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-10vh) translateX(40px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .glow-title {
+            /* Creamos el gradiente con tus colores base */
+            background: linear-gradient(to right,
+                    #ffffff,
+                    var(--primary),
+                    var(--secondary),
+                    #ffffff);
+            background-size: 200% auto;
+
+            /* Este truco hace que el fondo solo se vea a través de las letras */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* Animación del brillo */
+            animation: shineText 3s linear infinite, revealEffect 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+            /* Sombra suave para que no se pierda en el fondo */
+            filter: drop-shadow(0 0 5px rgba(255, 117, 140, 0.3));
+        }
+
+        @keyframes shineText {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Ajustamos el reveal para que no choque con el gradiente */
+        @keyframes revealEffect {
+            0% {
+                opacity: 0;
+                filter: blur(10px);
+                letter-spacing: 15px;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                letter-spacing: 2px;
+                transform: scale(1);
+            }
+        }
+
+        .glow-title:hover {
+            filter: drop-shadow(0 0 15px var(--primary));
+            transition: filter 0.5s ease;
+        }
+
         .scroll-text {
             position: absolute;
-            width: 85%; /* Ancho del bloque de texto */
-            max-width: 600px; /* Evita que el cuadro sea demasiado ancho en PC */
+            width: 85%;
+            /* Ancho del bloque de texto */
+            max-width: 600px;
+            /* Evita que el cuadro sea demasiado ancho en PC */
             top: 100%;
-            left: 50%; /* Lo movemos al centro */
-            transform: translateX(-50%); /* Truco para centrar perfectamente un elemento absoluto */
+            left: 50%;
+            /* Lo movemos al centro */
+            transform: translateX(-50%);
+            /* Truco para centrar perfectamente un elemento absoluto */
             text-align: center;
         }
 
         /* --- BOTONES --- */
         .btn-generic {
+
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             border: none;
             padding: 12px 35px;
@@ -167,6 +324,7 @@
             transition: opacity 1s ease;
             z-index: 100;
             position: relative;
+
         }
 
         #fixed-message {
@@ -185,16 +343,24 @@
             /* Subido de 0.7rem para que sea legible */
             line-height: 1.8;
             color: #f0f0f0;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Sombra más fuerte para resaltar */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            /* Sombra más fuerte para resaltar */
             text-align: center;
             /* --- EL CUADRO DE TEXTO (Efecto Vidrio) --- */
-            background: rgba(0, 0, 0, 0.4); /* Fondo oscuro semitransparente */
-            backdrop-filter: blur(8px);    /* Desenfoca el video de fondo */
-            -webkit-backdrop-filter: blur(8px); /* Soporte para Safari */
-            padding: 40px 20px;            /* Espacio interno para que el texto respire */
-            border-radius: 20px;           /* Bordes redondeados elegantes */
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Borde casi invisible */
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8); /* Sombra para dar profundidad */
+            background: rgba(0, 0, 0, 0.4);
+            /* Fondo oscuro semitransparente */
+            backdrop-filter: blur(8px);
+            /* Desenfoca el video de fondo */
+            -webkit-backdrop-filter: blur(8px);
+            /* Soporte para Safari */
+            padding: 40px 20px;
+            /* Espacio interno para que el texto respire */
+            border-radius: 20px;
+            /* Bordes redondeados elegantes */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Borde casi invisible */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            /* Sombra para dar profundidad */
         }
 
         #text-1 p {
@@ -231,18 +397,23 @@
         }
 
         #text-despedida p {
-            font-size: 1.1rem !important; /* Tamaño tipo carta, mucho más fino */
+            font-size: 1.1rem !important;
+            /* Tamaño tipo carta, mucho más fino */
             line-height: 1.8;
             padding: 0 10%;
             width: 100%;
-            max-width: 700px; /* Evita que el texto sea demasiado ancho en PC */
-            margin: 0 auto 1.5rem auto; /* Espacio entre párrafos */
+            max-width: 700px;
+            /* Evita que el texto sea demasiado ancho en PC */
+            margin: 0 auto 1.5rem auto;
+            /* Espacio entre párrafos */
             text-align: center;
             color: #e0e0e0;
         }
+
         #final-layout {
             display: none;
-            position: fixed; /* Asegura que cubra toda la pantalla */
+            position: fixed;
+            /* Asegura que cubra toda la pantalla */
             top: 0;
             left: 0;
             width: 100%;
@@ -259,15 +430,243 @@
 
         /* Para el primer texto (más corto) */
         @keyframes scrollUpShort {
-            0% { top: 100%; }
-            100% { top: -200%; } /* Menos recorrido para que no corra tanto */
+            0% {
+                top: 100%;
+            }
+
+            100% {
+                top: -200%;
+            }
+
+            /* Menos recorrido para que no corra tanto */
         }
+
         /* Para el texto de despedida (largo) */
         @keyframes scrollUpLong {
-            0% { top: 100%; }
-            100% { top: -400%; } /* Mucho más recorrido para que salga todo */
-    }
+            0% {
+                top: 100%;
+            }
 
+            100% {
+                top: -400%;
+            }
+
+            /* Mucho más recorrido para que salga todo */
+        }
+
+        /* Animación de revelado con expansión */
+        .reveal-text {
+            opacity: 0;
+            filter: blur(10px);
+            letter-spacing: 10px;
+            animation: revealEffect 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes revealEffect {
+            0% {
+                opacity: 0;
+                filter: blur(10px);
+                letter-spacing: 10px;
+                transform: scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                letter-spacing: 2px;
+                transform: scale(1);
+            }
+        }
+
+        /* --- ESTILOS DE LA FLOR MÁGICA --- */
+
+        .flower-container {
+            position: absolute;
+            bottom: 0;
+            /* Anclado al borde inferior */
+            width: 200px;
+            /* Tamaño de la flor completa */
+            height: 150px;
+            /* Menos altura para que el tallo empiece fuera */
+            z-index: 5;
+            /* Por delante de las partículas, detrás del texto */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: visible;
+            /* Para que el tallo crezca desde abajo */
+        }
+
+        /* El SVG de la flor */
+        .flower-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Tallo: Crece rápidamente desde abajo */
+        .flower-stem {
+            fill: none;
+            stroke: #4caf50;
+            /* Verde tallo */
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 60;
+            /* Longitud del tallo */
+            stroke-dashoffset: 60;
+            /* Oculto inicialmente */
+            animation: growStem 1s ease-out forwards;
+            /* Más rápido y cinemático */
+        }
+
+        @keyframes growStem {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* Cabeza de la flor (Capullo): Se revela al final del tallo */
+        .flower-head {
+            opacity: 0;
+            animation: revealHead 0.5s ease forwards;
+            animation-delay: 0.8s;
+            /* Espera a que el tallo casi termine */
+        }
+
+        @keyframes revealHead {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Pétalos básicos */
+        .petal {
+            fill: #ff85a1;
+            /* Rosa base */
+            stroke: #ff758c;
+            /* Rosa borde */
+            stroke-width: 1;
+            transform-origin: center center;
+            scale: 0;
+            /* Ocultos initially */
+        }
+
+        /* Animación de Florecimiento Dramático y Rápido */
+        .petal-back {
+            animation: bloom 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: 1s;
+        }
+
+        .petal-mid {
+            animation: bloom 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: 1.2s;
+        }
+
+        .petal-center {
+            animation: bloomCentral 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: 1.4s;
+            fill: #ffb3c1;
+        }
+
+        /* Más claro */
+
+        @keyframes bloom {
+            0% {
+                scale: 0;
+                transform: rotate(0);
+                opacity: 0;
+            }
+
+            60% {
+                scale: 1.2;
+                opacity: 1;
+                filter: brightness(1.2);
+            }
+
+            100% {
+                scale: 1;
+                transform: rotate(inherit);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bloomCentral {
+            0% {
+                scale: 0;
+                opacity: 0;
+            }
+
+            60% {
+                scale: 1.3;
+                opacity: 1;
+                filter: brightness(1.3);
+            }
+
+            100% {
+                scale: 1;
+                opacity: 1;
+            }
+        }
+
+        /* Centro de la flor */
+        .flower-center {
+            fill: #ffeb3b;
+            /* Amarillo centro */
+            scale: 0;
+            animation: bloomCentral 0.6s ease forwards;
+            animation-delay: 1.6s;
+        }
+
+        /* Destello de luz al florecer */
+        .flower-flash {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(10px);
+            animation: flashBloom 0.8s ease-out forwards;
+            animation-delay: 1.5s;
+            /* En el momento cumbre del florecimiento */
+            pointer-events: none;
+        }
+
+        @keyframes flashBloom {
+            0% {
+                opacity: 0;
+                scale: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+                scale: 2.5;
+            }
+
+            100% {
+                opacity: 0;
+                scale: 3;
+            }
+        }
+
+        /* Efecto de resplandor suave para el título */
+        .glow-title {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+                0 0 20px rgba(255, 117, 140, 0.3);
+        }
+
+        /* Subtítulo con retraso */
+        .subtitle-fade {
+            opacity: 0;
+            animation: fadeInSimple 2s ease forwards;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes fadeInSimple {
+            to {
+                opacity: 0.8;
+            }
+        }
 
         @media (max-width: 600px) {
             #text-1 {
@@ -316,13 +715,45 @@
 
 <body>
 
-    <div id="screen-start" class="screen active" style="background:#0f0c29;">
-        <h1 style="font-size:3.5rem;">Hola...</h1>
-        <p style="opacity:.8;">Tengo algo para decirte.</p>
-        <button class="btn-generic" style="opacity:1;display:block;"
-            onclick="changeScreen('screen-start','screen-main')">
-            Abrir detalle 🌸
-        </button>
+    <div id="screen-start" class="screen active">
+        <div id="particle-container" style="position:absolute; width:100%; height:100%;"></div>
+
+        <h1 class="reveal-text glow-title"
+            style="font-size:3.5rem; margin-bottom: 10px; animation-delay: 1.5s; opacity: 0; position: relative;">
+            Hola Dayana...
+        </h1>
+
+        <p class="subtitle-fade"
+            style="font-size:1.0rem; font-style: italic; font-family: 'Georgia', serif; animation-delay: 3s; opacity: 0;">
+            Hoy es un día muy especial, y aunque el tiempo y la distancia hayan cambiado muchas cosas, hay recuerdos que
+            siempre permanecen.
+        </p>
+
+        <div class="fade-in-text" style="animation-delay: 5s; margin-top: 40px; opacity: 0; position: relative;">
+            <button class="btn-generic btn-pulse" style="display: inline-block; opacity: 1;"
+                onclick="changeScreen('screen-start','screen-main')">
+                Abrir detalle 🌸
+            </button>
+        </div>
+
+        <div class="flower-container">
+            <svg class="flower-svg" viewBox="0 0 100 100">
+                <path class="flower-stem" d="M50,100 C50,80 45,70 50,50" />
+
+                <g class="flower-head">
+                    <ellipse class="petal petal-back" cx="35" cy="45" rx="10" ry="15" transform="rotate(-30 35 45)" />
+                    <ellipse class="petal petal-back" cx="65" cy="45" rx="10" ry="15" transform="rotate(30 65 45)" />
+
+                    <ellipse class="petal petal-mid" cx="42" cy="52" rx="12" ry="18" transform="rotate(-15 42 52)" />
+                    <ellipse class="petal petal-mid" cx="58" cy="52" rx="12" ry="18" transform="rotate(15 58 52)" />
+
+                    <ellipse class="petal petal-center" cx="50" cy="58" rx="15" ry="22" />
+
+                    <circle class="flower-center" cx="50" cy="58" r="5" />
+                </g>
+            </svg>
+            <div class="flower-flash"></div>
+        </div>
     </div>
 
     <div id="screen-main" class="screen">
@@ -353,7 +784,8 @@
                 se te cumpliera.<br><br><br>Mi mayor anhelo es que sigas siendo feliz, rodeada de
                 la familia que tanto te ama y haciendo lo que te apasiona.<br><br><br>Por eso cada vez que alcances una
                 nueva meta, recuerda que en algún lugar siempre habrá alguien alegrándose por ti, aunque no esté
-                ahí, a tu lado.<br><br><br>Te quiero ver triunfando, creciendo, aprendiendo y disfrutando de cada paso del
+                ahí, a tu lado.<br><br><br>Te quiero ver triunfando, creciendo, aprendiendo y disfrutando de cada paso
+                del
                 camino.<br><br><br>
                 Cuando te recuerdo me doy cuenta que estas completa, pero aun sabiendo eso me gustaría creer que soy la
                 pieza que te complementa.<br><br><br>
@@ -395,12 +827,14 @@
                     Daba igual de qué hablábamos, desde que te encontré es como si el mundo exterior hubiera dejado de
                     tener protagonismo.<br><br><br>
 
-                    Horas y horas de hablar de nosotros, del tiempo, de lo que nos gustaría e incluso de aquello de lo que no nos atreviamos a contar a la sociedad.<br><br><br>
+                    Horas y horas de hablar de nosotros, del tiempo, de lo que nos gustaría e incluso de aquello de lo
+                    que no nos atreviamos a contar a la sociedad.<br><br><br>
 
                     Aunque también había momentos de silencios, pero de los más cómodos que he experimentado en mi vida,
                     de esos que facilitan un juego de miradas y fijan imágenes en nuestras retinas.<br><br><br>
 
-                    Hay momentos que se quedarán grabados no por lo que pasó, sino por con quién los vivimos.<br><br><br>
+                    Hay momentos que se quedarán grabados no por lo que pasó, sino por con quién los
+                    vivimos.<br><br><br>
 
                     Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.</p>
             </div>
@@ -418,20 +852,29 @@
 
         <div class="scroll-container" id="container-despedida">
             <div class="scroll-text" id="text-despedida">
-                <p>Sé que no esperabas esto, y yo tampoco. Pasaron meses, días, semanas... y aún recuerdo aquellos momentos que me sacan una sonrisa, momentos que duelen, un dolor que he aceptado.</p>
-                
-                <p>¿Te imaginas qué hubiera pasado si todo fuera distinto? ¿Donde todo hubiera funcionado? Donde no te tuviera que escribir esto desde la distancia. Los miles de momentos que pudimos vivir, porque nuestra historia pudo y puede continuar... ninguno de los dos puede cambiar el pasado.</p>
-                
-                <p>En mi corazón no hay odio ni resentimiento por ti. A pesar de lo que lamentablemente experimenté, me hiciste más fuerte, mejoré. Me hubiera gustado que vieras mi mejor versión, la que siempre debiste merecer... he aprendido tanto.</p>
-                
-                <p>No sé si esta era la manera de aprender y valorar, pero me marcó de por vida, al igual que lo hiciste tú, con tu luz.</p>
-                
-                <p>Tal vez mis heridas no han sanado del todo, créeme que muchas veces imaginé un mensaje, una llamada... recordaba el sonido del autobús cuando paraba cerca a mi casa y sabia que eras tú, te imaginé llegando, y que toda esa incertidumbre terminaría... nunca pasó.</p>
-                
-                <p>Estoy seguro que tu enfoque y amor propio te llevarán a la cima, tienes tantas cualidades y virtudes que te harán brillar, y aunque no pueda estar ahí para verlo, me alegra saber que lo harás.</p>
-                
+                <p>Sé que no esperabas esto, y yo tampoco. Pasaron meses, días, semanas... y aún recuerdo aquellos
+                    momentos que me sacan una sonrisa, momentos que duelen, un dolor que he aceptado.</p>
+
+                <p>¿Te imaginas qué hubiera pasado si todo fuera distinto? ¿Donde todo hubiera funcionado? Donde no te
+                    tuviera que escribir esto desde la distancia. Los miles de momentos que pudimos vivir, porque
+                    nuestra historia pudo y puede continuar... ninguno de los dos puede cambiar el pasado.</p>
+
+                <p>En mi corazón no hay odio ni resentimiento por ti. A pesar de lo que lamentablemente experimenté, me
+                    hiciste más fuerte, mejoré. Me hubiera gustado que vieras mi mejor versión, la que siempre debiste
+                    merecer... he aprendido tanto.</p>
+
+                <p>No sé si esta era la manera de aprender y valorar, pero me marcó de por vida, al igual que lo hiciste
+                    tú, con tu luz.</p>
+
+                <p>Tal vez mis heridas no han sanado del todo, créeme que muchas veces imaginé un mensaje, una
+                    llamada... recordaba el sonido del autobús cuando paraba cerca a mi casa y sabia que eras tú, te
+                    imaginé llegando, y que toda esa incertidumbre terminaría... nunca pasó.</p>
+
+                <p>Estoy seguro que tu enfoque y amor propio te llevarán a la cima, tienes tantas cualidades y virtudes
+                    que te harán brillar, y aunque no pueda estar ahí para verlo, me alegra saber que lo harás.</p>
+
                 <p>No sé si estemos mejor el uno sin el otro</p>
-                
+
                 <p>No sé si este sea el final de la historia</p>
 
                 <p>No sé si en el fondo guardemos la esperanza de volver a encontranos</p>
@@ -439,20 +882,24 @@
                 <p>No sé si aún haya amor en nosotros...</p>
 
                 <p>Solo sé, que todo pasa por algo</p>
-            
+
                 <p>Sé que Dios no hace sus cosas al azar, no cruzó nuestras vidas "porque sí"</p>
-            
+
                 <p>Sé que no nos mereciamos tan dificil prueba...👼🏻</p>
 
-                <p>Tal vez nos quizó preparar para grandes cosas, para más pruebas, para vernos más fuertes, más maduros, más concientes... solo tal vez.</p>
-                
+                <p>Tal vez nos quizó preparar para grandes cosas, para más pruebas, para vernos más fuertes, más
+                    maduros, más concientes... solo tal vez.</p>
+
                 <p>Hubiera dado todo porque fuera diferente... pero ya estabas decidida en irte</p>
 
-                <p>La vida es una paradoja, trato de encontrar un "por qué", y siempre llego a la conclusión de que todo tiene su propósito.</p>
+                <p>La vida es una paradoja, trato de encontrar un "por qué", y siempre llego a la conclusión de que todo
+                    tiene su propósito.</p>
 
-                <p>Apesar de eso, en el fondo de mi corazón, una pequeña llama sigue encendida, no lo negaré, dentro de ella hay miles de esperanzas contenidas, esperando qué?... no lo sé</p>
-            
-                <p>Simplemente siguen ahí, esperando que la depara el destino, la vida, el futuro, inertes como particulas en el universo, universo que solo le da sentido si estas tu.</p>
+                <p>Apesar de eso, en el fondo de mi corazón, una pequeña llama sigue encendida, no lo negaré, dentro de
+                    ella hay miles de esperanzas contenidas, esperando qué?... no lo sé</p>
+
+                <p>Simplemente siguen ahí, esperando que la depara el destino, la vida, el futuro, inertes como
+                    particulas en el universo, universo que solo le da sentido si estas tu.</p>
             </div>
         </div>
 
@@ -472,6 +919,61 @@
     </audio>
 
     <script>
+
+        // Añadir dentro de tu etiqueta <script>
+        function typeWriterEffect(elementId, text, speed = 700) {
+            let i = 0;
+            const element = $(elementId);
+            element.innerHTML = "";
+
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Para usarlo, podrías llamarlo en el window.onload:
+        // window.onload = () => {
+        //    createParticles();
+        //    typeWriterEffect('tu-id-de-texto', 'Hola...', 150);
+        // };
+        function createParticles() {
+            const container = $('particle-container');
+            const particleCount = 150; // ¡Muchísimas más!
+            const colors = ['#ffffff', '#ffebef', '#e3f2fd', '#fff5f8'];
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                // Tamaños variados: unas muy pequeñas y otras más notables
+                const size = Math.random() * 4 + 1 + 'px';
+                particle.style.width = size;
+                particle.style.height = size;
+
+                // Posición inicial aleatoria
+                particle.style.left = Math.random() * 100 + '%';
+
+                // Color aleatorio del array
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                // Duración y retraso aleatorio para que sea un flujo constante
+                const duration = Math.random() * 5 + 5 + 's'; // Entre 5s y 10s
+                const delay = Math.random() * 10 + 's';
+
+                particle.style.animationDuration = duration;
+                particle.style.animationDelay = delay;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Ejecutar al cargar
+        window.onload = createParticles;
         const $ = id => document.getElementById(id);
         const musica = $('musica');
 
@@ -546,7 +1048,7 @@
 
                 }, 45000); // 45s de animación + 1s de margen
 
-            }, 5000);
+            }, 15000);
         }
 
         function initP3() {
