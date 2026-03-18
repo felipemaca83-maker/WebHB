@@ -14,19 +14,26 @@
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
-        body, html {
-            margin: 0; padding: 0;
+        body,
+        html {
+            margin: 0;
+            padding: 0;
             background: #000;
             color: white;
             font-family: 'Georgia', serif;
             overflow: hidden;
-            height: 100%; width: 100%;
+            height: 100%;
+            width: 100%;
         }
 
         /* --- TIPOGRAFÍAS Y EFECTOS --- */
-        h1, h2, .btn-generic {
+        h1,
+        h2,
+        .btn-generic {
             font-family: 'Caveat', cursive;
             text-shadow: 0 2px 4px rgba(0, 0, 0, .8);
         }
@@ -40,11 +47,16 @@
             filter: drop-shadow(0 0 5px rgba(255, 117, 140, 0.3));
         }
 
-        @keyframes shineText { to { background-position: 200% center; } }
+        @keyframes shineText {
+            to {
+                background-position: 200% center;
+            }
+        }
 
         /* --- ESTRUCTURA DE PANTALLAS --- */
         .screen {
-            position: fixed; inset: 0;
+            position: fixed;
+            inset: 0;
             display: none;
             flex-direction: column;
             align-items: center;
@@ -53,11 +65,16 @@
             z-index: 10;
         }
 
-        .active { display: flex; opacity: 1; }
+        .active {
+            display: flex;
+            opacity: 1;
+        }
 
         .video-background {
-            position: fixed; inset: 0;
-            width: 100%; height: 100%;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             opacity: 0;
             transition: opacity 2s ease;
@@ -65,7 +82,8 @@
         }
 
         .video-overlay {
-            position: fixed; inset: 0;
+            position: fixed;
+            inset: 0;
             background: rgba(0, 0, 0, .7);
             z-index: -4;
         }
@@ -81,74 +99,123 @@
             transition: opacity 1s ease;
         }
 
-        .foto-marco img { width: 100%; height: 75px; object-fit: cover; }
+        .foto-marco img {
+            width: 100%;
+            height: 75px;
+            object-fit: cover;
+        }
 
-        .pos1 { top: 10%; left: 10%; transform: rotate(-10deg); }
-        .pos2 { top: 25%; right: 10%; transform: rotate(15deg); }
-        .pos3 { top: 75%; left: 15%; transform: rotate(-5deg); }
-        .pos4 { top: 85%; right: 15%; transform: rotate(-12deg); }
+        .pos1 {
+            top: 10%;
+            left: 10%;
+            transform: rotate(-10deg);
+        }
+
+        .pos2 {
+            top: 25%;
+            right: 10%;
+            transform: rotate(15deg);
+        }
+
+        .pos3 {
+            top: 75%;
+            left: 15%;
+            transform: rotate(-5deg);
+        }
+
+        .pos4 {
+            top: 85%;
+            right: 15%;
+            transform: rotate(-12deg);
+        }
 
         .particle {
-            position: absolute; background: white; border-radius: 50%;
-            pointer-events: none; box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
             animation: float infinite ease-in-out;
         }
+
         /* --- NUEVOS ESTILOS PARA FONDOS DE TEXTO --- */
 
-/* Clase base para contenedores con fondo de imagen fijo */
-.bg-image-fixed {
-    background-attachment: fixed; /* La imagen se queda quieta al hacer scroll */
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
+        /* Clase base para contenedores con fondo de imagen fijo */
+        .bg-image-fixed {
+            background-attachment: fixed;
+            /* La imagen se queda quieta al hacer scroll */
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative;
+        }
 
-/* Capa oscura superpuesta para mejorar legibilidad */
-.bg-image-fixed::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.6); /* Oscurece la foto */
-    backdrop-filter: blur(3px); /* Desenfoca levemente la foto de fondo */
-    -webkit-backdrop-filter: blur(3px);
-    z-index: 1; /* Detrás del texto, delante de la imagen */
-}
+        /* Capa oscura superpuesta para mejorar legibilidad */
+        .bg-image-fixed::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Oscurece la foto */
+            backdrop-filter: blur(3px);
+            /* Desenfoca levemente la foto de fondo */
+            -webkit-backdrop-filter: blur(3px);
+            z-index: 1;
+            /* Detrás del texto, delante de la imagen */
+        }
 
-/* Asegurar que el texto esté por encima de la capa oscura */
-.scroll-text {
-    z-index: 2;
-}
+        /* Asegurar que el texto esté por encima de la capa oscura */
+        .scroll-text {
+            z-index: 2;
+        }
 
-/* ASIGNACIÓN DE FOTOS ESPECÍFICAS (Reutilizando URLs de Pantalla 1) */
+        /* ASIGNACIÓN DE FOTOS ESPECÍFICAS (Reutilizando URLs de Pantalla 1) */
 
-/* Foto para Pantalla 3 (Primer Scroll Largo) - Usamos Foto 0 */
-#container-2 {
-    background-image: url('https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T');
-}
+        /* Foto para Pantalla 3 (Primer Scroll Largo) - Usamos Foto 0 */
+        #container-2 {
+            background-image: url('https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T');
+        }
 
-/* Foto para Pantalla 5 (Despedida Final) - Usamos Foto 2 */
-#container-despedida {
-    background-image: url('https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-');
-}
+        /* Foto para Pantalla 5 (Despedida Final) - Usamos Foto 2 */
+        #container-despedida {
+            background-image: url('https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-');
+        }
 
         @keyframes float {
-            0% { transform: translateY(110vh) translateX(0) scale(1); opacity: 0; }
-            20%, 80% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) translateX(40px) scale(0.5); opacity: 0; }
+            0% {
+                transform: translateY(110vh) translateX(0) scale(1);
+                opacity: 0;
+            }
+
+            20%,
+            80% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-10vh) translateX(40px) scale(0.5);
+                opacity: 0;
+            }
         }
 
         /* --- TEXTOS Y SCROLL --- */
         .scroll-container {
-            position: absolute; inset: 0;
-            display: flex; justify-content: center;
-            opacity: 0; transition: opacity 1s ease;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease;
             overflow: hidden;
         }
 
         .scroll-text {
-            position: absolute; width: 85%; max-width: 600px;
-            top: 100%; left: 50%; transform: translateX(-50%);
+            position: absolute;
+            width: 85%;
+            max-width: 600px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
         }
 
@@ -161,6 +228,7 @@
             border: 1px solid var(--glass-border);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
         }
+
         .p2-text-base {
             font-size: 1.3rem;
             line-height: 1.8;
@@ -168,143 +236,280 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
 
-        #text-1 { font-size: 1.3rem; line-height: 1.8; color: #f0f0f0; }
-        #text-2 h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
-        #text-2 p, #text-despedida p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: #e0e0e0; }
+        #text-1 {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #f0f0f0;
+        }
 
-        @keyframes scrollUpShort { 0% { top: 100%; } 100% { top: -220%; } }
-        @keyframes scrollUpLong { 0% { top: 100%; } 100% { top: -450%; } }
+        #text-2 h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        #text-2 p,
+        #text-despedida p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #e0e0e0;
+        }
+
+        @keyframes scrollUpShort {
+            0% {
+                top: 100%;
+            }
+
+            100% {
+                top: -220%;
+            }
+        }
+
+        @keyframes scrollUpLong {
+            0% {
+                top: 100%;
+            }
+
+            100% {
+                top: -450%;
+            }
+        }
 
         /* --- BOTONES --- */
         .btn-generic {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none; padding: 12px 35px; color: white;
-            border-radius: 50px; cursor: pointer; font-size: 1.6rem;
+            border: none;
+            padding: 12px 35px;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.6rem;
             box-shadow: 0 5px 15px rgba(255, 117, 140, .4);
-            opacity: 0; display: none; transition: opacity 1s, transform 0.3s;
+            opacity: 0;
+            display: none;
+            transition: opacity 1s, transform 0.3s;
             z-index: 100;
         }
 
-        .btn-pulse { animation: pulse 2s infinite; }
-        .btn-generic:hover { transform: scale(1.1); }
+        .btn-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .btn-generic:hover {
+            transform: scale(1.1);
+        }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(255, 117, 140, 0); }
+
+            0%,
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 15px rgba(255, 117, 140, 0);
+            }
         }
 
         /* --- FLOR MÁGICA --- */
         .flower-container {
-            position: absolute; bottom: 0; width: 200px; height: 150px;
-            z-index: 5; display: flex; justify-content: center; align-items: center;
+            position: absolute;
+            bottom: 0;
+            width: 200px;
+            height: 150px;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .flower-stem {
-            fill: none; stroke: #4caf50; stroke-width: 3;
-            stroke-dasharray: 60; stroke-dashoffset: 60;
+            fill: none;
+            stroke: #4caf50;
+            stroke-width: 3;
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
             animation: growStem 1s ease-out forwards;
         }
 
-        .flower-head { opacity: 0; animation: revealHead 0.5s ease forwards 0.8s; }
-        .petal { fill: #ff85a1; stroke: #ff758c; stroke-width: 1; transform-origin: center; scale: 0; }
-        .petal-back { animation: bloom 0.8s forwards 1s; }
-        .petal-mid { animation: bloom 0.8s forwards 1.2s; }
-        .petal-center { animation: bloom 0.8s forwards 1.4s; fill: #ffb3c1; }
-        .flower-center { fill: #ffeb3b; scale: 0; animation: bloom 0.6s ease forwards 1.6s; }
+        .flower-head {
+            opacity: 0;
+            animation: revealHead 0.5s ease forwards 0.8s;
+        }
 
-        @keyframes growStem { to { stroke-dashoffset: 0; } }
-        @keyframes revealHead { to { opacity: 1; } }
+        .petal {
+            fill: #ff85a1;
+            stroke: #ff758c;
+            stroke-width: 1;
+            transform-origin: center;
+            scale: 0;
+        }
+
+        .petal-back {
+            animation: bloom 0.8s forwards 1s;
+        }
+
+        .petal-mid {
+            animation: bloom 0.8s forwards 1.2s;
+        }
+
+        .petal-center {
+            animation: bloom 0.8s forwards 1.4s;
+            fill: #ffb3c1;
+        }
+
+        .flower-center {
+            fill: #ffeb3b;
+            scale: 0;
+            animation: bloom 0.6s ease forwards 1.6s;
+        }
+
+        @keyframes growStem {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes revealHead {
+            to {
+                opacity: 1;
+            }
+        }
+
         @keyframes bloom {
-            0% { scale: 0; opacity: 0; }
-            60% { scale: 1.2; opacity: 1; }
-            100% { scale: 1; opacity: 1; }
+            0% {
+                scale: 0;
+                opacity: 0;
+            }
+
+            60% {
+                scale: 1.2;
+                opacity: 1;
+            }
+
+            100% {
+                scale: 1;
+                opacity: 1;
+            }
         }
 
         @media (max-width: 600px) {
-            #text-1, #text-2 p, #text-despedida p { font-size: 0.9rem; }
-            #text-2 h1 { font-size: 2rem; }
-            .foto-marco { width: 60px; }
+
+            #text-1,
+            #text-2 p,
+            #text-despedida p {
+                font-size: 0.9rem;
+            }
+
+            #text-2 h1 {
+                font-size: 2rem;
+            }
+
+            .foto-marco {
+                width: 60px;
+            }
         }
 
-        #video-final-container { display: none; position: fixed; inset: 0; background: #000; z-index: 500; }
+        #video-final-container {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 500;
+        }
     </style>
 </head>
 
 <body>
-<!-- PANTALLA 0: BIENVENIDA / FILTRO -->
-<div id="screen-welcome" class="screen active"> <!-- Nota: screen-start ya no debe tener la clase 'active' -->
-    <div id="welcome-particles" style="position:absolute; width:100%; height:100%; z-index: -1;"></div>
-    
-    <h1 class="glow-title" style="font-size:3rem; margin-bottom: 20px;">Hola Dayana</h1>
-    
-    <p style="font-size:1.1rem; text-align: center; padding: 0 30px; max-width: 500px; line-height: 1.6;">
-        Si es la primera vez que abres este detalle, presiona la carta. <br><br>
-        De lo contrario, si ya tienes contexto, puedes saltar directamente.
-    </p>
+    <!-- PANTALLA 0: BIENVENIDA / FILTRO -->
+    <div id="screen-welcome" class="screen active"> <!-- Nota: screen-start ya no debe tener la clase 'active' -->
+        <div id="welcome-particles" style="position:absolute; width:100%; height:100%; z-index: -1;"></div>
 
-<div style="margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
-    <!-- La carta SOLO abre el modal -->
-<!-- En tu HTML, busca el botón de la carta y cámbialo a esto: -->
-<button class="btn-generic btn-pulse" 
-        style="display: inline-block; opacity: 1; font-size: 3rem; padding: 10px 20px;" 
-        onclick="$('modal-info').style.display='flex'; $('musica-previa').play();">
-    ✉️
-</button>
+        <h1 class="glow-title" style="font-size:3rem; margin-bottom: 20px;">Hola Dayana</h1>
 
-    <!-- El botón Saltar ahora lleva a las INDICACIONES -->
-    <button class="btn-generic" style="display: inline-block; opacity: 0.8; font-size: 1.2rem;" onclick="changeScreen('screen-welcome','screen-prep')">
-        Saltar detalle ⏭️
-    </button>
-</div>
-</div>
+        <p style="font-size:1.1rem; text-align: center; padding: 0 30px; max-width: 500px; line-height: 1.6;">
+            Si es la primera vez que abres este detalle, presiona la carta. <br><br>
+            De lo contrario, si ya tienes contexto, puedes saltar directamente.
+        </p>
 
-<!-- VENTANA EMERGENTE (MODAL) CORREGIDA -->
-<div id="modal-info" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px);">
-    <div class="glass-box" style="position: relative; max-width: 400px; width: 100%; text-align: center; border: 1px solid var(--primary);">
-        
-        <!-- Botón de Cerrar (La X) -->
-        <div onclick="$('modal-info').style.display='none'" 
-             style="position: absolute; top: -15px; right: -15px; background: var(--primary); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: sans-serif; font-weight: bold; font-size: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.5); z-index: 1001;">
-            ✕
+        <div style="margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+            <!-- La carta SOLO abre el modal -->
+            <!-- En tu HTML, busca el botón de la carta y cámbialo a esto: -->
+            <button class="btn-generic btn-pulse"
+                style="display: inline-block; opacity: 1; font-size: 3rem; padding: 10px 20px;"
+                onclick="$('modal-info').style.display='flex'; $('musica-previa').play();">
+                ✉️
+            </button>
+
+            <!-- El botón Saltar ahora lleva a las INDICACIONES -->
+            <button class="btn-generic" style="display: inline-block; opacity: 0.8; font-size: 1.2rem;"
+                onclick="changeScreen('screen-welcome','screen-prep')">
+                Saltar detalle ⏭️
+            </button>
+        </div>
+    </div>
+
+    <!-- VENTANA EMERGENTE (MODAL) CORREGIDA -->
+    <div id="modal-info"
+        style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px);">
+        <div class="glass-box"
+            style="position: relative; max-width: 400px; width: 100%; text-align: center; border: 1px solid var(--primary);">
+
+            <!-- Botón de Cerrar (La X) -->
+            <div onclick="$('modal-info').style.display='none'"
+                style="position: absolute; top: -15px; right: -15px; background: var(--primary); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: sans-serif; font-weight: bold; font-size: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.5); z-index: 1001;">
+                ✕
+            </div>
+
+            <h2 style="color: var(--primary); font-family: 'Caveat', cursive; font-size: 2rem;">Nota importante</h2>
+            <p
+                style="font-family: 'Georgia', serif; font-size: 0.7rem; line-height: 1.6; color: #eee; margin-top: 10px;">
+                Inicialmente... quise crearte y regalarte este detalle por tu cumpleaños, mi error fue que me apresuré
+                tanto, y lo hice dos meses antes, en mi memoria estaba presente el día 16, con eso me bastó para iniciar
+                sin excusa.<br><br>
+                Pero, al enterarme del mes en que estaba, quedé 🤡, no se si fue la emoción del momento que me hizo
+                perder la noción del tiempo.
+                <br> <br>
+                Mi mente estaba tan nublada que solo veia el 16 de Marzo como la fecha correcta... Pero, tal vez en dos
+                meses cambien muchas cosas, tal vez no este convencido de que sea lo mas correcto, asi que; te dejaré el
+                detalle desde hoy, espero que cuando llegue el momento o te seintas preparada... lo abras, es con mucho
+                cariño. <br><br>
+                Si decides abrirlo ahora (no lo hagas), cierra esta ventana, dale al botón de "Saltar detalle" y sigue
+                las indicaciones. (Miralo en tu casa👀)<br><br>
+            </p>
+        </div>
+    </div>
+
+    <div id="screen-prep" class="screen">
+        <div id="prep-particles" style="position:absolute; width:100%; height:100%; z-index: -1;"></div>
+
+        <h1 class="glow-title" style="font-size:2.5rem; text-align: center; padding: 0 20px;">
+            Veo que elegiste ver el detalle... ✨
+        </h1>
+
+        <div class="glass-box" style="margin: 20px; max-width: 500px; text-align: left; padding: 30px;">
+            <p style="font-family: 'Georgia', serif; font-size: 1.1rem; line-height: 1.6; color: #f0f0f0;">
+                Antes de comenzar, unas pequeñas recomendaciones:
+            </p>
+            <ul style="list-style: none; padding: 0; font-size: 1rem; line-height: 2;">
+                <li>📍 Busca un lugar tranquilo (tu habitación sería ideal).</li>
+                <li>🤫 Asegúrate de que no haya mucho ruido alrededor.</li>
+                <li>☀️ Sube un poco el brillo de tu pantalla.</li>
+                <li>🔊 Ajusta el volumen (menos de la mitad está bien).</li>
+            </ul>
+            <p style="text-align: center; font-style: italic; margin-top: 20px; color: var(--secondary);">
+                Disfruta, es con mucho cariño. ❤️
+            </p>
         </div>
 
-        <h2 style="color: var(--primary); font-family: 'Caveat', cursive; font-size: 2rem;">Nota importante</h2>
-        <p style="font-family: 'Georgia', serif; font-size: 0.7rem; line-height: 1.6; color: #eee; margin-top: 10px;">
-            Inicialmente... quise crearte y regalarte este detalle por tu cumpleaños, mi error fue que me apresuré tanto, y lo hice dos meses antes, en mi memoria estaba presente el día 16, con eso me bastó para iniciar sin excusa.<br><br>
-            Pero, al enterarme del mes en que estaba, quedé 🤡, no se si fue la emoción del momento que me hizo perder la noción del tiempo. 
-        <br> <br>
-        Mi mente estaba tan nublada que solo veia el 16 de Marzo como la fecha correcta... Pero, tal vez en dos meses cambien muchas cosas, tal vez no este convencido de que sea lo mas correcto, asi que; te dejaré el detalle desde hoy, espero que cuando llegue el momento o te seintas preparada... lo abras, es con mucho cariño. <br><br>
-        Si decides abrirlo ahora (no lo hagas), cierra esta ventana, dale al botón de "Saltar detalle" y sigue las indicaciones. (Miralo en tu casa👀)<br><br>
-        </p>
+        <button class="btn-generic btn-pulse" style="display: inline-block; opacity: 1;"
+            onclick="changeScreen('screen-prep','screen-start')">
+            ¡Estoy lista! 🚀
+        </button>
     </div>
-</div>
-
-<div id="screen-prep" class="screen">
-    <div id="prep-particles" style="position:absolute; width:100%; height:100%; z-index: -1;"></div>
-    
-    <h1 class="glow-title" style="font-size:2.5rem; text-align: center; padding: 0 20px;">
-        Veo que elegiste ver el detalle... ✨
-    </h1>
-    
-    <div class="glass-box" style="margin: 20px; max-width: 500px; text-align: left; padding: 30px;">
-        <p style="font-family: 'Georgia', serif; font-size: 1.1rem; line-height: 1.6; color: #f0f0f0;">
-            Antes de comenzar, unas pequeñas recomendaciones:
-        </p>
-        <ul style="list-style: none; padding: 0; font-size: 1rem; line-height: 2;">
-            <li>📍 Busca un lugar tranquilo (tu habitación sería ideal).</li>
-            <li>🤫 Asegúrate de que no haya mucho ruido alrededor.</li>
-            <li>☀️ Sube un poco el brillo de tu pantalla.</li>
-            <li>🔊 Ajusta el volumen (menos de la mitad está bien).</li>
-        </ul>
-        <p style="text-align: center; font-style: italic; margin-top: 20px; color: var(--secondary);">
-            Disfruta, es con mucho cariño. ❤️
-        </p>
-    </div>
-
-    <button class="btn-generic btn-pulse" style="display: inline-block; opacity: 1;" onclick="changeScreen('screen-prep','screen-start')">
-        ¡Estoy lista! 🚀
-    </button>
-</div>
     <!-- PANTALLA 1: INICIO -->
     <div id="screen-start" class="screen">
         <div id="particle-container" style="position:absolute; width:100%; height:100%;"></div>
@@ -314,7 +519,8 @@
             siempre permanecen.
         </p>
         <div style="margin-top: 40px; position: relative;">
-            <button class="btn-generic btn-pulse" style="display: inline-block; opacity: 1;" onclick="changeScreen('screen-start','screen-main')">
+            <button class="btn-generic btn-pulse" style="display: inline-block; opacity: 1;"
+                onclick="changeScreen('screen-start','screen-main')">
                 Abrir detalle 🌸
             </button>
         </div>
@@ -340,10 +546,14 @@
         </video>
         <div class="video-overlay"></div>
         <div id="collage">
-            <div class="foto-marco pos1"><img src="https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T"></div>
-            <div class="foto-marco pos2"><img src="https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-"></div>
-            <div class="foto-marco pos3"><img src="https://lh3.googleusercontent.com/u/0/d/17ll_u-c7gtKxQUBSHqrxMc9pVzvOsb3D"></div>
-            <div class="foto-marco pos4"><img src="https://lh3.googleusercontent.com/u/0/d/1855o1Tz7C3tOtH5Xmn0ITz722SRWhI4R"></div>
+            <div class="foto-marco pos1"><img
+                    src="https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T"></div>
+            <div class="foto-marco pos2"><img
+                    src="https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-"></div>
+            <div class="foto-marco pos3"><img
+                    src="https://lh3.googleusercontent.com/u/0/d/17ll_u-c7gtKxQUBSHqrxMc9pVzvOsb3D"></div>
+            <div class="foto-marco pos4"><img
+                    src="https://lh3.googleusercontent.com/u/0/d/1855o1Tz7C3tOtH5Xmn0ITz722SRWhI4R"></div>
         </div>
         <div class="scroll-container" id="container-1">
             <div class="scroll-text glass-box p2-text-base" id="text-1">
@@ -369,7 +579,8 @@
             <h1 style="font-size:2.8rem;">Te mereces lo mejor✨</h1>
             <p style="color:var(--secondary); font-style:italic;">(quédate hasta el final)</p>
         </div>
-        <button class="btn-generic" id="btn-next" onclick="changeScreen('screen-main','screen-final')">Continuar ✨</button>
+        <button class="btn-generic" id="btn-next" onclick="changeScreen('screen-main','screen-final')">Continuar
+            ✨</button>
     </div>
 
     <!-- PANTALLA 3: FINAL -->
@@ -465,82 +676,89 @@
                     particulas en el universo, universo que tenia sentido cuando estabas tu.</p>
             </div>
         </div>
-        <div id="final-layout" style="display:none; opacity:0; transition: opacity 2s ease; text-align:center; flex-direction:column; justify-content:center; align-items:center; position:fixed; inset:0; background-size:cover; z-index:600;">
+        <div id="final-layout"
+            style="display:none; opacity:0; transition: opacity 2s ease; text-align:center; flex-direction:column; justify-content:center; align-items:center; position:fixed; inset:0; background-size:cover; z-index:600;">
             <h1 style="font-size:3rem; color:var(--secondary);">Feliz Cumpleaños Dayana ❤️
                 Feliz Vuelta al Sol ☀️
             </h1>
             <button class="btn-generic" onclick="redigirACancion()" style="display:inline-block; opacity:1;">
-    Un recuerdo...🎵
-</button>
+                Un recuerdo...🎵
+            </button>
         </div>
     </div>
-    <audio id="musica-previa" loop><source src="Pictures/musica.mpeg" type="audio/mpeg"></audio>
-    <audio id="musica" loop><source src="Pictures/musicados.mpeg" type="audio/mpeg"></audio>
+    <audio id="musica-previa" loop>
+        <source src="Pictures/musica.mpeg" type="audio/mpeg">
+    </audio>
+    <audio id="musica" loop>
+        <source src="Pictures/musicados.mpeg" type="audio/mpeg">
+    </audio>
 
     <script>
         const $ = id => document.getElementById(id);
         const musica = $('musica');
         const TIMING = { transition: 800, p2_delay: 15000, p2_scroll: 45000, p3_scroll: 55000, final_scroll: 110000, final_exit_delay: 77000 };
 
-function createParticles() {
-    // Agregamos 'prep-particles' a la lista
-    const containers = ['particle-container', 'welcome-particles', 'prep-particles'];
-    const colors = ['#ffffff', '#ffebef', '#e3f2fd', '#fff5f8'];
+        function createParticles() {
+            // Agregamos 'prep-particles' a la lista
+            const containers = ['particle-container', 'welcome-particles', 'prep-particles'];
+            const colors = ['#ffffff', '#ffebef', '#e3f2fd', '#fff5f8'];
 
-    containers.forEach(id => {
-        const container = $(id);
-        if (!container) return;
-        
-        for (let i = 0; i < 100; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            // ... resto del código de creación de partículas que ya tienes ...
-            const size = Math.random() * 4 + 1 + 'px';
-            p.style.width = p.style.height = size;
-            p.style.left = Math.random() * 100 + '%';
-            p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            p.style.animationDuration = Math.random() * 5 + 5 + 's';
-            p.style.animationDelay = Math.random() * 10 + 's';
-            container.appendChild(p);
+            containers.forEach(id => {
+                const container = $(id);
+                if (!container) return;
+
+                for (let i = 0; i < 100; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    // ... resto del código de creación de partículas que ya tienes ...
+                    const size = Math.random() * 4 + 1 + 'px';
+                    p.style.width = p.style.height = size;
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    p.style.animationDuration = Math.random() * 5 + 5 + 's';
+                    p.style.animationDelay = Math.random() * 10 + 's';
+                    container.appendChild(p);
+                }
+            });
         }
-    });
-}
 
-// Reemplaza tu función changeScreen por esta:
-function changeScreen(hideId, showId) {
-    const hide = $(hideId), show = $(showId);
-    const musicaPrevia = $('musica-previa');
-    const musicaPrincipal = $('musica');
+        // Reemplaza tu función changeScreen por esta:
+        function changeScreen(hideId, showId) {
+            const hide = $(hideId), show = $(showId);
+            const musicaPrevia = $('musica-previa');
+            const musicaPrincipal = $('musica');
 
-    // 1. Activar música previa al primer clic (desde Screen Welcome)
-    if (hideId === "screen-welcome") {
-        musicaPrevia.play().catch(e => console.log("Audio bloqueado aún"));
-    }
+            // 1. Activar música previa al primer clic (desde Screen Welcome)
+            if (hideId === "screen-welcome") {
+                musicaPrevia.play().catch(e => console.log("Audio bloqueado aún"));
+            }
 
-    // 2. Detener música previa suavemente al salir de indicaciones
-    if (hideId === "screen-prep" && showId === "screen-start") {
-        fadeOutAudio(musicaPrevia, 2500); // 2.5 segundos de desvanecimiento
-    }
+            // 2. Detener música previa suavemente al salir de indicaciones
+            if (hideId === "screen-prep" && showId === "screen-start") {
+                fadeOutAudio(musicaPrevia, 2500); // 2.5 segundos de desvanecimiento
+            }
 
-    // 3. Iniciar música principal en la Pantalla 1
-    if (hideId === "screen-start") {
-        musicaPrincipal.volume = 0;
-        musicaPrincipal.play();
-        fadeInAudio(musicaPrincipal, 2000); // Aparece suavemente
-        $('main-bg-video').play();
-    }
+            // 3. Iniciar música principal en la Pantalla 1
+            // ... dentro de changeScreen ...
+            if (hideId === "screen-start") {
+                // SEGURO PARA iOS: Pausamos manualmente la previa por si el fade falló
+                $('musica-previa').pause();
 
-    // Animación de transición de pantallas (lo que ya tenías)
-    hide.style.opacity = 0;
-    setTimeout(() => {
-        hide.style.display = 'none';
-        show.style.display = 'flex';
-        void show.offsetWidth;
-        show.style.opacity = 1;
-        if (showId === "screen-main") screenMainLogic.init();
-        if (showId === "screen-final") screenFinalLogic.init();
-    }, 800); // Usando el tiempo de transición estándar
-}
+                musicaPrincipal.play().catch(() => { });
+                $('main-bg-video').play();
+            }
+
+            // Animación de transición de pantallas (lo que ya tenías)
+            hide.style.opacity = 0;
+            setTimeout(() => {
+                hide.style.display = 'none';
+                show.style.display = 'flex';
+                void show.offsetWidth;
+                show.style.opacity = 1;
+                if (showId === "screen-main") screenMainLogic.init();
+                if (showId === "screen-final") screenFinalLogic.init();
+            }, 800); // Usando el tiempo de transición estándar
+        }
 
         const screenMainLogic = {
             init() {
@@ -605,7 +823,7 @@ function changeScreen(hideId, showId) {
         function startDespedida() {
             const contD = $('container-despedida'), textD = $('text-despedida');
             contD.style.display = "block";
-            
+
             setTimeout(() => {
                 contD.style.opacity = 1;
                 // La animación usa final_scroll para la VELOCIDAD
@@ -619,54 +837,62 @@ function changeScreen(hideId, showId) {
                         const final = $('final-layout');
                         final.style.backgroundImage = "url('Pictures/foto_final_dayana.jpeg')";
                         final.style.display = "flex";
-                        void final.offsetWidth; 
+                        void final.offsetWidth;
                         final.style.opacity = 1;
                     }, 1500);
                 }, TIMING.final_exit_delay); // <--- Aquí usamos el nuevo tiempo de salida
-                
+
             }, 2000);
         }
-function fadeOutAudio(audio, duration) {
-    const step = audio.volume / (duration / 100);
-    const interval = setInterval(() => {
-        if (audio.volume > step) {
-            audio.volume -= step;
-        } else {
-            audio.pause();
-            audio.volume = 1; // Reset para futuro uso
-            clearInterval(interval);
+        function fadeOutAudio(audio, duration) {
+            // Intentamos el fade normal
+            const startVolume = audio.volume;
+            const step = startVolume / (duration / 100);
+
+            const fadeInterval = setInterval(() => {
+                // Verificamos si el navegador permite cambiar el volumen
+                const prevVolume = audio.volume;
+                audio.volume = Math.max(0, audio.volume - step);
+
+                // Si el volumen no cambió (bloqueo de iOS) o llegó a 0
+                if (audio.volume === prevVolume || audio.volume <= 0) {
+                    clearInterval(fadeInterval);
+                    audio.pause();
+                    audio.currentTime = 0; // Reinicia la canción
+                    audio.volume = 1;      // Reset para futuros usos
+                }
+            }, 100);
         }
-    }, 175);
-}
 
-function fadeInAudio(audio, duration) {
-    audio.volume = 0;
-    const step = 1 / (duration / 100);
-    const interval = setInterval(() => {
-        if (audio.volume < 1 - step) {
-            audio.volume += step;
-        } else {
-            audio.volume = 1;
-            clearInterval(interval);
+        function fadeInAudio(audio, duration) {
+            audio.volume = 0;
+            const step = 1 / (duration / 100);
+            const interval = setInterval(() => {
+                if (audio.volume < 1 - step) {
+                    audio.volume += step;
+                } else {
+                    audio.volume = 1;
+                    clearInterval(interval);
+                }
+            }, 100);
         }
-    }, 100);
-}
-function redigirACancion() {
-    // 1. Bajamos el volumen de la música actual suavemente
-    const musicaPrincipal = $('musica');
-    fadeOutAudio(musicaPrincipal, 1500);
+        function redigirACancion() {
+            // 1. Bajamos el volumen de la música actual suavemente
+            const musicaPrincipal = $('musica');
+            fadeOutAudio(musicaPrincipal, 1500);
 
-    // 2. Fundido a negro de la pantalla para una transición limpia
-    document.body.style.transition = "opacity 1.5s ease";
-    document.body.style.opacity = 0;
+            // 2. Fundido a negro de la pantalla para una transición limpia
+            document.body.style.transition = "opacity 1.5s ease";
+            document.body.style.opacity = 0;
 
-    // 3. Redirección después de 1.5 segundos
-    setTimeout(() => {
-        window.location.href = "https://www.youtube.com/watch?v=iT14dRk_vYE&list=RDiT14dRk_vYE&start_radio=1";
-    }, 1500);
-}
+            // 3. Redirección después de 1.5 segundos
+            setTimeout(() => {
+                window.location.href = "https://www.youtube.com/watch?v=iT14dRk_vYE&list=RDiT14dRk_vYE&start_radio=1";
+            }, 1500);
+        }
 
         window.onload = createParticles;
     </script>
 </body>
+
 </html>
