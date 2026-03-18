@@ -10,42 +10,41 @@
         :root {
             --primary: #ff758c;
             --secondary: #ff7eb3;
+            --glass-bg: rgba(0, 0, 0, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
-        body,
-        html {
-            margin: 0;
-            padding: 0;
+        body, html {
+            margin: 0; padding: 0;
             background: #000;
             color: white;
             font-family: 'Georgia', serif;
             overflow: hidden;
-            height: 100%;
-            width: 100%;
+            height: 100%; width: 100%;
         }
 
-        h1,
-        h2,
-        .btn-generic {
+        /* --- TIPOGRAFÍAS Y EFECTOS --- */
+        h1, h2, .btn-generic {
             font-family: 'Caveat', cursive;
             text-shadow: 0 2px 4px rgba(0, 0, 0, .8);
-            opacity: 1;
-            /* Cambia de 0 a 1 */
-            display: inline-block;
-            /* Cambia de none a inline-block o block */
-
         }
 
+        .glow-title {
+            background: linear-gradient(to right, #ffffff, var(--primary), var(--secondary), #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shineText 3s linear infinite;
+            filter: drop-shadow(0 0 5px rgba(255, 117, 140, 0.3));
+        }
+
+        @keyframes shineText { to { background-position: 200% center; } }
+
+        /* --- ESTRUCTURA DE PANTALLAS --- */
         .screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; inset: 0;
             display: none;
             flex-direction: column;
             align-items: center;
@@ -54,42 +53,24 @@
             z-index: 10;
         }
 
-        .active {
-            display: flex;
-            opacity: 1;
-        }
+        .active { display: flex; opacity: 1; }
 
         .video-background {
+            position: fixed; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
             opacity: 0;
             transition: opacity 2s ease;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
             z-index: -5;
         }
 
         .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; inset: 0;
             background: rgba(0, 0, 0, .7);
             z-index: -4;
         }
 
-        /* --- FOTOS --- */
-        #collage {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            pointer-events: none;
-        }
-
+        /* --- COMPONENTES (FOTOS Y PARTÍCULAS) --- */
         .foto-marco {
             position: absolute;
             width: 75px;
@@ -100,681 +81,272 @@
             transition: opacity 1s ease;
         }
 
-        .foto-marco img {
-            width: 100%;
-            height: 75px;
-            object-fit: cover;
-        }
+        .foto-marco img { width: 100%; height: 75px; object-fit: cover; }
 
-        .pos1 {
-            top: 10%;
-            left: 10%;
-            transform: rotate(-10deg)
-        }
+        .pos1 { top: 10%; left: 10%; transform: rotate(-10deg); }
+        .pos2 { top: 25%; right: 10%; transform: rotate(15deg); }
+        .pos3 { top: 75%; left: 15%; transform: rotate(-5deg); }
+        .pos4 { top: 85%; right: 15%; transform: rotate(-12deg); }
 
-        .pos2 {
-            top: 25%;
-            right: 10%;
-            transform: rotate(15deg)
-        }
-
-        .pos3 {
-            top: 75%;
-            left: 15%;
-            transform: rotate(-5deg)
-        }
-
-        .pos4 {
-            top: 85%;
-            right: 15%;
-            transform: rotate(-12deg)
-        }
-
-        /* --- AJUSTE DE SCROLL CORREGIDO --- */
-        .scroll-container {
-            opacity: 0;
-            transition: opacity 1s ease;
-            width: 100%;
-            /* Cambiado de 90% a 100% para facilitar el centrado */
-            height: 100vh;
-            overflow: hidden;
-            position: absolute;
-            top: 0;
-            left: 0;
-            /* Aseguramos que empiece desde el borde izquierdo */
-            display: flex;
-            justify-content: center;
-            /* Centra el contenido horizontalmente */
-        }
-
-        /* Efecto de partículas sutiles */
-        #screen-start {
-            background: radial-gradient(circle at center, #1a1a40 0%, #000 100%);
-            background-size: 200% 200%;
-            animation: gradientMove 15s infinite alternate;
-            flex-direction: column;
-            /* Elementos en vertical */
-            align-items: center;
-            /* Centra horizontalmente */
-            justify-content: center;
-            /* Centra verticalmente */
-            text-align: center;
-            /* Alinea las líneas de texto al centro */
-        }
-
-        /* Animación de entrada para el texto */
-        .fade-in-text {
-            opacity: 0;
-            text-align: center;
-            transform: translateY(20px);
-            animation: fadeInUp 1.5s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Botón con efecto de pulso */
-        .btn-pulse {
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7);
-            transition: transform 0.3s ease;
-        }
-
-        .btn-pulse:hover {
-            transform: scale(1.1);
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7);
-            }
-
-            70% {
-                transform: scale(1);
-                box-shadow: 0 0 0 15px rgba(255, 117, 140, 0);
-            }
-
-            100% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(255, 117, 140, 0);
-            }
-        }
-
-        /* Partículas animadas */
         .particle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            pointer-events: none;
-            /* Añadimos un resplandor (glow) a cada partícula */
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            position: absolute; background: white; border-radius: 50%;
+            pointer-events: none; box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
             animation: float infinite ease-in-out;
         }
+        /* --- NUEVOS ESTILOS PARA FONDOS DE TEXTO --- */
+
+/* Clase base para contenedores con fondo de imagen fijo */
+.bg-image-fixed {
+    background-attachment: fixed; /* La imagen se queda quieta al hacer scroll */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+/* Capa oscura superpuesta para mejorar legibilidad */
+.bg-image-fixed::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Oscurece la foto */
+    backdrop-filter: blur(3px); /* Desenfoca levemente la foto de fondo */
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 1; /* Detrás del texto, delante de la imagen */
+}
+
+/* Asegurar que el texto esté por encima de la capa oscura */
+.scroll-text {
+    z-index: 2;
+}
+
+/* ASIGNACIÓN DE FOTOS ESPECÍFICAS (Reutilizando URLs de Pantalla 1) */
+
+/* Foto para Pantalla 3 (Primer Scroll Largo) - Usamos Foto 0 */
+#container-2 {
+    background-image: url('https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T');
+}
+
+/* Foto para Pantalla 5 (Despedida Final) - Usamos Foto 2 */
+#container-despedida {
+    background-image: url('https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-');
+}
 
         @keyframes float {
-            0% {
-                transform: translateY(110vh) translateX(0) scale(1);
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 0.8;
-            }
-
-            80% {
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: translateY(-10vh) translateX(40px) scale(0.5);
-                opacity: 0;
-            }
+            0% { transform: translateY(110vh) translateX(0) scale(1); opacity: 0; }
+            20%, 80% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) translateX(40px) scale(0.5); opacity: 0; }
         }
 
-        @keyframes gradientMove {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            100% {
-                background-position: 100% 50%;
-            }
-        }
-
-        .glow-title {
-            /* Creamos el gradiente con tus colores base */
-            background: linear-gradient(to right,
-                    #ffffff,
-                    var(--primary),
-                    var(--secondary),
-                    #ffffff);
-            background-size: 200% auto;
-
-            /* Este truco hace que el fondo solo se vea a través de las letras */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-
-            /* Animación del brillo */
-            animation: shineText 3s linear infinite, revealEffect 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-
-            /* Sombra suave para que no se pierda en el fondo */
-            filter: drop-shadow(0 0 5px rgba(255, 117, 140, 0.3));
-        }
-
-        @keyframes shineText {
-            to {
-                background-position: 200% center;
-            }
-        }
-
-        /* Ajustamos el reveal para que no choque con el gradiente */
-        @keyframes revealEffect {
-            0% {
-                opacity: 0;
-                filter: blur(10px);
-                letter-spacing: 15px;
-                transform: scale(0.8);
-            }
-
-            100% {
-                opacity: 1;
-                filter: blur(0);
-                letter-spacing: 2px;
-                transform: scale(1);
-            }
-        }
-
-        .glow-title:hover {
-            filter: drop-shadow(0 0 15px var(--primary));
-            transition: filter 0.5s ease;
+        /* --- TEXTOS Y SCROLL --- */
+        .scroll-container {
+            position: absolute; inset: 0;
+            display: flex; justify-content: center;
+            opacity: 0; transition: opacity 1s ease;
+            overflow: hidden;
         }
 
         .scroll-text {
-            position: absolute;
-            width: 85%;
-            /* Ancho del bloque de texto */
-            max-width: 600px;
-            /* Evita que el cuadro sea demasiado ancho en PC */
-            top: 100%;
-            left: 50%;
-            /* Lo movemos al centro */
-            transform: translateX(-50%);
-            /* Truco para centrar perfectamente un elemento absoluto */
+            position: absolute; width: 85%; max-width: 600px;
+            top: 100%; left: 50%; transform: translateX(-50%);
             text-align: center;
         }
 
-        /* --- BOTONES --- */
-        .btn-generic {
-
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            padding: 12px 35px;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.6rem;
-            box-shadow: 0 5px 15px rgba(255, 117, 140, .4);
-            opacity: 0;
-            display: none;
-            transition: opacity 1s ease;
-            z-index: 100;
-            position: relative;
-
+        .glass-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 40px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
         }
-
-        #fixed-message {
-            display: none;
-            opacity: 0;
-            text-align: center;
-            transition: opacity 1s ease;
-            z-index: 20;
-        }
-
-        #text-1 {
-            width: 100%;
-            /* Ya está limitado por el padre .scroll-text */
-            margin: 0 auto;
+        .p2-text-base {
             font-size: 1.3rem;
-            /* Subido de 0.7rem para que sea legible */
             line-height: 1.8;
             color: #f0f0f0;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-            /* Sombra más fuerte para resaltar */
-            text-align: center;
-            /* --- EL CUADRO DE TEXTO (Efecto Vidrio) --- */
-            background: rgba(0, 0, 0, 0.4);
-            /* Fondo oscuro semitransparente */
-            backdrop-filter: blur(8px);
-            /* Desenfoca el video de fondo */
-            -webkit-backdrop-filter: blur(8px);
-            /* Soporte para Safari */
-            padding: 40px 20px;
-            /* Espacio interno para que el texto respire */
-            border-radius: 20px;
-            /* Bordes redondeados elegantes */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            /* Borde casi invisible */
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-            /* Sombra para dar profundidad */
         }
 
-        #text-1 p {
-            margin-bottom: 2rem;
-            text-align: center;
+        #text-1 { font-size: 1.3rem; line-height: 1.8; color: #f0f0f0; }
+        #text-2 h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+        #text-2 p, #text-despedida p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: #e0e0e0; }
+
+        @keyframes scrollUpShort { 0% { top: 100%; } 100% { top: -220%; } }
+        @keyframes scrollUpLong { 0% { top: 100%; } 100% { top: -450%; } }
+
+        /* --- BOTONES --- */
+        .btn-generic {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none; padding: 12px 35px; color: white;
+            border-radius: 50px; cursor: pointer; font-size: 1.6rem;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, .4);
+            opacity: 0; display: none; transition: opacity 1s, transform 0.3s;
+            z-index: 100;
         }
 
-        /* --- TEXTO PANTALLA 3 (Alineación y Centrado) --- */
-        #text-2 {
-            width: 100%;
-            text-align: center;
+        .btn-pulse { animation: pulse 2s infinite; }
+        .btn-generic:hover { transform: scale(1.1); }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(255, 117, 140, 0); }
         }
 
-        #text-2 h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
-
-        #text-2 p {
-            font-size: 1.3rem;
-            /* Tamaño equilibrado */
-            line-height: 1.8;
-            margin: 0 auto;
-            width: 85%;
-            text-align: center;
-        }
-
-        #text-despedida {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #text-despedida p {
-            font-size: 1.1rem !important;
-            /* Tamaño tipo carta, mucho más fino */
-            line-height: 1.8;
-            padding: 0 10%;
-            width: 100%;
-            max-width: 700px;
-            /* Evita que el texto sea demasiado ancho en PC */
-            margin: 0 auto 1.5rem auto;
-            /* Espacio entre párrafos */
-            text-align: center;
-            color: #e0e0e0;
-        }
-
-        #final-layout {
-            display: none;
-            position: fixed;
-            /* Asegura que cubra toda la pantalla */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: 600;
-        }
-
-        /* Para el primer texto (más corto) */
-        @keyframes scrollUpShort {
-            0% {
-                top: 100%;
-            }
-
-            100% {
-                top: -200%;
-            }
-
-            /* Menos recorrido para que no corra tanto */
-        }
-
-        /* Para el texto de despedida (largo) */
-        @keyframes scrollUpLong {
-            0% {
-                top: 100%;
-            }
-
-            100% {
-                top: -400%;
-            }
-
-            /* Mucho más recorrido para que salga todo */
-        }
-
-        /* Animación de revelado con expansión */
-        .reveal-text {
-            opacity: 0;
-            filter: blur(10px);
-            letter-spacing: 10px;
-            animation: revealEffect 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        @keyframes revealEffect {
-            0% {
-                opacity: 0;
-                filter: blur(10px);
-                letter-spacing: 10px;
-                transform: scale(0.9);
-            }
-
-            100% {
-                opacity: 1;
-                filter: blur(0);
-                letter-spacing: 2px;
-                transform: scale(1);
-            }
-        }
-
-        /* --- ESTILOS DE LA FLOR MÁGICA --- */
-
+        /* --- FLOR MÁGICA --- */
         .flower-container {
-            position: absolute;
-            bottom: 0;
-            /* Anclado al borde inferior */
-            width: 200px;
-            /* Tamaño de la flor completa */
-            height: 150px;
-            /* Menos altura para que el tallo empiece fuera */
-            z-index: 5;
-            /* Por delante de las partículas, detrás del texto */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: visible;
-            /* Para que el tallo crezca desde abajo */
+            position: absolute; bottom: 0; width: 200px; height: 150px;
+            z-index: 5; display: flex; justify-content: center; align-items: center;
         }
 
-        /* El SVG de la flor */
-        .flower-svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Tallo: Crece rápidamente desde abajo */
         .flower-stem {
-            fill: none;
-            stroke: #4caf50;
-            /* Verde tallo */
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-dasharray: 60;
-            /* Longitud del tallo */
-            stroke-dashoffset: 60;
-            /* Oculto inicialmente */
+            fill: none; stroke: #4caf50; stroke-width: 3;
+            stroke-dasharray: 60; stroke-dashoffset: 60;
             animation: growStem 1s ease-out forwards;
-            /* Más rápido y cinemático */
         }
 
-        @keyframes growStem {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
+        .flower-head { opacity: 0; animation: revealHead 0.5s ease forwards 0.8s; }
+        .petal { fill: #ff85a1; stroke: #ff758c; stroke-width: 1; transform-origin: center; scale: 0; }
+        .petal-back { animation: bloom 0.8s forwards 1s; }
+        .petal-mid { animation: bloom 0.8s forwards 1.2s; }
+        .petal-center { animation: bloom 0.8s forwards 1.4s; fill: #ffb3c1; }
+        .flower-center { fill: #ffeb3b; scale: 0; animation: bloom 0.6s ease forwards 1.6s; }
 
-        /* Cabeza de la flor (Capullo): Se revela al final del tallo */
-        .flower-head {
-            opacity: 0;
-            animation: revealHead 0.5s ease forwards;
-            animation-delay: 0.8s;
-            /* Espera a que el tallo casi termine */
-        }
-
-        @keyframes revealHead {
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Pétalos básicos */
-        .petal {
-            fill: #ff85a1;
-            /* Rosa base */
-            stroke: #ff758c;
-            /* Rosa borde */
-            stroke-width: 1;
-            transform-origin: center center;
-            scale: 0;
-            /* Ocultos initially */
-        }
-
-        /* Animación de Florecimiento Dramático y Rápido */
-        .petal-back {
-            animation: bloom 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-            animation-delay: 1s;
-        }
-
-        .petal-mid {
-            animation: bloom 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-            animation-delay: 1.2s;
-        }
-
-        .petal-center {
-            animation: bloomCentral 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-            animation-delay: 1.4s;
-            fill: #ffb3c1;
-        }
-
-        /* Más claro */
-
+        @keyframes growStem { to { stroke-dashoffset: 0; } }
+        @keyframes revealHead { to { opacity: 1; } }
         @keyframes bloom {
-            0% {
-                scale: 0;
-                transform: rotate(0);
-                opacity: 0;
-            }
-
-            60% {
-                scale: 1.2;
-                opacity: 1;
-                filter: brightness(1.2);
-            }
-
-            100% {
-                scale: 1;
-                transform: rotate(inherit);
-                opacity: 1;
-            }
-        }
-
-        @keyframes bloomCentral {
-            0% {
-                scale: 0;
-                opacity: 0;
-            }
-
-            60% {
-                scale: 1.3;
-                opacity: 1;
-                filter: brightness(1.3);
-            }
-
-            100% {
-                scale: 1;
-                opacity: 1;
-            }
-        }
-
-        /* Centro de la flor */
-        .flower-center {
-            fill: #ffeb3b;
-            /* Amarillo centro */
-            scale: 0;
-            animation: bloomCentral 0.6s ease forwards;
-            animation-delay: 1.6s;
-        }
-
-        /* Destello de luz al florecer */
-        .flower-flash {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            filter: blur(10px);
-            animation: flashBloom 0.8s ease-out forwards;
-            animation-delay: 1.5s;
-            /* En el momento cumbre del florecimiento */
-            pointer-events: none;
-        }
-
-        @keyframes flashBloom {
-            0% {
-                opacity: 0;
-                scale: 1;
-            }
-
-            50% {
-                opacity: 0.8;
-                scale: 2.5;
-            }
-
-            100% {
-                opacity: 0;
-                scale: 3;
-            }
-        }
-
-        /* Efecto de resplandor suave para el título */
-        .glow-title {
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
-                0 0 20px rgba(255, 117, 140, 0.3);
-        }
-
-        /* Subtítulo con retraso */
-        .subtitle-fade {
-            opacity: 0;
-            animation: fadeInSimple 2s ease forwards;
-            animation-delay: 1.5s;
-        }
-
-        @keyframes fadeInSimple {
-            to {
-                opacity: 0.8;
-            }
+            0% { scale: 0; opacity: 0; }
+            60% { scale: 1.2; opacity: 1; }
+            100% { scale: 1; opacity: 1; }
         }
 
         @media (max-width: 600px) {
-            #text-1 {
-                font-size: 0.9rem;
-                /* Tamaño optimizado para móvil */
-                width: 100%;
-                text-align: center;
-            }
-
-            .scroll-text {
-                width: 90%;
-                /* En móviles le damos un poco más de espacio a los lados */
-            }
-
-            #text-2 p {
-                font-size: 0.9rem;
-            }
-
-            #text-despedida p {
-                font-size: 0.9rem;
-                /* En móviles el texto largo debe ser más pequeño aún */
-                line-height: 1.8;
-            }
-
-            #text-2 h1 {
-                font-size: 2rem;
-            }
-
-            .foto-marco {
-                width: 60px;
-            }
+            #text-1, #text-2 p, #text-despedida p { font-size: 0.9rem; }
+            #text-2 h1 { font-size: 2rem; }
+            .foto-marco { width: 60px; }
         }
 
-        #video-final-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 500;
-        }
+        #video-final-container { display: none; position: fixed; inset: 0; background: #000; z-index: 500; }
     </style>
 </head>
 
 <body>
+<!-- PANTALLA 0: BIENVENIDA / FILTRO -->
+<div id="screen-welcome" class="screen active"> <!-- Nota: screen-start ya no debe tener la clase 'active' -->
+    <div id="welcome-particles" style="position:absolute; width:100%; height:100%; z-index: -1;"></div>
+    
+    <h1 class="glow-title" style="font-size:3rem; margin-bottom: 20px;">Hola Dayana</h1>
+    
+    <p style="font-size:1.1rem; text-align: center; padding: 0 30px; max-width: 500px; line-height: 1.6;">
+        Si es la primera vez que abres este detalle, presiona la carta. <br><br>
+        De lo contrario, si ya tienes contexto, puedes saltar directamente.
+    </p>
 
-    <div id="screen-start" class="screen active">
+<div style="margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <!-- La carta SOLO abre el modal -->
+<!-- En tu HTML, busca el botón de la carta y cámbialo a esto: -->
+<button class="btn-generic btn-pulse" 
+        style="display: inline-block; opacity: 1; font-size: 3rem; padding: 10px 20px;" 
+        onclick="$('modal-info').style.display='flex'; $('musica-previa').play();">
+    ✉️
+</button>
+
+    <!-- El botón Saltar ahora lleva a las INDICACIONES -->
+    <button class="btn-generic" style="display: inline-block; opacity: 0.8; font-size: 1.2rem;" onclick="changeScreen('screen-welcome','screen-prep')">
+        Saltar detalle ⏭️
+    </button>
+</div>
+</div>
+
+<!-- VENTANA EMERGENTE (MODAL) CORREGIDA -->
+<div id="modal-info" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px);">
+    <div class="glass-box" style="position: relative; max-width: 400px; width: 100%; text-align: center; border: 1px solid var(--primary);">
+        
+        <!-- Botón de Cerrar (La X) -->
+        <div onclick="$('modal-info').style.display='none'" 
+             style="position: absolute; top: -15px; right: -15px; background: var(--primary); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: sans-serif; font-weight: bold; font-size: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.5); z-index: 1001;">
+            ✕
+        </div>
+
+        <h2 style="color: var(--primary); font-family: 'Caveat', cursive; font-size: 2rem;">Nota importante</h2>
+        <p style="font-family: 'Georgia', serif; font-size: 0.7rem; line-height: 1.6; color: #eee; margin-top: 10px;">
+            Inicialmente... quise crearte y regalarte este detalle por tu cumpleaños, mi error fue que me apresuré tanto, y lo hice dos meses antes, en mi memoria estaba presente el día 16, con eso me bastó para iniciar sin excusa.<br><br>
+            Pero, al enterarme del mes en que estaba, quedé 🤡, no se si fue la emoción del momento que me hizo perder la noción del tiempo. 
+        <br> <br>
+        Mi mente estaba tan nublada que solo veia el 16 de Marzo como la fecha correcta... Pero, tal vez en dos meses cambien muchas cosas, tal vez no este convencido de que sea lo mas correcto, asi que; te dejaré el detalle desde hoy, espero que cuando llegue el momento o te seintas preparada... lo abras, es con mucho cariño. <br><br>
+        Si decides abrirlo ahora (no lo hagas), cierra esta ventana, dale al botón de "Saltar detalle" y sigue las indicaciones. (Miralo en tu casa👀)<br><br>
+        </p>
+    </div>
+</div>
+
+<div id="screen-prep" class="screen">
+    <div id="prep-particles" style="position:absolute; width:100%; height:100%; z-index: -1;"></div>
+    
+    <h1 class="glow-title" style="font-size:2.5rem; text-align: center; padding: 0 20px;">
+        Veo que elegiste ver el detalle... ✨
+    </h1>
+    
+    <div class="glass-box" style="margin: 20px; max-width: 500px; text-align: left; padding: 30px;">
+        <p style="font-family: 'Georgia', serif; font-size: 1.1rem; line-height: 1.6; color: #f0f0f0;">
+            Antes de comenzar, unas pequeñas recomendaciones:
+        </p>
+        <ul style="list-style: none; padding: 0; font-size: 1rem; line-height: 2;">
+            <li>📍 Busca un lugar tranquilo (tu habitación sería ideal).</li>
+            <li>🤫 Asegúrate de que no haya mucho ruido alrededor.</li>
+            <li>☀️ Sube un poco el brillo de tu pantalla.</li>
+            <li>🔊 Ajusta el volumen (menos de la mitad está bien).</li>
+        </ul>
+        <p style="text-align: center; font-style: italic; margin-top: 20px; color: var(--secondary);">
+            Disfruta, es con mucho cariño. ❤️
+        </p>
+    </div>
+
+    <button class="btn-generic btn-pulse" style="display: inline-block; opacity: 1;" onclick="changeScreen('screen-prep','screen-start')">
+        ¡Estoy lista! 🚀
+    </button>
+</div>
+    <!-- PANTALLA 1: INICIO -->
+    <div id="screen-start" class="screen">
         <div id="particle-container" style="position:absolute; width:100%; height:100%;"></div>
-
-        <h1 class="reveal-text glow-title"
-            style="font-size:3.5rem; margin-bottom: 10px; animation-delay: 1.5s; opacity: 0; position: relative;">
-            Hola Dayana...
-        </h1>
-
-        <p class="subtitle-fade"
-            style="font-size:1.0rem; font-style: italic; font-family: 'Georgia', serif; animation-delay: 3s; opacity: 0;">
+        <h1 class="glow-title" style="font-size:3.5rem; margin-bottom: 10px; position: relative;">Dayana...</h1>
+        <p style="font-size:1rem; font-style: italic; opacity: 0.8; text-align: center; padding: 0 20px;">
             Hoy es un día muy especial, y aunque el tiempo y la distancia hayan cambiado muchas cosas, hay recuerdos que
             siempre permanecen.
         </p>
-
-        <div class="fade-in-text" style="animation-delay: 5s; margin-top: 40px; opacity: 0; position: relative;">
-            <button class="btn-generic btn-pulse" style="display: inline-block; opacity: 1;"
-                onclick="changeScreen('screen-start','screen-main')">
+        <div style="margin-top: 40px; position: relative;">
+            <button class="btn-generic btn-pulse" style="display: inline-block; opacity: 1;" onclick="changeScreen('screen-start','screen-main')">
                 Abrir detalle 🌸
             </button>
         </div>
-
         <div class="flower-container">
-            <svg class="flower-svg" viewBox="0 0 100 100">
+            <svg class="flower-svg" viewBox="0 0 100 100" width="100%" height="100%">
                 <path class="flower-stem" d="M50,100 C50,80 45,70 50,50" />
-
                 <g class="flower-head">
                     <ellipse class="petal petal-back" cx="35" cy="45" rx="10" ry="15" transform="rotate(-30 35 45)" />
                     <ellipse class="petal petal-back" cx="65" cy="45" rx="10" ry="15" transform="rotate(30 65 45)" />
-
                     <ellipse class="petal petal-mid" cx="42" cy="52" rx="12" ry="18" transform="rotate(-15 42 52)" />
                     <ellipse class="petal petal-mid" cx="58" cy="52" rx="12" ry="18" transform="rotate(15 58 52)" />
-
                     <ellipse class="petal petal-center" cx="50" cy="58" rx="15" ry="22" />
-
                     <circle class="flower-center" cx="50" cy="58" r="5" />
                 </g>
             </svg>
-            <div class="flower-flash"></div>
         </div>
     </div>
 
+    <!-- PANTALLA 2: MAIN -->
     <div id="screen-main" class="screen">
         <video class="video-background" autoplay muted loop playsinline id="main-bg-video">
             <source src="Pictures/regalo.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
-
         <div id="collage">
-            <div class="foto-marco pos1"><img
-                    src="https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T"></div>
-            <div class="foto-marco pos2"><img
-                    src="https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-"></div>
-            <div class="foto-marco pos3"><img
-                    src="https://lh3.googleusercontent.com/u/0/d/17ll_u-c7gtKxQUBSHqrxMc9pVzvOsb3D"></div>
-            <div class="foto-marco pos4"><img
-                    src="https://lh3.googleusercontent.com/u/0/d/1855o1Tz7C3tOtH5Xmn0ITz722SRWhI4R"></div>
+            <div class="foto-marco pos1"><img src="https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T"></div>
+            <div class="foto-marco pos2"><img src="https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-"></div>
+            <div class="foto-marco pos3"><img src="https://lh3.googleusercontent.com/u/0/d/17ll_u-c7gtKxQUBSHqrxMc9pVzvOsb3D"></div>
+            <div class="foto-marco pos4"><img src="https://lh3.googleusercontent.com/u/0/d/1855o1Tz7C3tOtH5Xmn0ITz722SRWhI4R"></div>
         </div>
-
         <div class="scroll-container" id="container-1">
-            <div class="scroll-text" id="text-1">
+            <div class="scroll-text glass-box p2-text-base" id="text-1">
                 Hoy quiero desearte un feliz cumpleaños de una manera especial, como tanto te gusta...<br><br><br>Aunque
                 estemos distanciados,
                 quiero que sepas que festejo cada uno de tus logros en silencio.<br><br><br>Conozco de cerca el esfuerzo
@@ -793,23 +365,19 @@
                 lluevan bendiciones y cosas hermosas.<br><br><br>
             </div>
         </div>
-
-        <div id="fixed-message">
-            <h1 style="font-size:2.8rem;">Te mereces lo mejor✨<br>Nunca lo olvides</h1>
+        <div id="fixed-message" style="display:none; opacity:0; text-align:center;">
+            <h1 style="font-size:2.8rem;">Te mereces lo mejor✨</h1>
             <p style="color:var(--secondary); font-style:italic;">(quédate hasta el final)</p>
         </div>
-        <button class="btn-generic" id="btn-next" onclick="changeScreen('screen-main','screen-final')"
-            style="margin: 0 auto;">
-            Continuar ✨
-        </button>
+        <button class="btn-generic" id="btn-next" onclick="changeScreen('screen-main','screen-final')">Continuar ✨</button>
     </div>
 
+    <!-- PANTALLA 3: FINAL -->
     <div id="screen-final" class="screen" style="background:radial-gradient(circle,#1a1a2e,#000);">
-
-        <div class="scroll-container" id="container-2">
-            <div class="scroll-text" id="text-2">
+        <div class="scroll-container bg-image-fixed" id="container-2">
+            <div class="scroll-text glass-box" id="text-2">
                 <h1>Antes de terminar...</h1>
-                <p>El paso del tiempo me ha hecho darme cuenta de que la vida está repleta de sorpresas, de pequeños
+                <p>El paso del tiempo me ha hecho dar cuenta de que la vida está repleta de sorpresas, de pequeños
                     detalles de grandes efectos, pero sobre todo de personas que dan giros inesperados a
                     nuestras historias, como tú.<br><br><br>
 
@@ -839,19 +407,14 @@
                     Gracias por ser parte de mi historia y por permitirme ser parte de la tuya.</p>
             </div>
         </div>
-
-        <button class="btn-generic" id="btn-play" onclick="playRegalo()">
-            📹▶️
-        </button>
-
+        <button class="btn-generic" id="btn-play" onclick="playRegalo()">📹▶️</button>
         <div id="video-final-container">
             <video id="video-regalo" muted playsinline style="width:100%;height:100%;object-fit:contain;">
                 <source src="Pictures/fondo.mp4" type="video/mp4">
             </video>
         </div>
-
-        <div class="scroll-container" id="container-despedida">
-            <div class="scroll-text" id="text-despedida">
+        <div class="scroll-container bg-image-fixed" id="container-despedida">
+            <div class="scroll-text glass-box" id="text-despedida">
                 <p>Sé que no esperabas esto, y yo tampoco. Pasaron meses, días, semanas... y aún recuerdo aquellos
                     momentos que me sacan una sonrisa, momentos que duelen, un dolor que he aceptado.</p>
 
@@ -890,249 +453,220 @@
                 <p>Tal vez nos quizó preparar para grandes cosas, para más pruebas, para vernos más fuertes, más
                     maduros, más concientes... solo tal vez.</p>
 
-                <p>Hubiera dado todo porque fuera diferente... pero ya estabas decidida en irte</p>
+                <p>Hubiera dado todo porque fuera diferente... pero ya estabas decidida en irte.</p>
 
                 <p>La vida es una paradoja, trato de encontrar un "por qué", y siempre llego a la conclusión de que todo
                     tiene su propósito.</p>
 
                 <p>Apesar de eso, en el fondo de mi corazón, una pequeña llama sigue encendida, no lo negaré, dentro de
-                    ella hay miles de esperanzas contenidas, esperando qué?... no lo sé</p>
+                    ella hay miles de esperanzas contenidas, esperando qué?... no lo sé.</p>
 
                 <p>Simplemente siguen ahí, esperando que la depara el destino, la vida, el futuro, inertes como
-                    particulas en el universo, universo que solo le da sentido si estas tu.</p>
+                    particulas en el universo, universo que tenia sentido cuando estabas tu.</p>
             </div>
         </div>
-
-        <div id="final-layout" style="display:none; opacity:0; transition: opacity 2s ease;">
-            <h1 style="font-size:3rem; color:var(--secondary); margin-bottom:30px; position:relative;">
-                Feliz Cumpleaños Dayana, <br> Feliz Vuelta al Sol ❤️
+        <div id="final-layout" style="display:none; opacity:0; transition: opacity 2s ease; text-align:center; flex-direction:column; justify-content:center; align-items:center; position:fixed; inset:0; background-size:cover; z-index:600;">
+            <h1 style="font-size:3rem; color:var(--secondary);">Feliz Cumpleaños Dayana ❤️
+                Feliz Vuelta al Sol ☀️
             </h1>
-            <button class="btn-generic" id="btn-salir" onclick="location.reload()"
-                style="display:inline-block; opacity:1; position:relative;">
-                Salir 🌸
-            </button>
+            <button class="btn-generic" onclick="redigirACancion()" style="display:inline-block; opacity:1;">
+    Un recuerdo...🎵
+</button>
         </div>
     </div>
-
-    <audio id="musica" loop>
-        <source src="Pictures/musica.mpeg" type="audio/mpeg">
-    </audio>
+    <audio id="musica-previa" loop><source src="Pictures/musica.mpeg" type="audio/mpeg"></audio>
+    <audio id="musica" loop><source src="Pictures/musicados.mpeg" type="audio/mpeg"></audio>
 
     <script>
-
-        // Añadir dentro de tu etiqueta <script>
-        function typeWriterEffect(elementId, text, speed = 700) {
-            let i = 0;
-            const element = $(elementId);
-            element.innerHTML = "";
-
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Para usarlo, podrías llamarlo en el window.onload:
-        // window.onload = () => {
-        //    createParticles();
-        //    typeWriterEffect('tu-id-de-texto', 'Hola...', 150);
-        // };
-        function createParticles() {
-            const container = $('particle-container');
-            const particleCount = 150; // ¡Muchísimas más!
-            const colors = ['#ffffff', '#ffebef', '#e3f2fd', '#fff5f8'];
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-
-                // Tamaños variados: unas muy pequeñas y otras más notables
-                const size = Math.random() * 4 + 1 + 'px';
-                particle.style.width = size;
-                particle.style.height = size;
-
-                // Posición inicial aleatoria
-                particle.style.left = Math.random() * 100 + '%';
-
-                // Color aleatorio del array
-                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
-                // Duración y retraso aleatorio para que sea un flujo constante
-                const duration = Math.random() * 5 + 5 + 's'; // Entre 5s y 10s
-                const delay = Math.random() * 10 + 's';
-
-                particle.style.animationDuration = duration;
-                particle.style.animationDelay = delay;
-
-                container.appendChild(particle);
-            }
-        }
-
-        // Ejecutar al cargar
-        window.onload = createParticles;
         const $ = id => document.getElementById(id);
         const musica = $('musica');
+        const TIMING = { transition: 800, p2_delay: 15000, p2_scroll: 45000, p3_scroll: 55000, final_scroll: 110000, final_exit_delay: 77000 };
 
-        function changeScreen(hideId, showId) {
-            if (hideId === "screen-start") {
-                musica.play().catch(() => { });
-                $('main-bg-video').play();
-            }
-            const hide = $(hideId);
-            const show = $(showId);
-            hide.style.opacity = 0;
+function createParticles() {
+    // Agregamos 'prep-particles' a la lista
+    const containers = ['particle-container', 'welcome-particles', 'prep-particles'];
+    const colors = ['#ffffff', '#ffebef', '#e3f2fd', '#fff5f8'];
 
-            setTimeout(() => {
-                hide.style.display = 'none';
-                show.style.display = 'flex';
-                show.style.opacity = 1;
-
-                if (showId === "screen-main") initP2();
-                if (showId === "screen-final") initP3();
-            }, 800);
+    containers.forEach(id => {
+        const container = $(id);
+        if (!container) return;
+        
+        for (let i = 0; i < 100; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            // ... resto del código de creación de partículas que ya tienes ...
+            const size = Math.random() * 4 + 1 + 'px';
+            p.style.width = p.style.height = size;
+            p.style.left = Math.random() * 100 + '%';
+            p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            p.style.animationDuration = Math.random() * 5 + 5 + 's';
+            p.style.animationDelay = Math.random() * 10 + 's';
+            container.appendChild(p);
         }
+    });
+}
 
-        function initP2() {
-            // 1. Mostrar video de fondo
-            setTimeout(() => $('main-bg-video').style.opacity = 1, 100);
+// Reemplaza tu función changeScreen por esta:
+function changeScreen(hideId, showId) {
+    const hide = $(hideId), show = $(showId);
+    const musicaPrevia = $('musica-previa');
+    const musicaPrincipal = $('musica');
 
-            // 2. Fotos en cascada
-            document.querySelectorAll('.foto-marco').forEach((f, i) => {
-                setTimeout(() => f.style.opacity = 1, 300 + (i * 2000));
-            });
+    // 1. Activar música previa al primer clic (desde Screen Welcome)
+    if (hideId === "screen-welcome") {
+        musicaPrevia.play().catch(e => console.log("Audio bloqueado aún"));
+    }
 
-            // 3. Inicio del Scroll
-            setTimeout(() => {
-                const cont = $('container-1');
-                const text = $('text-1');
-                cont.style.opacity = 1;
+    // 2. Detener música previa suavemente al salir de indicaciones
+    if (hideId === "screen-prep" && showId === "screen-start") {
+        fadeOutAudio(musicaPrevia, 2500); // 2.5 segundos de desvanecimiento
+    }
 
-                // Duración de 45s: Equilibrio entre lectura cómoda y fluidez
-                text.style.animation = "scrollUpShort 50s linear forwards";
+    // 3. Iniciar música principal en la Pantalla 1
+    if (hideId === "screen-start") {
+        musicaPrincipal.volume = 0;
+        musicaPrincipal.play();
+        fadeInAudio(musicaPrincipal, 2000); // Aparece suavemente
+        $('main-bg-video').play();
+    }
 
-                // --- CÁLCULO DE RECORRIDO COMPLETO ---
-                // Esperamos a que el texto termine su trayectoria hacia arriba (45s)
-                // Agregamos 1s extra para que el "adiós" visual sea total
+    // Animación de transición de pantallas (lo que ya tenías)
+    hide.style.opacity = 0;
+    setTimeout(() => {
+        hide.style.display = 'none';
+        show.style.display = 'flex';
+        void show.offsetWidth;
+        show.style.opacity = 1;
+        if (showId === "screen-main") screenMainLogic.init();
+        if (showId === "screen-final") screenFinalLogic.init();
+    }, 800); // Usando el tiempo de transición estándar
+}
+
+        const screenMainLogic = {
+            init() {
+                setTimeout(() => $('main-bg-video').style.opacity = 1, 100);
+                document.querySelectorAll('.foto-marco').forEach((f, i) => setTimeout(() => f.style.opacity = 1, 300 + (i * 2000)));
                 setTimeout(() => {
-                    // Desvanecemos el contenedor suavemente una vez el texto salió por arriba
-                    cont.style.opacity = 0;
-
+                    const cont = $('container-1'), text = $('text-1');
+                    cont.style.opacity = 1;
+                    text.style.animation = `scrollUpShort ${TIMING.p2_scroll / 1000 + 5}s linear forwards`;
+                    setTimeout(() => this.showFixed(), TIMING.p2_scroll);
+                }, TIMING.p2_delay);
+            },
+            showFixed() {
+                const cont = $('container-1'), fixed = $('fixed-message'), btn = $('btn-next');
+                cont.style.opacity = 0;
+                setTimeout(() => {
+                    cont.style.display = 'none';
+                    fixed.style.display = 'block';
+                    setTimeout(() => fixed.style.opacity = 1, 100);
                     setTimeout(() => {
-                        cont.style.display = 'none';
-
-                        // Aparece el mensaje fijo "Te mereces lo mejor..."
-                        const fixed = $('fixed-message');
-                        fixed.style.display = 'block';
-                        setTimeout(() => fixed.style.opacity = 1, 100);
-
-                        // El mensaje se queda 5 segundos para cerrar la idea
+                        fixed.style.opacity = 0;
                         setTimeout(() => {
-                            fixed.style.opacity = 0;
+                            fixed.style.display = 'none';
+                            btn.style.display = 'block';
+                            void btn.offsetWidth; btn.style.opacity = 1;
+                        }, 1000);
+                    }, 5000);
+                }, 1000);
+            }
+        };
 
-                            setTimeout(() => {
-                                fixed.style.display = 'none';
-
-                                // Aparece el botón final de esta sección
-                                const btnNext = $('btn-next');
-                                btnNext.style.display = 'block';
-                                void btnNext.offsetWidth;
-                                btnNext.style.opacity = 1;
-                            }, 1000);
-                        }, 5000);
-
-                    }, 1000);
-
-                }, 45000); // 45s de animación + 1s de margen
-
-            }, 15000);
-        }
-
-        function initP3() {
-            // 1. Pausa inicial breve para que el usuario se sitúe en la nueva pantalla
-            setTimeout(() => {
-                const cont = $('container-2');
-                const text = $('text-2');
-                cont.style.opacity = 1;
-
-                // Duración de 55s para este mensaje profundo y extenso
-                text.style.animation = "scrollUpShort 60s linear forwards";
-
-                // --- CÁLCULO DE RECORRIDO COMPLETO ---
-                // Esperamos a que el texto termine de subir y salir de pantalla (55s + 1s de margen)
+        const screenFinalLogic = {
+            init() {
                 setTimeout(() => {
-                    // Desvanecemos el contenedor una vez vacío
-                    cont.style.opacity = 0;
-
+                    const cont = $('container-2'), text = $('text-2');
+                    cont.style.opacity = 1;
+                    text.style.animation = `scrollUpShort ${TIMING.p3_scroll / 1000 + 5}s linear forwards`;
                     setTimeout(() => {
-                        cont.style.display = 'none';
-
-                        // 2. Aparece el botón de Play para el video de regalo
-                        const btnPlay = $('btn-play');
-                        btnPlay.style.display = 'block';
-
-                        // Forzamos reflow para que la transición de opacidad sea suave
-                        void btnPlay.offsetWidth;
-                        btnPlay.style.opacity = 1;
-                    }, 1000);
-
-                }, 55000); // 55s de animación + 1s de espera para asegurar que salió todo
-
-            }, 500); // Espera 1.5s antes de empezar el scroll
-        }
+                        cont.style.opacity = 0;
+                        setTimeout(() => {
+                            cont.style.display = 'none';
+                            const btn = $('btn-play');
+                            btn.style.display = 'block';
+                            void btn.offsetWidth; btn.style.opacity = 1;
+                        }, 1000);
+                    }, TIMING.p3_scroll);
+                }, 500);
+            }
+        };
 
         function playRegalo() {
-            const videoCont = $('video-final-container');
-            const video = $('video-regalo');
+            const videoCont = $('video-final-container'), video = $('video-regalo');
             $('btn-play').style.display = "none";
             videoCont.style.display = "block";
             video.play();
-
             video.onended = () => {
                 videoCont.style.opacity = 0;
-                setTimeout(() => {
-                    videoCont.style.display = "none";
-
-                    // --- INICIO SECUENCIA DE DESPEDIDA ---
-                    const contD = $('container-despedida');
-                    const textD = $('text-despedida');
-                    contD.style.display = "block";
-
-                    // Pequeña pausa con la pantalla en negro antes de que aparezca el texto (2s)
-                    setTimeout(() => {
-                        contD.style.opacity = 1;
-                        // 100 segundos para un scroll suave y pausado
-                        textD.style.animation = "scrollUpLong 90s linear forwards";
-
-                        // --- CÁLCULO DE FINALIZACIÓN ---  
-                        // Esperamos a que el texto termine de subir completamente (100s + 1s margen)
-                        setTimeout(() => {
-                            contD.style.opacity = 0;
-
-                            setTimeout(() => {
-                                contD.style.display = "none";
-
-                                // Layout final con el mensaje "Feliz Cumpleaños Dayana..."
-                                const layout = $('final-layout');
-                                layout.style.backgroundImage = "url('Pictures/foto_final_dayana.jpeg')";
-                                layout.style.display = "flex";
-
-                                // Forzamos el reflow para la transición final
-                                void layout.offsetWidth;
-                                layout.style.opacity = 1;
-                            }, 1500); // Pausa tras el desvanecimiento final
-
-                        }, 85000); // 105s de la animación + 1s de margen
-
-                    }, 2000);
-
-                }, 1000);
+                setTimeout(() => { videoCont.style.display = "none"; startDespedida(); }, 1000);
             };
-        };
+        }
+
+        function startDespedida() {
+            const contD = $('container-despedida'), textD = $('text-despedida');
+            contD.style.display = "block";
+            
+            setTimeout(() => {
+                contD.style.opacity = 1;
+                // La animación usa final_scroll para la VELOCIDAD
+                textD.style.animation = `scrollUpLong ${TIMING.final_scroll / 1000}s linear forwards`;
+
+                // El cierre usa final_exit_delay para no dejar la pantalla vacía
+                setTimeout(() => {
+                    contD.style.opacity = 0;
+                    setTimeout(() => {
+                        contD.style.display = "none";
+                        const final = $('final-layout');
+                        final.style.backgroundImage = "url('Pictures/foto_final_dayana.jpeg')";
+                        final.style.display = "flex";
+                        void final.offsetWidth; 
+                        final.style.opacity = 1;
+                    }, 1500);
+                }, TIMING.final_exit_delay); // <--- Aquí usamos el nuevo tiempo de salida
+                
+            }, 2000);
+        }
+function fadeOutAudio(audio, duration) {
+    const step = audio.volume / (duration / 100);
+    const interval = setInterval(() => {
+        if (audio.volume > step) {
+            audio.volume -= step;
+        } else {
+            audio.pause();
+            audio.volume = 1; // Reset para futuro uso
+            clearInterval(interval);
+        }
+    }, 175);
+}
+
+function fadeInAudio(audio, duration) {
+    audio.volume = 0;
+    const step = 1 / (duration / 100);
+    const interval = setInterval(() => {
+        if (audio.volume < 1 - step) {
+            audio.volume += step;
+        } else {
+            audio.volume = 1;
+            clearInterval(interval);
+        }
+    }, 100);
+}
+function redigirACancion() {
+    // 1. Bajamos el volumen de la música actual suavemente
+    const musicaPrincipal = $('musica');
+    fadeOutAudio(musicaPrincipal, 1500);
+
+    // 2. Fundido a negro de la pantalla para una transición limpia
+    document.body.style.transition = "opacity 1.5s ease";
+    document.body.style.opacity = 0;
+
+    // 3. Redirección después de 1.5 segundos
+    setTimeout(() => {
+        window.location.href = "https://www.youtube.com/watch?v=iT14dRk_vYE&list=RDiT14dRk_vYE&start_radio=1";
+    }, 1500);
+}
+
+        window.onload = createParticles;
     </script>
 </body>
-
 </html>
