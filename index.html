@@ -252,8 +252,11 @@
         #text-despedida p {
             font-size: 1.1rem;
             line-height: 1.8;
-            margin-bottom: 1.5rem;
             color: #e0e0e0;
+            margin-bottom: 2.5rem;
+            /* Aumenta el espacio entre párrafos */
+            line-height: 2;
+            /* Aumenta el espacio entre líneas para que respire más */
         }
 
         @keyframes scrollUpShort {
@@ -467,18 +470,20 @@
             <h2 style="color: var(--primary); font-family: 'Caveat', cursive; font-size: 2rem;">Nota importante</h2>
             <p
                 style="font-family: 'Georgia', serif; font-size: 0.7rem; line-height: 1.6; color: #eee; margin-top: 10px;">
-                Inicialmente... quise crearte y regalarte este detalle por tu cumpleaños, mi error fue que me apresuré
-                tanto, y lo hice dos meses antes, en mi memoria estaba presente el día 16, con eso me bastó para iniciar
-                sin excusa.<br><br>
-                Pero, al enterarme del mes en que estaba, quedé 🤡, no se si fue la emoción del momento que me hizo
-                perder la noción del tiempo.
+                Al principio... solo quería crear este detalle para tu cumpleaños. Mi error fue que me apresuré tanto
+                que lo terminé dos meses antes. En mi memoria el día 16 estaba tan presente que me bastó para empezar
+                sin buscar excusas.<br><br>
+                Pero al darme cuenta del mes en que realmente estábamos, quedé 🤡. No sé si fue la emoción del momento,
+                pero perdí por completo la noción del tiempo.
                 <br> <br>
-                Mi mente estaba tan nublada que solo veia el 16 de Marzo como la fecha correcta... Pero, tal vez en dos
-                meses cambien muchas cosas, tal vez no este convencido de que sea lo mas correcto, asi que; te dejaré el
-                detalle desde hoy, espero que cuando llegue el momento o te seintas preparada... lo abras, es con mucho
+                Mi mente estaba tan nublada que solo veía el 16 de marzo como la fecha correcta... Pero quién sabe...
+                tal vez en dos
+                meses cambien muchas cosas, tal vez no esté tan convencido de que sea lo mas correcto.
+                Aun así, quiero dejarte este detalle desde hoy, espero que cuando llegue el momento, o cuando te sientas
+                preparada... lo abras, es con mucho
                 cariño. <br><br>
                 Si decides abrirlo ahora (no lo hagas), cierra esta ventana, dale al botón de "Saltar detalle" y sigue
-                las indicaciones. (Miralo en tu casa👀)<br><br>
+                las indicaciones. (Míralo cuando estés tranquila en casa 👀)<br><br>
             </p>
         </div>
     </div>
@@ -771,22 +776,23 @@
                     setTimeout(() => this.showFixed(), TIMING.p2_scroll);
                 }, TIMING.p2_delay);
             },
+
             showFixed() {
                 const cont = $('container-1'), fixed = $('fixed-message'), btn = $('btn-next');
                 cont.style.opacity = 0;
                 setTimeout(() => {
                     cont.style.display = 'none';
                     fixed.style.display = 'block';
-                    setTimeout(() => fixed.style.opacity = 1, 100);
+                    setTimeout(() => fixed.style.opacity = 1, 50);
                     setTimeout(() => {
                         fixed.style.opacity = 0;
                         setTimeout(() => {
                             fixed.style.display = 'none';
                             btn.style.display = 'block';
                             void btn.offsetWidth; btn.style.opacity = 1;
-                        }, 1000);
+                        }, 800);
                     }, 5000);
-                }, 1000);
+                }, 500);
             }
         };
 
