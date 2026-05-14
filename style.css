@@ -1,0 +1,416 @@
+:root {
+    --primary: #ff758c;
+    --secondary: #ff7eb3;
+    --glass-bg: rgba(0, 0, 0, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: white;
+    font-family: 'Georgia', serif;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+/* --- TIPOGRAFÍAS Y EFECTOS --- */
+h1,
+h2,
+.btn-generic {
+    font-family: 'Caveat', cursive;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, .8);
+}
+
+.glow-title {
+    background: linear-gradient(to right, #ffffff, var(--primary), var(--secondary), #ffffff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shineText 3s linear infinite;
+    filter: drop-shadow(0 0 5px rgba(255, 117, 140, 0.3));
+}
+
+@keyframes shineText {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* --- ESTRUCTURA DE PANTALLAS --- */
+.screen {
+    position: fixed;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .8s ease;
+    z-index: 10;
+}
+
+.active {
+    display: flex;
+    opacity: 1;
+}
+
+.video-background {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 2s ease;
+    z-index: -5;
+}
+
+.video-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .7);
+    z-index: -4;
+}
+
+/* --- COMPONENTES (FOTOS Y PARTÍCULAS) --- */
+.foto-marco {
+    position: absolute;
+    width: 75px;
+    background: white;
+    padding: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.foto-marco img {
+    width: 100%;
+    height: 75px;
+    object-fit: cover;
+}
+
+.pos1 {
+    top: 10%;
+    left: 10%;
+    transform: rotate(-10deg);
+}
+
+.pos2 {
+    top: 25%;
+    right: 10%;
+    transform: rotate(15deg);
+}
+
+.pos3 {
+    top: 75%;
+    left: 15%;
+    transform: rotate(-5deg);
+}
+
+.pos4 {
+    top: 85%;
+    right: 15%;
+    transform: rotate(-12deg);
+}
+
+.particle {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    animation: float infinite ease-in-out;
+}
+
+/* --- NUEVOS ESTILOS PARA FONDOS DE TEXTO --- */
+
+/* Clase base para contenedores con fondo de imagen fijo */
+.bg-image-fixed {
+    background-attachment: fixed;
+    /* La imagen se queda quieta al hacer scroll */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+/* Capa oscura superpuesta para mejorar legibilidad */
+.bg-image-fixed::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Oscurece la foto */
+    backdrop-filter: blur(3px);
+    /* Desenfoca levemente la foto de fondo */
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 1;
+    /* Detrás del texto, delante de la imagen */
+}
+
+/* Asegurar que el texto esté por encima de la capa oscura */
+.scroll-text {
+    z-index: 2;
+}
+
+/* ASIGNACIÓN DE FOTOS ESPECÍFICAS (Reutilizando URLs de Pantalla 1) */
+
+/* Foto para Pantalla 3 (Primer Scroll Largo) - Usamos Foto 0 */
+#container-2 {
+    background-image: url('https://lh3.googleusercontent.com/u/0/d/16RKXMXGo29QZphsXFTba3XTXirhSTE1T');
+}
+
+/* Foto para Pantalla 5 (Despedida Final) - Usamos Foto 2 */
+#container-despedida {
+    background-image: url('https://lh3.googleusercontent.com/u/0/d/1hV4k1GuvKjxyUpu05ejDkZ4u65lPLQP-');
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(110vh) translateX(0) scale(1);
+        opacity: 0;
+    }
+
+    20%,
+    80% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-10vh) translateX(40px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* --- TEXTOS Y SCROLL --- */
+.scroll-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease;
+    overflow: hidden;
+}
+
+.scroll-text {
+    position: absolute;
+    width: 85%;
+    max-width: 600px;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.glass-box {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 40px 20px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+.p2-text-base {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: #f0f0f0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+#text-1 {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: #f0f0f0;
+}
+
+#text-2 h1 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+#text-2 p,
+#text-despedida p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #e0e0e0;
+    margin-bottom: 2.5rem;
+    /* Aumenta el espacio entre párrafos */
+    line-height: 2;
+    /* Aumenta el espacio entre líneas para que respire más */
+}
+
+@keyframes scrollUpShort {
+    0% {
+        top: 100%;
+    }
+
+    100% {
+        top: -220%;
+    }
+}
+
+@keyframes scrollUpLong {
+    0% {
+        top: 100%;
+    }
+
+    100% {
+        top: -450%;
+    }
+}
+
+/* --- BOTONES --- */
+.btn-generic {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    border: none;
+    padding: 12px 35px;
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.6rem;
+    box-shadow: 0 5px 15px rgba(255, 117, 140, .4);
+    opacity: 0;
+    display: none;
+    transition: opacity 1s, transform 0.3s;
+    z-index: 100;
+}
+
+.btn-pulse {
+    animation: pulse 2s infinite;
+}
+
+.btn-generic:hover {
+    transform: scale(1.1);
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px rgba(255, 117, 140, 0);
+    }
+}
+
+/* --- FLOR MÁGICA --- */
+.flower-container {
+    position: absolute;
+    bottom: 0;
+    width: 200px;
+    height: 150px;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flower-stem {
+    fill: none;
+    stroke: #4caf50;
+    stroke-width: 3;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: growStem 1s ease-out forwards;
+}
+
+.flower-head {
+    opacity: 0;
+    animation: revealHead 0.5s ease forwards 0.8s;
+}
+
+.petal {
+    fill: #ff85a1;
+    stroke: #ff758c;
+    stroke-width: 1;
+    transform-origin: center;
+    scale: 0;
+}
+
+.petal-back {
+    animation: bloom 0.8s forwards 1s;
+}
+
+.petal-mid {
+    animation: bloom 0.8s forwards 1.2s;
+}
+
+.petal-center {
+    animation: bloom 0.8s forwards 1.4s;
+    fill: #ffb3c1;
+}
+
+.flower-center {
+    fill: #ffeb3b;
+    scale: 0;
+    animation: bloom 0.6s ease forwards 1.6s;
+}
+
+@keyframes growStem {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes revealHead {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bloom {
+    0% {
+        scale: 0;
+        opacity: 0;
+    }
+
+    60% {
+        scale: 1.2;
+        opacity: 1;
+    }
+
+    100% {
+        scale: 1;
+        opacity: 1;
+    }
+}
+
+@media (max-width: 600px) {
+
+    #text-1,
+    #text-2 p,
+    #text-despedida p {
+        font-size: 0.9rem;
+    }
+
+    #text-2 h1 {
+        font-size: 2rem;
+    }
+
+    .foto-marco {
+        width: 60px;
+    }
+}
+
+#video-final-container {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 500;
+}
